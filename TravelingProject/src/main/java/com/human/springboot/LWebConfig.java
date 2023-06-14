@@ -10,7 +10,7 @@ public class LWebConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 				registry.addResourceHandler("/img/place/**") // Change the mapping pattern if needed
-	            .addResourceLocations("file:C:/Users/admin/eclipse-workspace/Final_project/src/main/resources/static/place/");
+	            .addResourceLocations("C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/");
 	}
 
 }

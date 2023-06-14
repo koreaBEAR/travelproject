@@ -473,7 +473,7 @@ public class Traval_controller {
 	        for (MultipartFile image : images) {
 	            String originalFilename = image.getOriginalFilename();
 	  
-	            String filePath = "C:/Users/admin/eclipse-workspace/Final_project/src/main/resources/static/place/" + originalFilename; 
+	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename; 
 	            File dest = new File(filePath);
 	            image.transferTo(dest);
 	            System.out.println(dest);
@@ -484,7 +484,7 @@ public class Traval_controller {
 	        e.printStackTrace();
 	        for (MultipartFile image : images) {
 	            String originalFilename = image.getOriginalFilename();
-	            String filePath = "C:/Users/admin/eclipse-workspace/Final_project/src/main/resources/static/place/" + originalFilename; 
+	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename; 
 	            File file = new File(filePath);
 	            if (file.exists() && file.isFile()) {
 	                file.delete();
