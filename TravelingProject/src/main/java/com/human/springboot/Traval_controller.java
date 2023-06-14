@@ -874,8 +874,9 @@ public class Traval_controller {
 					if (!file.isEmpty()) {
 						String fileName = file.getOriginalFilename();
 						fileNames1.add(fileName);
-						String filePath = "C:/Users/admin/eclipse-workspace/TravelingProject/src/main/resources/static/img/";
+						String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/contact";
 						File newFile = new File(filePath + fileName);
+						System.out.println(newFile);
 						file.transferTo(newFile);
 					}
 				}
@@ -911,7 +912,7 @@ public class Traval_controller {
 					if (!file.isEmpty()) {
 						String fileName = file.getOriginalFilename();
 						fileNames1.add(fileName);
-						String filePath = "C:/Users/admin/eclipse-workspace/TravelingProject/src/main/resources/static/img/contact";
+						String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/contact";
 						File newFile = new File(filePath + fileName);
 						file.transferTo(newFile);
 					}
