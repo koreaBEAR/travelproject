@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='com.human.springboot.TDAO'>
+	<select	id="member_list" resultType="com.human.springboot.SignDTO">
+		select * from member
+	</select>
+	<insert id="member_insert">
+		insert into member values(member_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, #{param8}, 'user')
+	</insert>
+	<select id="id_check" resultType="Integer">
+		select count(*) from member where member_id=#{param1}
+	</select>
+	<select id="nickName_check" resultType="Integer">
+		select count(*) from member where member_id=#{param1}
+	</select>
+	<select id="member_check" resultType="Integer">
+		select count(*) from member where member_id=#{param1} and member_pw=#{param2}
+	</select>
+	<select id="member_class" resultType="String">
+		select member_class from member where member_id=#{param1}
+	</select>
+	<select id="member_id" resultType="String">
+		select member_id from member where member_name=#{param1} and member_email=#{param2}
+	</select>
+	<select id="findPw" resultType="String">
+		select member_pw from member where member_name=#{param1} and member_id=#{param2} and member_email=#{param3}
+	</select>
+	<select id="findPwVal" resultType="Integer">
+		select count(*) from member where member_name=#{param1} and member_id=#{param2} and member_email=#{param3}
+	</select>
+	<select id="nowPw" resultType="Integer">	
+		select count(*) from member where member_id=#{param1} and member_pw=#{param2}
+	</select>
+	<update id="newPwUpdate">
+        update member set member_pw = #{param2} where member_id = #{param1}
+    </update>
+    <update id="setRandomPw">
+    	update member set member_pw = #{param2} where member_id = #{param1}
+    </update>
+    
+	<!-- 리뷰 -->
+	<select id="placeList" resultType="com.human.springboot.RevDTO">
+		select place_seq, place_img, place_name, place_address from place
+	</select>
+</mapper>

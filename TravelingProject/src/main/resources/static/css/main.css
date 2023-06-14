@@ -1,0 +1,164 @@
+@charset "UTF-8";
+
+/* 사진 슬라이드 배너 */
+.carousel-item img {
+    width: 100%;
+    height: 445px; /* 원하는 높이 값으로 변경 */
+    object-fit: cover;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    height: 50px;  /* 아이콘의 크기 조절 */
+    width: 40px;   /* 아이콘의 크기 조절 */
+    background-color: rgba(0, 0, 0, 0.8); 
+}
+
+h5{
+ 	margin-right: 50px;
+	font-size: 80px;
+}
+
+.carousel-caption {
+    right: 0;
+    left: auto;
+    text-align: right;
+    padding: 10px; /* Set your desired padding */
+}
+
+/* 여행 문구 */
+h1 {
+    text-align: center;
+    font-size: 50px;
+}
+
+/* 검색창 */
+.serachbox {
+	margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+    
+#keyword {
+	width: 35%;
+	padding: 10px;
+}
+
+/* select option 카테고리 */
+.sort {
+    margin-right: 12%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.sort select {
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background: #f8f8f8;
+    color: #333;
+    outline: none;
+    
+}
+
+.sort select option {
+    min-width: 200px;
+    padding: 25px;
+    background: #fff;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.sort select:hover {
+    background: #e9e9e9;
+}
+
+/* 관광명소 div */
+#tourlist {		
+    margin-left: 5.5%;
+    width: 94vw;
+    margin-bottom: 7%;
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    grid-auto-rows: 400px;
+}
+
+.div1-1 {
+	
+	border-radius: 15px;
+    height: 80%;
+    width: 75%;
+    overflow: hidden;
+    border:1px solid rgb(128, 128, 128, .5);
+    flex: 0 0 calc(25% - 30px); 
+    box-sizing: border-box; 
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.5);
+    text-align:center;
+} 
+
+.div1-1 p {
+    margin-top: 7px;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+.div_img{
+	overflow: hidden;
+	height:80%;
+}
+.div_img > img{
+	width:100%;
+	height:100%;
+}
+
+ 
+.div1-1:hover img{
+	transform:scale(1.5);
+    transition: .4s;
+	cursor:pointer;
+}
+
+
+/* city 모달 상세띄우기 */
+
+.modal-content img {
+    width: 100%;
+    height: 400px;
+}
+
+.modal-dialog {
+    max-width: 800px; /* Adjust the width as per your preference */
+}
+.modal-title{	
+	font-size: 40px;
+	display: inline;
+	margin-right: 15px;
+}
+.modalcontent{
+    font-family: 'Pretendard-Regular';
+	margin-top: 20px;
+	font-size: 19px;
+}
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+.center-button {
+    display: flex;
+    justify-content: center;
+}
+.btn-primary {
+    padding: 10px 20px; 
+    font-size: 18px; 
+}
+.fa-calendar-check {
+    margin-top: 25px;  /* Adjust this value as needed */
+}
+
