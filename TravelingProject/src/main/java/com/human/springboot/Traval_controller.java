@@ -252,6 +252,7 @@ public class Traval_controller {
 		return "reviews";
 	}
 	//리뷰에 place보이기
+	
 	@PostMapping("/loadReview")
 	@ResponseBody
 	public String loadReviews(HttpServletRequest req) {
