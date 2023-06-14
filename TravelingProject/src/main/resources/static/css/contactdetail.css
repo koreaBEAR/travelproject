@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+h1 {
+	text-align: center;
+	font-size: 50px;
+}
+
+/* 댓글 스타일 */
+.comment {
+	padding: 10px;
+	margin-bottom: 10px;
+	background-color: #f2f2f2;
+	border: 1px solid #ccc;
+}
+
+.comment p {
+	margin-bottom: 10px;
+}
+
+.comment .author {
+	font-weight: bold;
+}
+
+.comment .date {
+	font-size: 12px;
+	color: #888;
+}
+
+.comment .content {
+	font-size: 14px;
+}
+
+/* 게시판 테이블 */
+.tbldetail {
+	margin: auto;
+	margin-top: 12%; 
+	width: 85%;
+	border-collapse: collapse;
+}
+
+.tbldetail_head {
+
+} 
+
+.tbldetail_head h1 {
+	margin: 0;
+	padding: 10px;
+}
+
+.tbldetail_body .detaillist {
+	background-color: #f2f2f2;
+	padding: 10px;
+}
+.tblcategory {
+	font-size: 20px; font-weight : bold;
+	background-color: #f2f2f2;
+	width: 20%;
+	font-weight: bold; /* Reduced from 10px to 5px */
+}
+
+.tbldetail_body td {
+	border: 1px solid #ccc;
+	padding: 20px;
+}
+
+#tblimg img {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 5px;
+	width: 200px;
+	height: 150px;
+}
+
+/* 게시판 버튼 */
+.btnsort {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.boardBtn {	
+	background-color: #007BFF;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 4px;
+	transition-duration: 0.4s;
+}
+
+.boardBtn:hover {
+	background-color: white;
+	color: #007BFF;
+}

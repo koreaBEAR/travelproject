@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -229,13 +232,6 @@ public class Traval_controller {
 		return val;
 	}
 
-	@GetMapping("/main")
-	public String loadMain(HttpServletRequest req, Model model) {
-		HttpSession session = req.getSession();
-			model.addAttribute("id",session.getAttribute("id"));
-			model.addAttribute("memberClass",session.getAttribute("memberClass"));
-		return "main";
-	}
 	@GetMapping("/changePw")
 	public String changePw(HttpServletRequest req, Model model) {
 		HttpSession session = req.getSession();
@@ -627,4 +623,376 @@ public class Traval_controller {
 	public String manage_error() {
 		return "manage_error";	
 	}	
+	
+	
+/////////////////////////	재민 ////////////////////////////////
+		
+		//메인 홈페이지//
+	@GetMapping("/main")
+	public String loadMain(HttpServletRequest req, Model model) {
+		HttpSession session = req.getSession();
+		model.addAttribute("id", session.getAttribute("id"));
+		model.addAttribute("memberClass", session.getAttribute("memberClass"));
+		return "main";
+	}
+
+// 메인 리스트 오름차순	   
+	@PostMapping("/cityasc")
+	@ResponseBody
+	public String cityAsc(HttpServletRequest req) {
+
+		ArrayList<cityDTO> ascList = tdao.cityasc();
+
+		JSONArray ja = new JSONArray();
+		for (int i = 0; i < ascList.size(); i++) {
+			JSONObject jo = new JSONObject();
+
+			jo.put("city_num", ascList.get(i).getCity_num());
+			jo.put("city_name", ascList.get(i).getCity_name());
+			jo.put("city_img", ascList.get(i).getCity_img());
+			jo.put("city_content", ascList.get(i).getCity_content());
+			jo.put("city_count", ascList.get(i).getCity_count());
+			jo.put("city_engname", ascList.get(i).getCity_engname());
+
+			ja.put(jo);
+		}
+		return ja.toString();
+	}
+
+// 메인 리스트 내림차순	   
+	@PostMapping("/citydesc")
+	@ResponseBody
+	public String cityDesc(HttpServletRequest req) {
+
+		ArrayList<cityDTO> descList = tdao.citydesc();
+
+		JSONArray ja = new JSONArray();
+		for (int i = 0; i < descList.size(); i++) {
+			JSONObject jo = new JSONObject();
+
+			jo.put("city_num", descList.get(i).getCity_num());
+			jo.put("city_name", descList.get(i).getCity_name());
+			jo.put("city_img", descList.get(i).getCity_img());
+			jo.put("city_engname", descList.get(i).getCity_engname());
+
+			ja.put(jo);
+		}
+		return ja.toString();
+	}
+
+// 메인 리스트 인기순	   
+	@PostMapping("/citybest")
+	@ResponseBody
+	public String cityBest(HttpServletRequest req) {
+
+		ArrayList<cityDTO> descList = tdao.citybest();
+
+		JSONArray ja = new JSONArray();
+		for (int i = 0; i < descList.size(); i++) {
+			JSONObject jo = new JSONObject();
+
+			jo.put("city_num", descList.get(i).getCity_num());
+			jo.put("city_name", descList.get(i).getCity_name());
+			jo.put("city_img", descList.get(i).getCity_img());
+			jo.put("city_engname", descList.get(i).getCity_engname());
+
+			ja.put(jo);
+		}
+		return ja.toString();
+	}
+
+//  고객센터 검색
+	@PostMapping("/searchcity")
+	@ResponseBody
+	public String searchCity(HttpServletRequest req) {
+		String keyword = req.getParameter("keyword");
+
+		ArrayList<cityDTO> searchCitys = tdao.serachcity(keyword);
+
+		JSONArray ja = new JSONArray();
+		for (int i = 0; i < searchCitys.size(); i++) {
+			JSONObject jo = new JSONObject();
+
+			jo.put("city_num", searchCitys.get(i).getCity_num());
+			jo.put("city_name", searchCitys.get(i).getCity_name());
+			jo.put("city_img", searchCitys.get(i).getCity_img());
+			jo.put("city_engname", searchCitys.get(i).getCity_engname());
+
+			ja.put(jo);
+		}
+		return ja.toString();
+	}
+
+// 메인에서 dialog
+	@PostMapping("/getCityDetails/{city_num}")
+	@ResponseBody
+	public String getCityDetails(@PathVariable("city_num") int city_num, HttpServletRequest req) {
+
+		ArrayList<cityDTO> cityDetaillist = tdao.getCityDetails(city_num);
+
+		JSONArray ja = new JSONArray();
+		for (int i = 0; i < cityDetaillist.size(); i++) {
+			JSONObject jo = new JSONObject();
+
+			jo.put("city_num", cityDetaillist.get(i).getCity_num());
+			jo.put("city_name", cityDetaillist.get(i).getCity_name());
+			jo.put("city_img", cityDetaillist.get(i).getCity_img());
+			jo.put("city_count", cityDetaillist.get(i).getCity_count());
+			jo.put("city_content", cityDetaillist.get(i).getCity_content());
+			jo.put("city_engname", cityDetaillist.get(i).getCity_engname());
+
+			ja.put(jo);
+		}
+		return ja.toString();
+	}
+
+// 고객센터 문의게시판
+	@GetMapping("/contact")
+	public String getListtotal(Model model) {
+
+		int num = tdao.contacttotal();
+		model.addAttribute("num", num);
+
+		return "contact";
+	}
+
+// 고객센터 문의 리스트	   
+	@PostMapping("/getList")
+	@ResponseBody
+	public String doGetList(HttpServletRequest req) {
+
+		int page_num = Integer.parseInt(req.getParameter("pageNum"));
+
+		ArrayList<contactDTO> alList = tdao.contactlist();
+
+		int howmanyProd = alList.size();
+		int howmanyPages = (howmanyProd / 10) + 1;
+		if (howmanyProd % 10 == 0) {
+			howmanyPages = howmanyPages - 1;
+		}
+		int start = (page_num - 1) * 10;
+		int end = (page_num * 10) - 1;
+
+		JSONArray ja = new JSONArray();
+		try {
+			JSONObject jo = new JSONObject();
+			jo.put("howmany", howmanyPages);
+			ja.put(jo);
+
+			for (int i = 0; i < alList.size(); i++) {
+				if (i >= start && i <= end) {
+					jo = new JSONObject();
+					jo.put("help_seq", alList.get(i).getHelp_seq());
+					jo.put("help_category", alList.get(i).getHelp_category());
+					jo.put("help_title", alList.get(i).getHelp_title());
+					jo.put("member_nickname", alList.get(i).getMember_nickname());
+					jo.put("help_created", alList.get(i).getHelp_created());
+					jo.put("help_complete", alList.get(i).getHelp_complete());
+
+					ja.put(jo);
+				}
+			}
+		} catch (Exception e) {
+		}
+		return ja.toString();
+	}
+
+//  고객센터 검색
+	@PostMapping("/search")
+	@ResponseBody
+	public String search(HttpServletRequest req) {
+
+		String pageNumStr = req.getParameter("pageNum");
+		int pageNum = pageNumStr != null ? Integer.parseInt(pageNumStr) : 1;
+
+		String searchType = req.getParameter("type");
+		String keyword = req.getParameter("keyword");
+
+		ArrayList<contactDTO> searchResults = tdao.search(searchType, keyword);
+
+		int howmanyProd = searchResults.size();
+		int howmanyPages = (howmanyProd / 10) + 1;
+		if (howmanyProd % 10 == 0) {
+			howmanyPages = howmanyPages - 1;
+		}
+		int start = (pageNum - 1) * 10;
+		int end = (pageNum * 10) - 1;
+
+		JSONObject result = new JSONObject();
+		JSONArray ja = new JSONArray();
+		try {
+			JSONObject jo = new JSONObject();
+			jo.put("howmany", howmanyPages);
+			ja.put(jo);
+
+			for (int i = 0; i < searchResults.size(); i++) {
+				if (i >= start && i <= end) {
+					jo = new JSONObject();
+					jo.put("count", searchResults.get(i).getCount());
+					jo.put("help_seq", searchResults.get(i).getHelp_seq());
+					jo.put("help_category", searchResults.get(i).getHelp_category());
+					jo.put("help_title", searchResults.get(i).getHelp_title());
+					jo.put("member_nickname", searchResults.get(i).getMember_nickname());
+					jo.put("help_created", searchResults.get(i).getHelp_created());
+					jo.put("help_complete", searchResults.get(i).getHelp_complete());
+
+					ja.put(jo);
+				}
+			}
+			result.put("results", ja);
+			result.put("count", searchResults.size());
+		} catch (Exception e) {
+		}
+		return result.toString();
+	}
+
+// 고객센터 문의작성
+	@GetMapping("/contactwrite")
+	public String contactwrite() {
+
+		return "contactwrite";
+	}
+
+// 고객센터 문의 insert
+	@PostMapping("/contactinsert")
+	@ResponseBody
+	public String prodInsert(HttpServletRequest req,
+			@RequestParam(value = "img", required = false) MultipartFile[] imgs,
+			@RequestParam("help_category") String help_category, @RequestParam("help_title") String help_title,
+			@RequestParam("help_content") String help_content, @RequestParam("help_password") String help_password) {
+
+		String insertval = "ok";
+
+		try {
+			HttpSession session = req.getSession();
+			String member_id = (String) session.getAttribute("id");
+
+			List<String> fileNames1 = new ArrayList<>();
+// 이미지 파일이 업로드되었는지 확인
+			if (imgs != null && imgs.length > 0) {
+				for (MultipartFile file : imgs) {
+					if (!file.isEmpty()) {
+						String fileName = file.getOriginalFilename();
+						fileNames1.add(fileName);
+						String filePath = "C:/Users/admin/eclipse-workspace/TravelingProject/src/main/resources/static/img/";
+						File newFile = new File(filePath + fileName);
+						file.transferTo(newFile);
+					}
+				}
+			}
+
+			String help_img = String.join(",", fileNames1);
+			tdao.contactinsert(member_id, help_category, help_title, help_content, help_img, help_password);
+
+		} catch (Exception e) {
+			insertval = "fail";
+			e.printStackTrace();
+		}
+
+		return insertval;
+	}
+
+	@PostMapping("/contactupate")
+	@ResponseBody
+	public String doupdate(HttpServletRequest req,
+			@RequestParam(value = "help_img", required = false) MultipartFile[] imgs,
+			@RequestParam("help_seq") int help_seq, @RequestParam("help_category") String help_category,
+			@RequestParam("help_title") String help_title, @RequestParam("help_content") String help_content,
+			@RequestParam("help_password") String help_password) {
+
+		String updateval = "ok";
+
+		try {
+
+			List<String> fileNames1 = new ArrayList<>();
+// 이미지 파일이 업로드되었는지 확인
+			if (imgs != null && imgs.length > 0) {
+				for (MultipartFile file : imgs) {
+					if (!file.isEmpty()) {
+						String fileName = file.getOriginalFilename();
+						fileNames1.add(fileName);
+						String filePath = "C:/Users/admin/eclipse-workspace/TravelingProject/src/main/resources/static/img/contact";
+						File newFile = new File(filePath + fileName);
+						file.transferTo(newFile);
+					}
+				}
+			}
+
+			String help_img = String.join(",", fileNames1);
+			tdao.contactupdate(help_seq, help_category, help_title, help_content, help_img, help_password);
+
+		} catch (Exception e) {
+			updateval = "fail";
+			e.printStackTrace();
+		}
+		return updateval;
+	}
+
+//	고객센터 상세페이지
+	@GetMapping("/contactdetail/{help_seq}")
+	public String mypagereviewwrite(@PathVariable("help_seq") int help_seq, HttpServletRequest req, Model model) {
+
+		contactDTO detail = tdao.contactdetail(help_seq);
+		model.addAttribute("details", detail);
+		return "contactdetail";
+
+	}
+
+//게시판 공개글/비밀글 체크
+	@PostMapping("/sortPost")
+	@ResponseBody
+	public String doSortPost(HttpServletRequest req) {
+
+		int post_seq = Integer.parseInt(req.getParameter("post_seq"));
+
+		Object password = tdao.sortPost(post_seq);
+
+		if (password == null) {
+			return "open";
+		} else {
+			return "secret";
+		}
+
+	}
+
+// 고객센터 상세페이지 - 비밀번호 입력get   
+	@PostMapping("/pwdselect/{help_seq}")
+	@ResponseBody
+	public ResponseEntity<String> pwdSelect(@PathVariable("help_seq") int help_seq, HttpServletRequest req) {
+
+		String getpwd = tdao.pwdselect(help_seq);
+		String putpwd = req.getParameter("help_password");
+
+		System.out.println("getpwd=" + getpwd);
+		System.out.println("putpwd=" + putpwd);
+
+		if (getpwd.equals(putpwd)) {
+			return new ResponseEntity<>("contactdetail", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("invalid password", HttpStatus.OK);
+		}
+	}
+
+// 고객센터 게시글 수정  
+	@GetMapping("/updatelist/{help_seq}")
+	public String updatelist(@PathVariable("help_seq") int help_seq, HttpServletRequest req, Model model) {
+
+		contactDTO updatelist = tdao.contactdetail(help_seq);
+		model.addAttribute("updatelists", updatelist);
+
+		return "contactupdate";
+
+	}
+
+// 고객센터 게시글 삭제   
+	@PostMapping("/contactdelete")
+	@ResponseBody
+	public String reviewdelete(HttpServletRequest req) {
+		int help_seq = Integer.parseInt(req.getParameter("help_seq"));
+
+		tdao.contactdelete(help_seq);
+
+		return "contact";
+	}
+	
 }

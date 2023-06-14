@@ -217,4 +217,102 @@
 		update help set help_comment=#{param1}, help_complete=#{param2} where help_seq=#{param3}
 	</update>
 	
+	
+<!-- 	재민          -->
+
+<!-- 메인 리스트 get -->
+<select id="cityasc" resultType="com.human.springboot.cityDTO">
+	select * from city order by city_name asc
+</select>
+<select id="citydesc" resultType="com.human.springboot.cityDTO">
+	select * from city order by city_name desc
+</select>
+<select id="citybest" resultType="com.human.springboot.cityDTO">
+	select * from city order by city_count desc
+</select>
+<select id="serachcity" resultType="com.human.springboot.cityDTO">
+select * from city
+where city_name like '%' || #{param1} || '%'
+</select>
+
+<!-- 메인 상세시티 dialog -->
+<select id="getCityDetails" resultType="com.human.springboot.cityDTO">
+	select * from city where city_num=#{param1}
+</select>
+
+<!-- 고객센터 게시판 리스트 및 count -->
+<select id="contactlist" resultType="com.human.springboot.contactDTO">
+	select a.help_seq, a.help_category, a.help_title, b.member_nickname, a.help_created, a.help_complete 
+    from help a, member b
+    where a.member_id = b.member_id
+    order by a.help_seq asc
+</select>
+
+<select id="search" resultType="com.human.springboot.contactDTO">
+	select 
+            a.help_seq, 
+            a.help_category, 
+            a.help_title, 
+            b.member_nickname, 
+            a.help_created, 
+            a.help_complete, 
+            (select COUNT(*) from help where ${param1} like '%' || #{param2} || '%') as count
+        from 
+            help a, member b
+        where 
+            a.member_id = b.member_id
+            and ${param1} like '%' || #{param2} || '%'
+        order by 
+            a.help_seq asc
+    </select>
+
+<select id="contacttotal" resultType="int">
+		select count(help_seq) from help
+</select>
+
+<!-- 고객센터 글작성 -->
+<insert id="contactinsert">
+  insert into help values
+  (contactseq.nextval,#{param1}, #{param2}, #{param3}, #{param4}, TO_CHAR(SYSDATE, 'YYYY/MM/DD'),
+    #{param5},'', '대기중', #{param6}) 
+</insert>
+
+<!-- 고객센터 게시판 업데이트 리스트 -->
+	<select id="updatelist" resultType="com.human.springboot.contactDTO">
+		select a.help_seq,a.member_id,b.member_nickname, a.help_category, a.help_title, a.help_content, a.help_created, a.help_img, a.help_comment, a.help_password
+		from help a, member b
+		where a.help_seq=#{param1} and a.member_id=b.member_id
+	</select>
+	
+<!-- 고객센터 게시판 수정 -->
+ 	<update id="contactupdate">
+		update help
+		set help_category=#{param2}, help_title=#{param3}, help_content=#{param4}, help_img=#{param5}, help_password=#{param6}, help_complete='대기중'
+		where help_seq=#{param1}
+	</update>
+
+<!-- 고객센터 게시판 상세페이지 -->
+	<select id="contactdetail" resultType="com.human.springboot.contactDTO">
+		select a.help_seq,a.member_id,b.member_nickname, a.help_category, a.help_title, a.help_content, a.help_created, a.help_img, a.help_comment, a.help_password
+		from help a, member b
+		where a.help_seq=#{param1} and a.member_id=b.member_id
+	</select>
+	
+<!-- 게시물 공개/비공개 판별 -->
+	<select id="sortPost" resultType="Object">
+		select help_password from help where help_seq = #{param1}
+	</select>
+			
+<!-- 고객센터 게시판 비밀번호 입력 -->
+	<select id="pwdselect" resultType="String">
+		select help_password from help where help_seq=#{param1}
+	</select>
+
+		
+<!-- 고객센터 게시물 삭제	 -->
+	<delete id="contactdelete">
+		delete from help where help_seq=#{param1}
+	</delete>
+
+
 </mapper>

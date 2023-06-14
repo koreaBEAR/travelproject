@@ -16,8 +16,8 @@
     </span>
     <span id="head_line">
         <div class="dong">
-            <a href="/" id="head_login">LOGIN</a>
-            <a href="/join" id="head_login">SIGNIN</a>
+            <a href="/" id="head_mypage">LOGIN</a>
+            <a href="/join" id="head_mypage">SIGNIN</a>
         </div>
     </span>
 </div>
@@ -28,7 +28,7 @@
     </span>
     <div class="dong">
         <a id="head_mine">WELCOME, ${id}</a>
-        <a href="/logout" id="head_logout">LOGOUT</a>
+        <a href="/logout" id="head_mypage">LOGOUT</a>
         <a href="/manage_member" id="head_mypage">ADMINPAGE</a>
     </div>
 </div>
@@ -49,6 +49,6 @@
     </span>
 </div>
 <% } %>
-</br>
+
 </body>
 </html>

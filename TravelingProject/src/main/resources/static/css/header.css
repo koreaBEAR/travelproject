@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+/* 상단 헤더 */
+.Mainhead {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 115px;
+    z-index: 100;
+    background-color: #fff; /* Change to the color of your header background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.title_img {
+    margin-left: 20px;
+    margin-top: 7px;
+    height: 105px;
+    width: 330px;
+    /* object-fit: contain; */
+}
+
+
+/* 메인헤더 카테고리*/
+.dong {
+    padding: 20px 30px;
+    height: auto;
+    width: auto;
+    text-align: right;
+    background-color: rgb(201, 247, 255);
+    border-radius: 20px;
+}
+
+#head_line{
+    width: auto;
+    height: 60px;
+    float:right;
+    vertical-align: middle;
+    margin-top:13px;
+    padding-right: 5px;
+}
+
+#head_login{
+    text-decoration-line:none;
+    color:black;
+    font-size:13px;
+    padding: 15px 15px;
+}
+
+#head_mypage{
+    text-decoration-line:none;
+    color:black;
+    font-size:13px;
+    padding: 15px 15px;
+    font-size:medium
+}
+#head_login:hover{
+    color:rgb(255, 255, 255);
+    border-radius:10px 10px 10px 10px;
+    background-color:rgb(158, 227, 255);
+    padding:5px 15px;
+}
+
+#head_mypage:hover{
+    color:rgb(255, 255, 255);
+    border-radius:10px 10px 10px 10px;
+    background-color:rgb(158, 227, 255);
+    padding:5px 15px;
+}
+
+.login{
+    width: 15px;
+    height: 15px;
+    padding-top: 10px;
+}
+
+
+body{
+	font-family: 'SUITE', sans-serif;
+ 	font-size: large;
+	font-style: normal; 
+    margin-top: 86px;
+	background-color:#fff;
+}
+@media screen and (min-width:1000px){
+.img {
+  margin-left:auto;
+  margin-right:auto;
+  display: none;
+  width:100%;
+}
+.img.on {
+  display: block;
+}
+}

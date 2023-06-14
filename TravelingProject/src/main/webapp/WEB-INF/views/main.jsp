@@ -174,7 +174,7 @@ $(document)
                     str += '<div class="modal-body">';
                     str += '<img src="/img/' + data[i]['city_img'] + '" alt="City Image">';
                     str += '<i class="fa-regular fa-calendar-check fa-2xl" style="color: #050505;"></i>&nbsp;'+ data[i]['city_count'];
-                    str += '<p class= modalcontent>' + data[i]['city_content'] + '</p>';
+                    str += '<p class= "modalcontent">' + data[i]['city_content'] + '</p>';
                     str += '</div>';
                     str += '<div class="modal-footer center-button">';
                     str += '<button type="button" id="btnCreate" class="btn btn-primary">일정생성하기</button>';

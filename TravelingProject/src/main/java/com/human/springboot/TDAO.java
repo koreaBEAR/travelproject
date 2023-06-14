@@ -50,6 +50,29 @@ public interface TDAO {
 		ArrayList<LDTO> hsearch_paging(@Param("pageNo") int pageNo, @Param("amount") int amount, String type, String keyword);
 		int hsearch_TotalCount(String type, String keyword);
 		
+		
+////////////////////재민////////////////	
+		// 메인
+		ArrayList<cityDTO> cityasc(); 
+		ArrayList<cityDTO> citydesc();
+		ArrayList<cityDTO> citybest();
+		ArrayList<cityDTO> serachcity(String keyword);
+		ArrayList<cityDTO> getCityDetails(int city_num);
+		
+//		고객센터
+		ArrayList<contactDTO> contactlist(); //게시판 리스트
+		ArrayList<contactDTO> search(String type, String keyword);  //키워드 게시판 리스트
+		int contacttotal(); //게시판 글 count
+		void contactinsert(String member_id, String help_category, String help_title, String help_content, String help_img, String help_password); //게시판 글작성
+		contactDTO contactdetail(int help_seq); //게시판 상세보기
+		void contactdelete(int help_seq); // 게시글 삭제
+		String pwdselect(int help_seq); // 게시글 비밀번호 입력
+		contactDTO updatelist(int help_seq); //게시판 업데이트 리스트
+		void contactupdate(int help_seq, String help_category, String help_title, String help_content, String help_img, String help_password);
+		
+		
+	//  게시물 비공개/공개 판별
+		String sortPost(int post_seq);
 	}
 
 
