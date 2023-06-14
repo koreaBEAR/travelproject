@@ -238,7 +238,7 @@ public class Traval_controller {
 		model.addAttribute("id",session.getAttribute("id"));
 		return "changePw";
 	}
-	@GetMapping("/tourlist")
+	@GetMapping("/review")
 	public String reviewPage() {
 		return "reviews";
 	}
