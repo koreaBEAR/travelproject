@@ -31,6 +31,9 @@ public class Traval_controller {
 	@Autowired
 	private EmailService emailService; // EmailService 주입
 	
+	
+	//현빈/////////////////
+	//로그인 & 회원가입
 	@GetMapping("/")
 	public String doLogin() {
 		return "login";
@@ -128,6 +131,8 @@ public class Traval_controller {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	//아이디 비밀번호 찾기
 	@PostMapping("/findId")
 	@ResponseBody
 	public String findId(HttpServletRequest req) {
@@ -208,6 +213,8 @@ public class Traval_controller {
 		}
 		return val;
 	}
+	
+	//비밀번호 변경
 	@PostMapping("/changeMemberPw")
 	@ResponseBody
 	public String changeMemberPw(HttpServletRequest req) {
@@ -238,10 +245,14 @@ public class Traval_controller {
 		model.addAttribute("id",session.getAttribute("id"));
 		return "changePw";
 	}
-	@GetMapping("/tourlist")
+	
+	//리뷰 피드
+	@GetMapping("/review")
 	public String reviewPage() {
 		return "reviews";
 	}
+	//리뷰에 place보이기
+	
 	@PostMapping("/loadReview")
 	@ResponseBody
 	public String loadReviews(HttpServletRequest req) {
@@ -472,8 +483,7 @@ public class Traval_controller {
 	    try {
 	        for (MultipartFile image : images) {
 	            String originalFilename = image.getOriginalFilename();
-	  
-	            String filePath = "C:/Users/admin/eclipse-workspace/TravelingProject/src/main/resources/static/img/place/" + originalFilename; 
+	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename; 
 	            File dest = new File(filePath);
 	            image.transferTo(dest);
 	            System.out.println(dest);
@@ -484,7 +494,7 @@ public class Traval_controller {
 	        e.printStackTrace();
 	        for (MultipartFile image : images) {
 	            String originalFilename = image.getOriginalFilename();
-	            String filePath = "C:/Users/admin/eclipse-workspace/TravelingProject/src/main/resources/static/img/place/" + originalFilename; 
+	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename; 
 	            File file = new File(filePath);
 	            if (file.exists() && file.isFile()) {
 	                file.delete();

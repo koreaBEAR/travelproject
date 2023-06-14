@@ -42,7 +42,7 @@
     
 	<!-- 리뷰 -->
 	<select id="placeList" resultType="com.human.springboot.RevDTO">
-		select place_seq, place_img, place_name, place_address from place
+		select place_seq, place_img, place_name, place_address from place order by place_seq
 	</select>
 	
 	
