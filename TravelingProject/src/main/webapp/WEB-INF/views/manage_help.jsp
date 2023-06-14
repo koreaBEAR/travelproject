@@ -46,6 +46,7 @@ form {
 	align-items: center;
 	justify-content: center;
 	margin-bottom: 20px;
+	margin-top: 100px;
 }
 
 /* 셀렉트 박스 스타일 */
@@ -338,7 +339,7 @@ $(document)
     $('#help_content').text(help_content);
     let imageUrl = '';
     for (let i = 0; i < images.length; i++) {
-    	imageUrl += '<img src="/static/contact/' + images[i] + '" class="uploaded-image">';
+    	imageUrl += '<img src="/img/contact/' + images[i] + '" class="uploaded-image">';
     }
     $('#help_img').html(imageUrl);
     //$('#help_img').html('<img src="' + help_img + '" class="uploaded-image">');

@@ -50,10 +50,10 @@
 
 <body>
   <%@ include file="./header.jsp" %>
-  <img src="/static/error/error.jpg">
+  <img src="/error/error.jpg">
   <h2>
     <a href="/main">
-      <img src="/static/error/arrow.gif">
+      <img src="/error/arrow.gif">
       <span style="display: inline-block; vertical-align: middle;">Go to main</span>
     </a>
   </h2>

@@ -483,7 +483,6 @@ public class Traval_controller {
 	    try {
 	        for (MultipartFile image : images) {
 	            String originalFilename = image.getOriginalFilename();
-	  
 	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename; 
 	            File dest = new File(filePath);
 	            image.transferTo(dest);

@@ -11,6 +11,7 @@ public class LWebConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 				registry.addResourceHandler("/img/place/**") // Change the mapping pattern if needed
 	            .addResourceLocations("C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/");
+
 	}
 
 }
