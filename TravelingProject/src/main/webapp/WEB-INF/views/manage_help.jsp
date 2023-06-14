@@ -95,7 +95,7 @@ form {
 .pageIndex {
 	display: flex;
 	justify-content: center;
-	margin-top: 20px;
+	margin-top: 50px;
 }
 
 /* 링크 스타일 */
