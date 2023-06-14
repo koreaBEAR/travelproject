@@ -44,4 +44,177 @@
 	<select id="placeList" resultType="com.human.springboot.RevDTO">
 		select place_seq, place_img, place_name, place_address from place
 	</select>
+	
+	
+	<!--정아  -->
+	<!-- 회원관리 페이징해서 보여주기 & 삭제 -->
+	<select id="member_paging"  resultType="com.human.springboot.LDTO"> 
+<![CDATA[
+	select * 
+	from
+		(
+ 			select rownum as row_num, sub.*
+ 			from
+ 				(
+				select * from member 
+				order by member_seq 
+ 				) sub
+		)
+			where row_num between (#{pageNo}-1) * #{amount} +1 and #{pageNo}* #{amount}
+	]]>
+	</select>	
+	<select id="member_TotalCount" resultType="int">
+        select count (*) from member 
+	</select>
+	<delete id="member_delete">
+		delete from member where member_seq=#{param1}
+	</delete>	
+
+<!-- 회원관리 검색결과만 페이징 -->
+	<select id="msearch_paging" resultType="com.human.springboot.LDTO"> 
+	<![CDATA[
+		select * 
+		from
+			(
+  			select rownum as row_num, sub.*
+  			from
+  				(
+				select * from member 
+				where ${param3} like '%'||#{param4}||'%'
+				order by member_seq 
+  				) sub
+			)
+		where row_num between (#{pageNo}-1) * #{amount} +1 and #{pageNo}* #{amount}
+ 	]]>
+	</select>	
+	<select id="msearch_TotalCount" resultType="int">
+        select count (*) from member 
+        where ${param1} like '%'||#{param2}||'%'
+	</select>
+<!-- ************************************************************************************** -->	
+
+
+
+<!-- 업체관리 페이징해서 보여주기 & 삭제  -->	
+	<select id="place_paging"  resultType="com.human.springboot.LDTO"> 
+<![CDATA[
+	select * 
+	from
+		(
+ 			select rownum as row_num, sub.*
+ 			from
+ 				(
+				select a.place_seq, b.city_name, c.place_category_name, a.place_name, a.place_address, a.place_tel
+				from place a, city b, place_category c
+				where a.place_city = b.city_num
+				and a.place_category = c.place_category_num		
+				order by a.place_seq desc		
+ 				) sub
+		)
+			where row_num between (#{pageNo}-1) * #{amount} +1 and #{pageNo}* #{amount}
+	]]>
+	</select>	
+	<select id="place_TotalCount" resultType="int">
+        select count (*) from place
+	</select>
+	<delete id="place_delete">
+		delete from place where place_seq=#{param1}
+	</delete>
+
+<!-- 업체관리 검색결과만 페이징 -->
+	<select id="psearch_paging" resultType="com.human.springboot.LDTO"> 
+	<![CDATA[
+		select * 
+		from
+			(
+  			select rownum as row_num, sub.*
+  			from
+  				(
+				select a.place_seq, b.city_name, c.place_category_name, a.place_name, a.place_address, a.place_tel
+				from place a, city b, place_category c
+				where a.place_city = b.city_num
+				and a.place_category = c.place_category_num
+				and ${param3} like '%'||#{param4}||'%'		
+				order by a.place_seq desc					
+  				) sub
+			)
+		where row_num between (#{pageNo}-1) * #{amount} +1 and #{pageNo}* #{amount}
+ 	]]>
+	</select>	
+	<select id="psearch_TotalCount" resultType="int">
+        select count (a.place_seq) 
+        from place a, city b, place_category c
+		where a.place_city = b.city_num
+		and a.place_category = c.place_category_num
+        and ${param1} like '%'||#{param2}||'%'
+        order by a.place_seq 
+	</select>
+<!-- 업체등록 -->	
+	<insert id="place_insert">
+		insert into place(place_seq, place_date, place_city, place_category, place_name, place_address, place_tel, place_open, place_content, place_img) 
+		values(place_num.nextval,to_char(sysdate,'yyyy/mm/dd'), #{param1}, #{param2}, #{param3},#{param4},#{param5},#{param6},#{param7},#{param8})
+	</insert>	
+<!-- 업체보기 -->	
+	<select id="place_view" resultType="com.human.springboot.LDTO" >
+		select a.place_seq, b.city_name, c.place_category_name, a.place_name, a.place_address, a.place_tel, a.place_open, a.place_content, a.place_img ,b.city_num, c.place_category_num
+		from place a, city b, place_category c
+		where place_seq=#{param1}
+		and a.place_city = b.city_num
+		and a.place_category = c.place_category_num			
+	</select>
+<!-- 업체업데이트 -->
+	<update id="place_update">
+		update place set place_city=#{param1}, place_category=#{param2},place_name=#{param3}, place_address=#{param4}, place_tel=#{param5}, place_open=#{param6}, place_content=#{param7}, place_img=#{param8} where place_seq=#{param9}
+	</update>	
+<!-- ************************************************************************************** -->		
+
+
+
+<!-- 문의관리 페이징해서 보여주기 -->
+	<select id="help_paging"  resultType="com.human.springboot.LDTO"> 
+<![CDATA[
+	select * 
+	from
+		(
+ 			select rownum as row_num, sub.*
+ 			from
+ 				(
+				select * from help 
+				order by help_seq desc
+ 				) sub
+		)
+			where row_num between (#{pageNo}-1) * #{amount} +1 and #{pageNo}* #{amount}
+	]]>
+	</select>	
+	<select id="help_TotalCount" resultType="int">
+        select count (*) from help 
+	</select>
+	
+<!-- 문의관리 검색결과만 페이징 -->
+	<select id="hsearch_paging" resultType="com.human.springboot.LDTO"> 
+	<![CDATA[
+		select * 
+		from
+			(
+  			select rownum as row_num, sub.*
+  			from
+  				(
+				select * from help
+				where ${param3} like '%'||#{param4}||'%' 
+				order by help_seq desc			
+  				) sub
+			)
+		where row_num between (#{pageNo}-1) * #{amount} +1 and #{pageNo}* #{amount}
+ 	]]>
+	</select>	
+	<select id="hsearch_TotalCount" resultType="int">
+        select count (*) from help
+        where ${param1} like '%'||#{param2}||'%'
+	</select>
+
+<!-- 관리자 답변달기 -->
+	<update id="comment_insert">
+		update help set help_comment=#{param1}, help_complete=#{param2} where help_seq=#{param3}
+	</update>
+	
 </mapper>

@@ -1,6 +1,9 @@
 package com.human.springboot;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -272,4 +278,353 @@ public class Traval_controller {
 		return ja.toString();
 	}
 	
+	//정아
+	@GetMapping("/manage_member")
+	public String manage_member(@RequestParam(defaultValue = "1") int pageNo,
+			 					@RequestParam(defaultValue = "10") int amount, Model model) {
+		ArrayList<LDTO> member=ldao.member_paging(pageNo, amount);
+		model.addAttribute("memberList",member);
+		
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("amount", amount);
+		int totalCount = ldao.member_TotalCount();
+		model.addAttribute("totalCount", totalCount);
+		int endPage = (int) (Math.ceil((double) totalCount / amount));
+		model.addAttribute("endPage", endPage);
+		return "manage_member";	
+	}
+		
+	//회원삭제
+	@PostMapping("/member_delete")
+	@ResponseBody
+	public String memberDelete(HttpServletRequest req) {
+		int member_seq=Integer.parseInt(req.getParameter("member_seq"));
+		ldao.member_delete(member_seq);
+		return "manage_member";
+	}
+
+	//회원검색&페이징
+	   @GetMapping("/member/search")
+	   public String doSearch(@RequestParam(defaultValue = "1") int pageNo,
+			   				  @RequestParam(defaultValue = "10") int amount, 
+	                          Model model, HttpServletRequest req, HttpSession session) {
+
+	      String keyword = req.getParameter("keyword"); 
+	      String type = req.getParameter("type");
+
+
+	      if (keyword != null && type != null) {
+	         session.setAttribute("keyword", keyword);
+	         session.setAttribute("type", type);
+	      }
+	      else {
+	         keyword = (String) session.getAttribute("keyword");
+	         type = (String) session.getAttribute("type");
+	      }
+
+	      ArrayList<LDTO> member = new ArrayList<LDTO>();
+	      int totalCount = 0;	    
+	      if(!type.equals("")){
+	    	  member = ldao.msearch_paging(pageNo, amount, type, keyword);
+	    	  totalCount = ldao.msearch_TotalCount(type, keyword);    
+	      }
+	      
+	      if(totalCount ==0) {
+	    	  model.addAttribute("errorMessage","일치하는 검색 결과가 없습니다.");
+	    	  return "manage_member";
+	      }
+
+	      model.addAttribute("memberList",member);    
+	      model.addAttribute("pageNo", pageNo);
+	      model.addAttribute("amount", amount);
+	      model.addAttribute("totalCount", totalCount);
+	      int endPage = (int) (Math.ceil((double) totalCount / amount));
+	      model.addAttribute("endPage", endPage);    
+
+	      return "manage_member";
+	   }
+
+
+///////////////////////////////////////////////////////////////////////////////////////		   
+	//업체관리&페이징
+	@GetMapping("/manage_place")
+	public String manage_place(@RequestParam(defaultValue = "1") int pageNo,
+			 				   @RequestParam(defaultValue = "10") int amount, Model model) {
+		ArrayList<LDTO> place=ldao.place_paging(pageNo, amount);
+		model.addAttribute("placeList",place);
+		
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("amount", amount);
+		int totalCount = ldao.place_TotalCount();
+		model.addAttribute("totalCount", totalCount);
+		int endPage = (int) (Math.ceil((double) totalCount / amount));
+		model.addAttribute("endPage", endPage);
+		return "manage_place";	
+	}
+
+	
+	//업체검색&페이징
+   @GetMapping("/place/search")
+   public String placeSearch(@RequestParam(defaultValue = "1") int pageNo,
+                    	     @RequestParam(defaultValue = "10") int amount, 
+                             Model model, HttpServletRequest req, HttpSession session) {
+	  String keyword = req.getParameter("keyword"); 
+      String type = req.getParameter("type");
+
+
+      if (keyword != null && type != null) {
+         session.setAttribute("keyword", keyword);
+         session.setAttribute("type", type);
+      }
+      else {
+         keyword = (String) session.getAttribute("keyword");
+         type = (String) session.getAttribute("type");
+      }
+
+      ArrayList<LDTO> place = new ArrayList<LDTO>();
+      int totalCount = 0;	    
+      if(!type.equals("")){
+    	  place = ldao.psearch_paging(pageNo, amount, type, keyword);
+    	  totalCount = ldao.psearch_TotalCount(type, keyword);    
+      }
+      
+      if(totalCount ==0) {
+    	  model.addAttribute("errorMessage","일치하는 검색 결과가 없습니다.");
+    	  return "manage_place";
+      }
+
+      model.addAttribute("placeList",place);    
+      model.addAttribute("pageNo", pageNo);
+      model.addAttribute("amount", amount);
+      model.addAttribute("totalCount", totalCount);
+      int endPage = (int) (Math.ceil((double) totalCount / amount));
+      model.addAttribute("endPage", endPage);    
+
+      return "manage_place";
+   }
+	   
+	//업체삭제 1(일괄,개별)
+	@PostMapping("/place_delete")
+	@ResponseBody
+	public String place_delete(HttpServletRequest req) {
+	    String place_seq = req.getParameter("placeSeqs");
+	    System.out.println(place_seq);
+	    place_seq = place_seq.replaceFirst(",", "");
+	    place_seq = place_seq.replace("on,", "");
+	    String[] placeSeqArray = place_seq.split(",");
+	    System.out.println(Arrays.toString(placeSeqArray));
+	    
+	    for (String seq : placeSeqArray) {
+	        int placeSeq = Integer.parseInt(seq);
+	        ldao.place_delete(placeSeq);
+	        System.out.println(placeSeq);
+	    }
+	    
+	    return "manage_place";
+	}
+	//업체삭제 2(상세페이지에서)
+	@GetMapping("/delete_place/{place_seq}")
+	public String doDelete(@PathVariable("place_seq") int place_seq) {
+		ldao.place_delete(place_seq);
+		return "redirect:/manage_place";
+	}
+	
+
+	@GetMapping("/place_insert")
+	public String place_insert() {
+		return "place_insert";	
+	}
+	
+	//업체등록
+	@PostMapping("/place_upload")
+	@ResponseBody
+	public String place_insert(HttpServletRequest req) {
+	    int city = Integer.parseInt(req.getParameter("city"));
+	    int place = Integer.parseInt(req.getParameter("place"));
+	    String name = req.getParameter("name");
+	    String tel = req.getParameter("tel");
+	    String open = req.getParameter("open");
+	    String content = req.getParameter("content");
+	    String postcode = req.getParameter("postcode");
+	    String address = req.getParameter("address");
+	    String detailAddress = req.getParameter("detailAddress");
+	    
+	    String place_address = postcode + "," + address + "," + detailAddress;
+
+	    String[] fileNames = req.getParameterValues("imageNames[]");
+	    System.out.println(Arrays.toString(fileNames));
+	    
+	    String[] imageUrls;
+	    if (fileNames != null) {
+	        imageUrls = new String[fileNames.length];
+	        for (int i = 0; i < fileNames.length; i++) {
+	            imageUrls[i] = "/img/place/" + fileNames[i];
+	        }
+	    } else {
+	        imageUrls = new String[]{""};
+	    }
+	    String img = String.join(",", imageUrls);
+
+	    ldao.place_insert(city, place, name, place_address, tel, open, content, img);
+	    return "manage_place";
+	}
+
+	
+	//이미지 업로드
+	@PostMapping("/upload_image")
+	public String uploadImage(@RequestParam("images") MultipartFile[] images) {
+	    try {
+	        for (MultipartFile image : images) {
+	            String originalFilename = image.getOriginalFilename();
+	  
+	            String filePath = "C:/Users/admin/eclipse-workspace/Final_project/src/main/resources/static/place/" + originalFilename; 
+	            File dest = new File(filePath);
+	            image.transferTo(dest);
+	            System.out.println(dest);
+	        }
+	        return "manage_place"; 
+	    } catch (IOException e) {
+	    	
+	        e.printStackTrace();
+	        for (MultipartFile image : images) {
+	            String originalFilename = image.getOriginalFilename();
+	            String filePath = "C:/Users/admin/eclipse-workspace/Final_project/src/main/resources/static/place/" + originalFilename; 
+	            File file = new File(filePath);
+	            if (file.exists() && file.isFile()) {
+	                file.delete();
+	            }
+	        }
+
+	        return "redirect:/manage_place"; 
+	    }
+	}
+
+	
+	//업체상세보기	
+	@GetMapping("/place_view/{place_seq}")
+	public String place_view(@PathVariable("place_seq") int place_seq,Model model) {
+		model.addAttribute("p",ldao.place_view(place_seq));
+		return"place_view";
+	}
+	
+	@GetMapping("/place_update/{place_seq}")
+	public String place_update(@PathVariable("place_seq") int place_seq,Model model) {
+		model.addAttribute("p",ldao.place_view(place_seq));
+		return "place_update";	
+	}
+	
+	//업체수정
+	@PostMapping("/place_update")
+	@ResponseBody
+	public String place_update(HttpServletRequest req) {
+		int seq = Integer.parseInt(req.getParameter("place_seq"));
+		int city = Integer.parseInt(req.getParameter("city"));
+	    int place = Integer.parseInt(req.getParameter("place"));
+	    String name = req.getParameter("name");
+	    String tel = req.getParameter("tel");
+	    String open = req.getParameter("open");
+	    String content = req.getParameter("content");
+	    String postcode = req.getParameter("postcode");
+	    String address = req.getParameter("address");
+	    String detailAddress = req.getParameter("detailAddress");
+	    
+	    String place_address = postcode + "," + address + "," + detailAddress;
+
+	    String[] fileNames = req.getParameterValues("imageNames[]");
+	    System.out.println(Arrays.toString(fileNames));
+	    
+	    String[] imageUrls;
+	    if (fileNames != null) {
+	        imageUrls = new String[fileNames.length];
+	        for (int i = 0; i < fileNames.length; i++) {
+	            imageUrls[i] = "/img/place/" + fileNames[i];
+	        }
+	    } else {
+	        imageUrls = new String[]{""};
+	    }
+	    String img = String.join(",", imageUrls);
+
+	    ldao.place_update(city, place, name, place_address, tel, open, content, img, seq);
+	    return "manage_place";
+	}
+	
+	
+///////////////////////////////////////////////////////////////////////////////////////		
+	//문의관리&페이징
+	@GetMapping("/manage_help")
+	public String manage_help(@RequestParam(defaultValue = "1") int pageNo,
+			 				  @RequestParam(defaultValue = "10") int amount, Model model,HttpServletRequest req) {
+		ArrayList<LDTO> help=ldao.help_paging(pageNo, amount);
+		model.addAttribute("helpList",help);
+							
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("amount", amount);
+		int totalCount = ldao.help_TotalCount();
+		model.addAttribute("totalCount", totalCount);
+		int endPage = (int) (Math.ceil((double) totalCount / amount));
+		model.addAttribute("endPage", endPage);
+		return "manage_help";	
+	}
+	
+	 
+	//관리자 답변달기
+	@PostMapping("comment_insert")
+	@ResponseBody
+	public String doinsert(HttpServletRequest req) {
+		String check = "ok";
+		String comment=req.getParameter("comment");
+		String help_complete=req.getParameter("help_complete");
+		int help_seq = Integer.parseInt(req.getParameter("help_seq"));
+		//System.out.println(comment);
+		//System.out.println(help_seq);
+		ldao.comment_insert(comment,help_complete,help_seq);
+		return check;		
+	}
+	
+	
+	//문의검색&페이징
+	@GetMapping("/help/search")
+	   public String hSearch(@RequestParam(defaultValue = "1") int pageNo,
+			   				 @RequestParam(defaultValue = "10") int amount, 
+	                         Model model, HttpServletRequest req, HttpSession session) {
+	      String keyword = req.getParameter("keyword"); 
+	      String type = req.getParameter("type");
+
+
+	      if (keyword != null && type != null) {
+	         session.setAttribute("keyword", keyword);
+	         session.setAttribute("type", type);
+	      }
+	      else {
+	         keyword = (String) session.getAttribute("keyword");
+	         type = (String) session.getAttribute("type");
+	      }
+
+	      ArrayList<LDTO> help = new ArrayList<LDTO>();
+	      int totalCount = 0;	    
+	      if(!type.equals("")){
+	    	  help = ldao.hsearch_paging(pageNo, amount, type, keyword);
+	    	  totalCount = ldao.hsearch_TotalCount(type, keyword);    
+	      }
+	      
+	      if(totalCount ==0) {
+	    	  model.addAttribute("errorMessage","일치하는 검색 결과가 없습니다.");
+	    	  return "manage_member";
+	      }
+
+	      model.addAttribute("helpList",help);    
+	      model.addAttribute("pageNo", pageNo);
+	      model.addAttribute("amount", amount);
+	      model.addAttribute("totalCount", totalCount);
+	      int endPage = (int) (Math.ceil((double) totalCount / amount));
+	      model.addAttribute("endPage", endPage);    
+
+	      return "manage_help";
+	   }
+
+	
+	@GetMapping("/manage_error")
+	public String manage_error() {
+		return "manage_error";	
+	}	
 }

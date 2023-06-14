@@ -3,6 +3,7 @@ package com.human.springboot;
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface TDAO {
@@ -21,4 +22,34 @@ public interface TDAO {
 	
 	//리뷰
 	ArrayList <RevDTO> placeList();
-}
+	
+	
+	//정아////////////////
+	//회원관리
+		void member_delete(int member_seq);
+		ArrayList<LDTO> member_paging(@Param("pageNo") int pageNo, @Param("amount") int amount);
+		int member_TotalCount();
+		ArrayList<LDTO> msearch_paging(@Param("pageNo") int pageNo, @Param("amount") int amount, String type, String keyword);
+		int msearch_TotalCount(String type, String keyword);
+
+	//업체관리
+		LDTO place_view(int place_seq);
+		void place_delete(int place_seq);
+		void place_update(int city, int category, String name, String address, String tel, String open, String content, String img, int place_seq);
+		void place_insert(int city, int category, String name, String address, String tel, String open, String content, String img);
+		ArrayList<LDTO> place_paging(@Param("pageNo") int pageNo, @Param("amount") int amount);
+		int place_TotalCount();
+		ArrayList<LDTO> psearch_paging(@Param("pageNo") int pageNo, @Param("amount") int amount, String type, String keyword);
+		int psearch_TotalCount(String type, String keyword);
+
+		
+	//문의관리	
+		void comment_insert(String help_comment,String help_complete, int help_seq);
+		ArrayList<LDTO> help_paging(@Param("pageNo") int pageNo, @Param("amount") int amount);
+		int help_TotalCount();
+		ArrayList<LDTO> hsearch_paging(@Param("pageNo") int pageNo, @Param("amount") int amount, String type, String keyword);
+		int hsearch_TotalCount(String type, String keyword);
+		
+	}
+
+
