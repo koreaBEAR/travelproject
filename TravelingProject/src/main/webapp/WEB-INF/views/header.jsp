@@ -41,7 +41,7 @@
         <div class="dong">
             <a id="head_mine">WELCOME, ${id}님!</a>
             <a href="/contact" id="head_mypage">CONTACT</a>
-            <a href="/tourlist" id="head_mypage">TOURLIST</a>
+            <a href="/place" id="head_mypage">PLACE</a>
             <a href="/mypage" id="head_mypage">MYPAGE</a>
             <a href="/logout" id="head_mypage">LOGOUT</a>
             <input type="hidden" id="m_id" name="m_id" value="<%=session.getAttribute("id")%>">
