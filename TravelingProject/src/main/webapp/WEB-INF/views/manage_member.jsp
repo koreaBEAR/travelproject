@@ -11,8 +11,7 @@
 <title>Manage_member</title>
 </head>
 <style>
-body{
- margin-top : 10%}
+
 .nav {
 	display: flex;
 	position: fixed;
@@ -47,6 +46,7 @@ form {
 	align-items: center;
 	justify-content: center;
 	margin-bottom: 20px;
+	margin-top: 100px;
 }
 
 /* 셀렉트 박스 스타일 */
