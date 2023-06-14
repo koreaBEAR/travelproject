@@ -11,6 +11,8 @@
 <title>Manage_member</title>
 </head>
 <style>
+body{
+ margin-top : 10%}
 .nav {
 	display: flex;
 	position: fixed;
