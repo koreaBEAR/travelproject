@@ -17,8 +17,7 @@
 <style>
 .section {
 	margin-top: 30px;
-	padding: 20px;
-	
+	padding: 20px;	
 }
 
 table {

@@ -320,7 +320,7 @@ function showImages(fileNames) {
 
         var imageElement = $('<div>').addClass('image-wrapper');
         var img = $('<img>').attr('src', imageUrl).addClass('uploaded-image');
-        var deleteButton = $('<button>').text('Delete').addClass('delete-image').data('filename', fileName);
+        var deleteButton = $('<button>').text('X').addClass('delete-image').data('filename', fileName);
 
         imageElement.append(img);
         imageElement.append(deleteButton);
