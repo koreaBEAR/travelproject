@@ -282,12 +282,12 @@ public class Traval_controller {
 	@GetMapping("/manage_member")
 	public String manage_member(@RequestParam(defaultValue = "1") int pageNo,
 			 					@RequestParam(defaultValue = "10") int amount, Model model) {
-		ArrayList<LDTO> member=ldao.member_paging(pageNo, amount);
+		ArrayList<LDTO> member=tdao.member_paging(pageNo, amount);
 		model.addAttribute("memberList",member);
 		
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("amount", amount);
-		int totalCount = ldao.member_TotalCount();
+		int totalCount = tdao.member_TotalCount();
 		model.addAttribute("totalCount", totalCount);
 		int endPage = (int) (Math.ceil((double) totalCount / amount));
 		model.addAttribute("endPage", endPage);
@@ -299,7 +299,7 @@ public class Traval_controller {
 	@ResponseBody
 	public String memberDelete(HttpServletRequest req) {
 		int member_seq=Integer.parseInt(req.getParameter("member_seq"));
-		ldao.member_delete(member_seq);
+		tdao.member_delete(member_seq);
 		return "manage_member";
 	}
 
@@ -325,8 +325,8 @@ public class Traval_controller {
 	      ArrayList<LDTO> member = new ArrayList<LDTO>();
 	      int totalCount = 0;	    
 	      if(!type.equals("")){
-	    	  member = ldao.msearch_paging(pageNo, amount, type, keyword);
-	    	  totalCount = ldao.msearch_TotalCount(type, keyword);    
+	    	  member = tdao.msearch_paging(pageNo, amount, type, keyword);
+	    	  totalCount = tdao.msearch_TotalCount(type, keyword);    
 	      }
 	      
 	      if(totalCount ==0) {
@@ -350,12 +350,12 @@ public class Traval_controller {
 	@GetMapping("/manage_place")
 	public String manage_place(@RequestParam(defaultValue = "1") int pageNo,
 			 				   @RequestParam(defaultValue = "10") int amount, Model model) {
-		ArrayList<LDTO> place=ldao.place_paging(pageNo, amount);
+		ArrayList<LDTO> place=tdao.place_paging(pageNo, amount);
 		model.addAttribute("placeList",place);
 		
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("amount", amount);
-		int totalCount = ldao.place_TotalCount();
+		int totalCount = tdao.place_TotalCount();
 		model.addAttribute("totalCount", totalCount);
 		int endPage = (int) (Math.ceil((double) totalCount / amount));
 		model.addAttribute("endPage", endPage);
@@ -384,8 +384,8 @@ public class Traval_controller {
       ArrayList<LDTO> place = new ArrayList<LDTO>();
       int totalCount = 0;	    
       if(!type.equals("")){
-    	  place = ldao.psearch_paging(pageNo, amount, type, keyword);
-    	  totalCount = ldao.psearch_TotalCount(type, keyword);    
+    	  place = tdao.psearch_paging(pageNo, amount, type, keyword);
+    	  totalCount = tdao.psearch_TotalCount(type, keyword);    
       }
       
       if(totalCount ==0) {
@@ -416,7 +416,7 @@ public class Traval_controller {
 	    
 	    for (String seq : placeSeqArray) {
 	        int placeSeq = Integer.parseInt(seq);
-	        ldao.place_delete(placeSeq);
+	        tdao.place_delete(placeSeq);
 	        System.out.println(placeSeq);
 	    }
 	    
@@ -425,7 +425,7 @@ public class Traval_controller {
 	//업체삭제 2(상세페이지에서)
 	@GetMapping("/delete_place/{place_seq}")
 	public String doDelete(@PathVariable("place_seq") int place_seq) {
-		ldao.place_delete(place_seq);
+		tdao.place_delete(place_seq);
 		return "redirect:/manage_place";
 	}
 	
@@ -465,7 +465,7 @@ public class Traval_controller {
 	    }
 	    String img = String.join(",", imageUrls);
 
-	    ldao.place_insert(city, place, name, place_address, tel, open, content, img);
+	    tdao.place_insert(city, place, name, place_address, tel, open, content, img);
 	    return "manage_place";
 	}
 
@@ -503,13 +503,13 @@ public class Traval_controller {
 	//업체상세보기	
 	@GetMapping("/place_view/{place_seq}")
 	public String place_view(@PathVariable("place_seq") int place_seq,Model model) {
-		model.addAttribute("p",ldao.place_view(place_seq));
+		model.addAttribute("p",tdao.place_view(place_seq));
 		return"place_view";
 	}
 	
 	@GetMapping("/place_update/{place_seq}")
 	public String place_update(@PathVariable("place_seq") int place_seq,Model model) {
-		model.addAttribute("p",ldao.place_view(place_seq));
+		model.addAttribute("p",tdao.place_view(place_seq));
 		return "place_update";	
 	}
 	
@@ -544,7 +544,7 @@ public class Traval_controller {
 	    }
 	    String img = String.join(",", imageUrls);
 
-	    ldao.place_update(city, place, name, place_address, tel, open, content, img, seq);
+	    tdao.place_update(city, place, name, place_address, tel, open, content, img, seq);
 	    return "manage_place";
 	}
 	
@@ -554,12 +554,12 @@ public class Traval_controller {
 	@GetMapping("/manage_help")
 	public String manage_help(@RequestParam(defaultValue = "1") int pageNo,
 			 				  @RequestParam(defaultValue = "10") int amount, Model model,HttpServletRequest req) {
-		ArrayList<LDTO> help=ldao.help_paging(pageNo, amount);
+		ArrayList<LDTO> help=tdao.help_paging(pageNo, amount);
 		model.addAttribute("helpList",help);
 							
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("amount", amount);
-		int totalCount = ldao.help_TotalCount();
+		int totalCount = tdao.help_TotalCount();
 		model.addAttribute("totalCount", totalCount);
 		int endPage = (int) (Math.ceil((double) totalCount / amount));
 		model.addAttribute("endPage", endPage);
@@ -577,7 +577,7 @@ public class Traval_controller {
 		int help_seq = Integer.parseInt(req.getParameter("help_seq"));
 		//System.out.println(comment);
 		//System.out.println(help_seq);
-		ldao.comment_insert(comment,help_complete,help_seq);
+		tdao.comment_insert(comment,help_complete,help_seq);
 		return check;		
 	}
 	
@@ -603,8 +603,8 @@ public class Traval_controller {
 	      ArrayList<LDTO> help = new ArrayList<LDTO>();
 	      int totalCount = 0;	    
 	      if(!type.equals("")){
-	    	  help = ldao.hsearch_paging(pageNo, amount, type, keyword);
-	    	  totalCount = ldao.hsearch_TotalCount(type, keyword);    
+	    	  help = tdao.hsearch_paging(pageNo, amount, type, keyword);
+	    	  totalCount = tdao.hsearch_TotalCount(type, keyword);    
 	      }
 	      
 	      if(totalCount ==0) {
