@@ -273,7 +273,7 @@ function cityBest() {
     });
 }
 
-function SearchCity() {
+function SearchCity() {c
     var keyword = $('#keyword').val();
     $.ajax({
         url: '/searchcity',
