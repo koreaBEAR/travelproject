@@ -548,14 +548,14 @@ public class Traval_controller {
 	    if (fileNames != null) {
 	        imageUrls = new String[fileNames.length];
 	        for (int i = 0; i < fileNames.length; i++) {
-	            imageUrls[i] = "/img/place/" + fileNames[i];
+	            imageUrls[i] = "/img//place/" + fileNames[i];
 	        }
 	    } else {
 	        imageUrls = new String[]{""};
 	    }
 	    String img = String.join(",", imageUrls);
 
-	    tdao.place_update(city, place, name, place_address, tel, open, content, img,lat, lng,seq);
+	    tdao.place_update(city, place, name, place_address, tel, open, content, img, lat, lng, seq);
 	    return "manage_place";
 	}
 	
