@@ -245,7 +245,7 @@ where city_name like '%' || #{param1} || '%'
 	select a.help_seq, a.help_category, a.help_title, b.member_nickname, a.help_created, a.help_complete 
     from help a, member b
     where a.member_id = b.member_id
-    order by a.help_seq asc
+    order by a.help_seq desc
 </select>
 
 <select id="search" resultType="com.human.springboot.contactDTO">
