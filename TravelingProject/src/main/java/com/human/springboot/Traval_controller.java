@@ -552,7 +552,8 @@ public class Traval_controller {
 	            imageUrls[i] = "/img//place/" + fileNames[i];
 	        }
 	    } else {
-	        imageUrls = new String[]{""};
+	    	String originalImageUrls = tdao.place_view(seq).getPlace_img();
+	        imageUrls = originalImageUrls.split(",");
 	    }
 	    String img = String.join(",", imageUrls);
 
