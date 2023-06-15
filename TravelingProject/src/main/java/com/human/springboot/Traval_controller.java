@@ -455,7 +455,10 @@ public class Traval_controller {
 	    String postcode = req.getParameter("postcode");
 	    String address = req.getParameter("address");
 	    String detailAddress = req.getParameter("detailAddress");
-	    
+	    double lat = Double.parseDouble(req.getParameter("lat"));
+	    double lng = Double.parseDouble(req.getParameter("lng"));
+
+	    System.out.println(lat);
 	    String place_address = postcode + "," + address + "," + detailAddress;
 
 	    String[] fileNames = req.getParameterValues("imageNames[]");
@@ -472,7 +475,7 @@ public class Traval_controller {
 	    }
 	    String img = String.join(",", imageUrls);
 
-	    tdao.place_insert(city, place, name, place_address, tel, open, content, img);
+	    tdao.place_insert(city, place, name, place_address, tel, open, content, img,lat,lng);
 	    return "manage_place";
 	}
 
@@ -533,6 +536,8 @@ public class Traval_controller {
 	    String postcode = req.getParameter("postcode");
 	    String address = req.getParameter("address");
 	    String detailAddress = req.getParameter("detailAddress");
+	    double lat = Double.parseDouble(req.getParameter("lat"));
+	    double lng = Double.parseDouble(req.getParameter("lng"));
 	    
 	    String place_address = postcode + "," + address + "," + detailAddress;
 
@@ -550,7 +555,7 @@ public class Traval_controller {
 	    }
 	    String img = String.join(",", imageUrls);
 
-	    tdao.place_update(city, place, name, place_address, tel, open, content, img, seq);
+	    tdao.place_update(city, place, name, place_address, tel, open, content, img,lat, lng,seq);
 	    return "manage_place";
 	}
 	

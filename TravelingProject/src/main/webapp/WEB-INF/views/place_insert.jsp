@@ -144,7 +144,7 @@ input[type=button]:hover, input[type=submit]:hover {
       		<input type="text" name="address" id="address" placeholder="주소" autocomplete="off"><br>
       		<input type="text" name="detailAddress" id="detailAddress" placeholder="상세주소" autocomplete="off">
       		<input type="button" onclick="locationserch()" value="위치">
-      		<input type=text id=lat><input type=text id=lng><br></td>	
+      		<input type=text id=lat name=lat><input type=text id=lng name=lng><br></td>	
 	</tr>
 	<tr>		
 		<td>전화</td>
@@ -197,6 +197,8 @@ $(document)
             postcode: $('#postcode').val(),
             address: $('#address').val(),
             detailAddress: $('#detailAddress').val(),
+            lat: $('#lat').val(),
+            lng: $('#lng').val(),
             tel: $('#tel').val(),
             open: $('#open').val(),
             content: $('#content').val(),
