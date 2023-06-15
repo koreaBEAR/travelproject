@@ -96,7 +96,22 @@ textarea {
 	position: relative;
 }
 
-a {
-	color: inherit;
-	text-decoration: none;
+
+/* 카테고리 select */
+#mySelect {
+    width: 150px;               /* Width of the dropdown */
+    height: 40px;               /* Height of the dropdown */
+    padding: 10px;              /* Padding around the text */
+    font-size: 15px;            /* Size of the text */
+    border-radius: 5px;         /* Rounded corners */
+    border: 1px solid #ccc;     /* Gray border */
+    background-color: #f8f8f8;  /* Light gray background */
+}
+
+#mySelect option {
+    padding: 10px;              /* Padding around the text in options */
+}
+
+#mySelect:focus {
+    border-color: #4CAF50;      /* Green border when dropdown is focused */
 }

@@ -159,6 +159,36 @@ h1 {
     font-size: 18px; 
 }
 .fa-calendar-check {
-    margin-top: 25px;  /* Adjust this value as needed */
+    margin-top: 28px;  /* Adjust this value as needed */
 }
 
+/* 여행지 선택 스크롤 버튼 */
+.moveH1 {
+   text-align: center;
+}
+#btnChoice {
+	border-radius: 30px;
+    background-color: rgb(201, 247, 255); 
+    border: none;        
+    padding: 15px 32px;        /* Some padding */
+    text-align: center;        /* Centered text */
+    text-decoration: none;     /* No underline */
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;           /* Cursor changes to hand icon */
+    transition-duration: 0.4s; /* Animation to change color for smoothness */
+    font-size: 20px;
+}
+
+#btnChoice:hover {
+    background-color:rgb(158, 227, 255); /* Green background on hover */
+    color: white; 
+}
+
+/* 푸터 */
+.footer {
+	margin-left: 5%;
+ 	font-size: 15px;
+	
+}
