@@ -1,37 +1,37 @@
- .post-container {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 20px;
-  }
+.post-container {
+	display: flex;
+	align-items: flex-start;
+	margin-bottom: 20px;
+}
 
-  .post-photo {
-    flex: 1;
-    max-width: 200px;
-    margin-right: 20px;
-  }
+.post-photo {
+	flex: 1;
+	max-width: 200px;
+	margin-right: 20px;
+}
 
-  .post-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
+.post-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
 
-  .post-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
+.post-title {
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
 
-  .comment-container {
-    flex: 1;
-    border: 1px solid #ccc;
-    padding: 10px;
-    overflow-y: scroll;
-  }
+.comment-container {
+	flex: 1;
+	border: 1px solid #ccc;
+	padding: 10px;
+	overflow-y: scroll;
+}
 
-  .comment {
-    margin-bottom: 10px;
-  }
+.comment {
+	margin-bottom: 10px;
+}
   
 /*   업체 띄우기 */
 #placeList {		
@@ -78,5 +78,8 @@
 .divA:hover img{
 	transform:scale(1.5);
     transition: .4s;
+	cursor:pointer;
+}
+.viewDivFooter:hover{
 	cursor:pointer;
 }

@@ -118,13 +118,13 @@ input.img-button {
 				<p class="tit">
 					<a href="/contact">고객센터</a>
 				</p>
-				<span class="first">010-8483-5391</span> <span>평일 09:00 -
-					18:00</span> <span>점심 12:00 - 13:00</span> <span>토요일 · 일요일 · 공휴일 휴무</span>
+				<span class="first">010-7963-4246</span>&nbsp;<span>평일 09:00 -
+					18:00</span> <span>점심 12:30 - 14:00</span> <span>토요일 · 일요일 · 공휴일 휴무</span>
 			</div>
 
 			<div>
-				<span>(주)투어리스트 대표 : 조현빈 사업자등록번호 : 635-81-01124</span>
-				<p>이메일 : human123@human.com 메일로 문의를 남겨주세요.</p>
+				<span>(주)투어리스트 대표 : 조현빈 사업자등록번호 : 123-99-0619</span>
+				<p>이메일 : gusqls990215@gmail.com 메일로 문의를 남겨주세요.</p>
 				<p>주소 : 충청남도 천안시 동남구 대흥로 215 7층, 8층</p>
 				<span>투어리스트는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 투어리스트는 상품·거래정보 및
 					거래에 대하여 책임을 지지 않습니다.<span>
