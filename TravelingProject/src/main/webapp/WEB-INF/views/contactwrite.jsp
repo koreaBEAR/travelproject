@@ -19,7 +19,6 @@
 
 <form action="/contactinsert" method="post" enctype="multipart/form-data">                
 <table id=updatelist border=1>
-<!-- <h1>고객센터 문의글 작성</h1> -->
 	<tr><td>카테고리</td><td>
 	     <select id=mySelect>
 	      <option value="선택해주세요">선택해주세요</option>

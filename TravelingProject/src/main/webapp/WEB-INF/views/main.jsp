@@ -29,6 +29,10 @@ input.img-button {
     margin-right: -250px; /* Adjust this value to move the button further to the right */
 }
 
+ html { 
+  scroll-behavior: smooth; 
+}  
+
 </style>
 <body>
 <!-- 헤더 -->
@@ -73,7 +77,7 @@ input.img-button {
     </div>
 </section>
 </br>
-<div></br></br>
+<div id="target"></br></br>
     <h1>𝑾𝒉𝒆𝒓𝒆 𝒂𝒓𝒆 𝒚𝒐𝒖 𝒕𝒓𝒂𝒗𝒆𝒍𝒊𝒏𝒈 𝒕𝒐?</h1>
 </div>
 <!-- 검색창 -->
@@ -95,6 +99,8 @@ input.img-button {
 <!-- 관광명소 div -->
 <section class="tourlist" id="tourlist"></section>
 
+<div class="moveH1"><button type="button" id=btnChoice>여행지 선택화면으로 돌아가기</button></div>
+
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -104,24 +110,25 @@ input.img-button {
         </div>
     </div>
 </div>
-
-<hr>
     <!-- Footer section -->
+    <hr>
 	<footer>
-		<div>
-			<p class="tit">
-				<a href="/contact">고객센터</a>
-			</p>
-			<span class="first">010-8483-5391</span> <span>평일 09:00 -
-				18:00</span> <span>점심 12:00 - 13:00</span> <span>토요일 · 일요일 · 공휴일 휴무</span>
-		</div>
+		<div class="footer">
+			<div>
+				<p class="tit">
+					<a href="/contact">고객센터</a>
+				</p>
+				<span class="first">010-8483-5391</span> <span>평일 09:00 -
+					18:00</span> <span>점심 12:00 - 13:00</span> <span>토요일 · 일요일 · 공휴일 휴무</span>
+			</div>
 
-		<div>
-			<span>(주)투어리스트 대표 : 조현빈 사업자등록번호 : 635-81-01124</span>
-			<p>이메일 : human123@human.com 메일로 문의를 남겨주세요.</p>
-			<p>주소 : 충청남도 천안시 동남구 대흥로 215 7층, 8층</p>
-			<span>투어리스트는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 투어리스트는 상품·거래정보 및
-				거래에 대하여 책임을 지지 않습니다.<span>
+			<div>
+				<span>(주)투어리스트 대표 : 조현빈 사업자등록번호 : 635-81-01124</span>
+				<p>이메일 : human123@human.com 메일로 문의를 남겨주세요.</p>
+				<p>주소 : 충청남도 천안시 동남구 대흥로 215 7층, 8층</p>
+				<span>투어리스트는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 투어리스트는 상품·거래정보 및
+					거래에 대하여 책임을 지지 않습니다.<span>
+			</div>
 		</div>
 	</footer>
 </body>
@@ -193,7 +200,21 @@ $(document)
     $('#myModal').on('hidden.bs.modal', function() {
         $('#myModal .modal-content').empty();
     });
+    
+    
 });
+
+// 여행지 선택 이동 h1
+const $topBtn = document.querySelector(".moveH1");
+
+$topBtn.onclick = () => {
+const h1 = document.getElementById('target');
+h1.scrollIntoView({behavior: "smooth"});
+
+setTimeout(() => {
+ window.scrollBy(0, -100);  
+}, 500);  
+}
 
 function cityAsc() {
     $.ajax({
