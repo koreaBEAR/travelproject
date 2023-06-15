@@ -140,10 +140,10 @@ input[type=button]:hover, input[type=submit]:hover {
 	</tr>
 	<tr>		
 		<td>주소</td>
-		<td><input type="text" name="postcode" id="postcode" placeholder="우편번호" autocomplete="off">
+		<td><input type="text" name="postcode" id="postcode" placeholder="우편번호" autocomplete="off" value="${p.place_address.split(',')[0]}">
       		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-      		<input type="text" name="address" id="address" placeholder="주소" autocomplete="off"><br>
-      		<input type="text" name="detailAddress" id="detailAddress" placeholder="상세주소" autocomplete="off">
+      		<input type="text" name="address" id="address" placeholder="주소" autocomplete="off" value="${p.place_address.split(',')[1]}"><br>
+      		<input type="text" name="detailAddress" id="detailAddress" placeholder="상세주소" autocomplete="off" value="${p.place_address.split(',')[2]}">
       		<input type="button" onclick="locationserch()" value="위치">
       		<input type=text id=lat name=lat><input type=text id=lng name=lng><br></td>	
 	</tr>
