@@ -24,6 +24,13 @@
           <option value="descorder">내림차순</option>
         </select>
     </div>
+<!--     modal -->
+    <div id="placeModal" class="placeModal" style="display:none">
+    	<div class="modalDialog">
+    		<div class="modalContent">
+    		</div>
+    	</div>
+    </div>
 <!-- 관광명소 div -->
    <section class="placeList" id="placeList"></section>
     <div class=viewDivFooter>
@@ -32,5 +39,6 @@
     </body>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="http://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="js/reviews.js"></script>
 </html>

@@ -8,6 +8,17 @@ $(document)
 	$(this).css({'background-color':'#000','color':'#fff'})
 	loadReview(pageNum);
 })
+.on('click','.divA',function(){
+	$('#placeModal').dialog({
+		title:'',
+		modal:true,
+		width:800,
+		height:600,
+		resizeable:false,
+		show:'fadeIn',
+		hide:'fadeOut'
+	})
+})
 
 function loadReview(pageNum){
 	$.ajax({
