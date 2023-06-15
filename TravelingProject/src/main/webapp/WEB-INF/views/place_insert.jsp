@@ -328,8 +328,8 @@ function locationserch() {
 	  geocoder.addressSearch(location, function (result, status) {
 	    // 정상적으로 검색이 완료됐으면
 	    if (status === kakao.maps.services.Status.OK) {
-	      document.getElementById('lat이 들어갈 input의 id').value=result[0].y;
-	      document.getElementById('lng이 들어갈 input의 id').value=result[0].x;
+	      document.getElementById('lat').value=result[0].y;
+	      document.getElementById('lng').value=result[0].x;
 	    }
 	  });
 	}
