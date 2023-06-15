@@ -316,7 +316,7 @@ function showImages(fileNames) {
 
     for (var i = 0; i < fileNames.length; i++) {
         var fileName = fileNames[i];
-        var imageUrl = '/img/place/' + encodeURIComponent(fileName);
+        var imageUrl = '/img//place/' + encodeURIComponent(fileName);
 
         var imageElement = $('<div>').addClass('image-wrapper');
         var img = $('<img>').attr('src', imageUrl).addClass('uploaded-image');
