@@ -185,10 +185,3 @@ h1 {
     background-color:rgb(158, 227, 255); /* Green background on hover */
     color: white; 
 }
-
-/* 푸터 */
-.footer {
-	margin-left: 5%;
- 	font-size: 15px;
-	
-}
