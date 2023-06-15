@@ -151,8 +151,8 @@
 	</select>
 <!-- 업체등록 -->	
 	<insert id="place_insert">
-		insert into place(place_seq, place_date, place_city, place_category, place_name, place_address, place_tel, place_open, place_content, place_img) 
-		values(place_num.nextval,to_char(sysdate,'yyyy/mm/dd'), #{param1}, #{param2}, #{param3},#{param4},#{param5},#{param6},#{param7},#{param8})
+		insert into place(place_seq, place_date, place_city, place_category, place_name, place_address, place_tel, place_open, place_content, place_img, place_lat, place_lng) 
+		values(place_num.nextval,to_char(sysdate,'yyyy/mm/dd'), #{param1}, #{param2}, #{param3},#{param4},#{param5},#{param6},#{param7},#{param8},#{param9},#{param10})
 	</insert>	
 <!-- 업체보기 -->	
 	<select id="place_view" resultType="com.human.springboot.LDTO" >
@@ -164,7 +164,7 @@
 	</select>
 <!-- 업체업데이트 -->
 	<update id="place_update">
-		update place set place_city=#{param1}, place_category=#{param2},place_name=#{param3}, place_address=#{param4}, place_tel=#{param5}, place_open=#{param6}, place_content=#{param7}, place_img=#{param8} where place_seq=#{param9}
+		update place set place_city=#{param1}, place_category=#{param2},place_name=#{param3}, place_address=#{param4}, place_tel=#{param5}, place_open=#{param6}, place_content=#{param7}, place_img=#{param8}, place_lat=#{param9} , place_lng=#{param10} where place_seq=#{param11}
 	</update>	
 <!-- ************************************************************************************** -->		
 
@@ -245,7 +245,7 @@ where city_name like '%' || #{param1} || '%'
 	select a.help_seq, a.help_category, a.help_title, b.member_nickname, a.help_created, a.help_complete 
     from help a, member b
     where a.member_id = b.member_id
-    order by a.help_seq asc
+    order by a.help_seq desc
 </select>
 
 <select id="search" resultType="com.human.springboot.contactDTO">

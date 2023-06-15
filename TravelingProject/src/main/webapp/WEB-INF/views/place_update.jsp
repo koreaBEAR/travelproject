@@ -10,13 +10,14 @@
 <title>Place_update</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=83a5e10151ba0f12ecdb1a465d31b58e&libraries=services"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
 <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUITE/fonts/static/woff2/SUITE.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/static/css/header.css">
 </head>
 <style>
 .section {
-	margin-top: 30px;
+	margin-top: 150px;
 	padding: 20px;
 }
 
@@ -142,7 +143,9 @@ input[type=button]:hover, input[type=submit]:hover {
 		<td><input type="text" name="postcode" id="postcode" placeholder="우편번호" autocomplete="off" value="${p.place_address.split(',')[0]}">
       		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
       		<input type="text" name="address" id="address" placeholder="주소" autocomplete="off" value="${p.place_address.split(',')[1]}"><br>
-      		<input type="text" name="detailAddress" id="detailAddress" placeholder="상세주소" autocomplete="off" value="${p.place_address.split(',')[2]}"></td>	
+      		<input type="text" name="detailAddress" id="detailAddress" placeholder="상세주소" autocomplete="off" value="${p.place_address.split(',')[2]}">
+      		<input type="button" onclick="locationserch()" value="위치">
+      		<input type=text id=lat name=lat><input type=text id=lng name=lng><br></td>	
 	</tr>
 	<tr>		
 		<td>전화</td>
@@ -193,17 +196,19 @@ $(document)
         type: 'post',
         dataType: 'text',
         data: {
-            city: $('#city').val(),
-            place: $('#place').val(),
-            name: $('#name').val(),
-            postcode: $('#postcode').val(),
-            address: $('#address').val(),
-            detailAddress: $('#detailAddress').val(),
-            tel: $('#tel').val(),
-            open: $('#open').val(),
-            content: $('#content').val(),
-            imageNames: fileNames,
-            place_seq : $('#place_seq').val()
+        	 city: $('#city').val(),
+             place: $('#place').val(),
+             name: $('#name').val(),
+             postcode: $('#postcode').val(),
+             address: $('#address').val(),
+             detailAddress: $('#detailAddress').val(),
+             lat: $('#lat').val(),
+             lng: $('#lng').val(),
+             tel: $('#tel').val(),
+             open: $('#open').val(),
+             content: $('#content').val(),
+             imageNames: fileNames,
+             place_seq : $('#place_seq').val()
         },
         beforeSend: function() {
         	if ($('#city').val() === '지역') {
@@ -316,11 +321,11 @@ function showImages(fileNames) {
 
     for (var i = 0; i < fileNames.length; i++) {
         var fileName = fileNames[i];
-        var imageUrl = '/img/place/' + encodeURIComponent(fileName);
+        var imageUrl = '/img//place/' + encodeURIComponent(fileName);
 
         var imageElement = $('<div>').addClass('image-wrapper');
         var img = $('<img>').attr('src', imageUrl).addClass('uploaded-image');
-        var deleteButton = $('<button>').text('Delete').addClass('delete-image').data('filename', fileName);
+        var deleteButton = $('<button>').text('X').addClass('delete-image').data('filename', fileName);
 
         imageElement.append(img);
         imageElement.append(deleteButton);
@@ -329,6 +334,22 @@ function showImages(fileNames) {
 
     $('#imageNames').val(fileNames.join(','));
 }
+
+function locationserch() {
+	  let location = $("#address").val(); // 주소를 가져오는 input위치
+	  // 주소-좌표 변환 객체를 생성합니다
+	  console.log(location);
+	  let geocoder = new kakao.maps.services.Geocoder();
+
+	  // 주소로 좌표를 검색합니다
+	  geocoder.addressSearch(location, function (result, status) {
+	    // 정상적으로 검색이 완료됐으면
+	    if (status === kakao.maps.services.Status.OK) {
+	      document.getElementById('lat').value=result[0].y;
+	      document.getElementById('lng').value=result[0].x;
+	    }
+	  });
+	}
 
 
 </script>

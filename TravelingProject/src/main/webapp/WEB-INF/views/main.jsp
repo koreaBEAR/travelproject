@@ -205,7 +205,7 @@ $(document)
 });
 
 // 여행지 선택 이동 h1
-const $topBtn = document.querySelector(".moveH1");
+const $topBtn = document.querySelector("#btnChoice");
 
 $topBtn.onclick = () => {
 const h1 = document.getElementById('target');
@@ -273,7 +273,7 @@ function cityBest() {
     });
 }
 
-function SearchCity() {c
+function SearchCity() {
     var keyword = $('#keyword').val();
     $.ajax({
         url: '/searchcity',

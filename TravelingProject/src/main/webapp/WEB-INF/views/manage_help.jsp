@@ -95,7 +95,7 @@ form {
 .pageIndex {
 	display: flex;
 	justify-content: center;
-	margin-top: 20px;
+	margin-top: 50px;
 }
 
 /* 링크 스타일 */
@@ -287,19 +287,22 @@ a.index {
 		</c:forEach>
 	</table>
 
-	<div class="pageIndex"> <!--페이징 -->	
-		<a href="?pageNo=1&amount=${amount}" class="btn"><<</a>&nbsp
-		<c:if test="${pageNo > 1}">
-			<a href="?pageNo=${pageNo - 1}&amount=${amount}" class="btn"><</a>
-		</c:if>
-		<c:forEach var="i" begin="1" end="${endPage}">
-			<a href="?pageNo=${i}&amount=${amount}" class="btn ${pageNo == i ? 'bold' : ''}">${i}</a>
-		</c:forEach>
-		<c:if test="${pageNo < endPage}">
-			<a href="?pageNo=${pageNo + 1}&amount=${amount}" class="btn">></a>&nbsp
-	  	</c:if>
-		<a href="?pageNo=${endPage}&amount=${amount}" class="btn">>></a>
-	</div>	
+	<div class="pageIndex"> <!-- Paging -->
+	  <a href="?pageNo=1&amount=${amount}" class="btn"><<</a>&nbsp;
+	  <c:if test="${pageNo > 1}">
+	    <a href="?pageNo=${pageNo - 1}&amount=${amount}" class="btn"><</a>
+	  </c:if>
+	  <c:forEach var="i" begin="1" end="${endPage}">
+	    <c:if test="${i <= 10}">
+	      <a href="?pageNo=${i}&amount=${amount}" class="btn ${pageNo == i ? 'bold' : ''}">${i}</a>
+	    </c:if>
+	  </c:forEach>
+	  <c:if test="${pageNo < endPage}">
+	    <a href="?pageNo=${pageNo + 1}&amount=${amount}" class="btn">></a>&nbsp;
+	  </c:if>
+	  <a href="?pageNo=${endPage}&amount=${amount}" class="btn">>></a>
+	</div>
+
 </div>  
 
 <div id="helpDlg" style="display:none;">
