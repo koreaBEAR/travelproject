@@ -140,12 +140,12 @@ input[type=button]:hover, input[type=submit]:hover {
 	</tr>
 	<tr>		
 		<td>주소</td>
-		<td><input type="text" name="postcode" id="postcode" placeholder="우편번호" autocomplete="off" value="${p.place_address.split(',')[0]}">
+		<td><input type="text" name="postcode" id="postcode" placeholder="우편번호" autocomplete="off">
       		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-      		<input type="text" name="address" id="address" placeholder="주소" autocomplete="off" value="${p.place_address.split(',')[1]}"><br>
-      		<input type="text" name="detailAddress" id="detailAddress" placeholder="상세주소" autocomplete="off" value="${p.place_address.split(',')[2]}">
+      		<input type="text" name="address" id="address" placeholder="주소" autocomplete="off"><br>
+      		<input type="text" name="detailAddress" id="detailAddress" placeholder="상세주소" autocomplete="off">
       		<input type="button" onclick="locationserch()" value="위치">
-      		<input type=text id=lat name=lat><input type=text id=lng name=lng></td>	
+      		<input type=text id=lat name=lat><input type=text id=lng name=lng><br></td>	
 	</tr>
 	<tr>		
 		<td>전화</td>
@@ -196,19 +196,19 @@ $(document)
         type: 'post',
         dataType: 'text',
         data: {
-            city: $('#city').val(),
-            place: $('#place').val(),
-            name: $('#name').val(),
-            postcode: $('#postcode').val(),
-            address: $('#address').val(),
-            detailAddress: $('#detailAddress').val(),
-            lat: $('#lat').val(),
-            lng: $('#lng').val(),
-            tel: $('#tel').val(),
-            open: $('#open').val(),
-            content: $('#content').val(),
-            imageNames: fileNames,
-            place_seq : $('#place_seq').val()
+        	 city: $('#city').val(),
+             place: $('#place').val(),
+             name: $('#name').val(),
+             postcode: $('#postcode').val(),
+             address: $('#address').val(),
+             detailAddress: $('#detailAddress').val(),
+             lat: $('#lat').val(),
+             lng: $('#lng').val(),
+             tel: $('#tel').val(),
+             open: $('#open').val(),
+             content: $('#content').val(),
+             imageNames: fileNames,
+             place_seq : $('#place_seq').val()
         },
         beforeSend: function() {
         	if ($('#city').val() === '지역') {
@@ -334,6 +334,7 @@ function showImages(fileNames) {
 
     $('#imageNames').val(fileNames.join(','));
 }
+
 function locationserch() {
 	  let location = $("#address").val(); // 주소를 가져오는 input위치
 	  // 주소-좌표 변환 객체를 생성합니다

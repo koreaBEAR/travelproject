@@ -164,7 +164,7 @@
 	</select>
 <!-- 업체업데이트 -->
 	<update id="place_update">
-		update place set place_city=#{param1}, place_category=#{param2},place_name=#{param3}, place_address=#{param4}, place_tel=#{param5}, place_open=#{param6}, place_content=#{param7}, place_img=#{param8}, place_lat=#{param9} , place_lng=#{param10} where place_seq=#{param9}
+		update place set place_city=#{param1}, place_category=#{param2},place_name=#{param3}, place_address=#{param4}, place_tel=#{param5}, place_open=#{param6}, place_content=#{param7}, place_img=#{param8}, place_lat=#{param9} , place_lng=#{param10} where place_seq=#{param11}
 	</update>	
 <!-- ************************************************************************************** -->		
 
