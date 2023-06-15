@@ -247,7 +247,7 @@ public class Traval_controller {
 	}
 	
 	//리뷰 피드
-	@GetMapping("/review")
+	@GetMapping("/place")
 	public String reviewPage() {
 		return "reviews";
 	}
@@ -259,23 +259,21 @@ public class Traval_controller {
 		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
 		ArrayList <RevDTO> alPlace = tdao.placeList();
 		int howmanyPlace = alPlace.size();
-		int howmanyPages = (howmanyPlace/12)+1;
-		if (howmanyPlace%12==0) {howmanyPages = howmanyPages-1;}
+		int howmanyPages = (howmanyPlace/13)+1;
+		if (howmanyPlace%13==0) {howmanyPages = howmanyPages-1;}
 		JSONArray ja = new JSONArray();
-		int start = (pageNum - 1)*12;
-		int end = (pageNum * 12)-1;
+		int start = (pageNum - 1)*13;
+		int end = (pageNum * 13)-1;
 		try {
 			JSONObject jo = new JSONObject();
 			jo.put("howmany",howmanyPages);
 			ja.put(jo);
-			for(int i=start; i<=end; i++) {
+			for(int i=start; i<end; i++) {
 				if(i>=start && i<=end) {
 					jo = new JSONObject();
 					jo.put("placeId",alPlace.get(i).getPlace_seq());
 					jo.put("placeImg",alPlace.get(i).getPlace_img());
-					jo.put("placeName", alPlace.get(i).getPlace_name());
-					jo.put("placeAddress", alPlace.get(i).getPlace_address());
-					
+					jo.put("placeName", alPlace.get(i).getPlace_name());					
 					ja.put(jo);
 				}
 			}

@@ -24,13 +24,13 @@ function loadReview(pageNum){
 				pageStr = pageStr + '&nbsp;<span name=pageNum>'+i+'</span>&nbsp;'
 			}
 			$('.viewDivFooter').append(pageStr)
-			$('.divtbl').empty()
+			$('.placeList').empty()
 			for(i=1; i<data.length; i++){
-				let placeImg = '<img src="'+data[i]['placeImg']+'"class="placeImg" alt="'+data[i]['placeId']+'">'
-				let nameStr = "<p>"+data[i]['placeName']+"</p>"
-				let addressStr = "<p>"+data[i]['placeAddress']+"</p>"
-				let div = '<div class="divA"><div class="divImg">'+placeImg+'</div><div class="divB">'+nameStr+addressStr+'</div></div>'
-				$('.divtbl').append(div)
+				let placeImg = '<img src="'+data[i]['placeImg']+'"class="placeImg">'
+				let hiddenId = '<input type="hidden" id="placeNum" name="placeNum" value="'+data[i]['placeId']+'">'
+				let nameStr = "<p><span class=boldText>"+data[i]['placeName']+"</span></p>"
+				let div = '<div class="divA">'+hiddenId+'<div class="divImg">'+placeImg+'</div>'+nameStr+'</div>'
+				$('.placeList').append(div)
 			}
 		}})
 }
