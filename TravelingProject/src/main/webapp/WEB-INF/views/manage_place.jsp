@@ -198,8 +198,8 @@ a.index {
 	
 	<select id="displayCount" onchange="CountChange()">
 	<option value="10" selected="selected">10</option>
-	<option value="20">20</option>
-	<option value="30">30</option>
+	<option value="50">50</option>
+	<option value="100">100</option>
 	</select>	
 
 	<span id="errorMessage"></span>
