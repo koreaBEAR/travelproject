@@ -29,6 +29,8 @@ public class LDTO {
 	String place_date;
 	String place_open;
 	int place_like;
+	int place_lat;
+	int place_lng;
 	
 	
 	//city
