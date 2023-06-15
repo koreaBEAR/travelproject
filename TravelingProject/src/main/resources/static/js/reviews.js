@@ -26,7 +26,7 @@ function loadReview(pageNum){
 			$('.viewDivFooter').append(pageStr)
 			$('.placeList').empty()
 			for(i=1; i<data.length; i++){
-				let placeImg = '<img src="'+data[i]['placeImg']+'"class="placeImg">'
+				let placeImg = '<img src="'+data[i]['placeImg']+'" class="placeImg">'
 				let hiddenId = '<input type="hidden" id="placeNum" name="placeNum" value="'+data[i]['placeId']+'">'
 				let nameStr = "<p><span class=boldText>"+data[i]['placeName']+"</span></p>"
 				let div = '<div class="divA">'+hiddenId+'<div class="divImg">'+placeImg+'</div>'+nameStr+'</div>'
