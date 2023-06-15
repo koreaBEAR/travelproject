@@ -465,7 +465,7 @@ public class Traval_controller {
 	    if (fileNames != null) {
 	        imageUrls = new String[fileNames.length];
 	        for (int i = 0; i < fileNames.length; i++) {
-	            imageUrls[i] = "/img//place/" + fileNames[i];
+	            imageUrls[i] = "/img/place/" + fileNames[i];
 	        }
 	    } else {
 	        imageUrls = new String[]{""};
