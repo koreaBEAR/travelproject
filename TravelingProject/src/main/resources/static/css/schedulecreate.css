@@ -1,0 +1,588 @@
+@charset "UTF-8";
+@font-face {
+	font-family: cookie;
+	src: url('/font/CookieRun Regular.otf')
+}
+* {
+	font-family: cookie;
+	margin : 0;
+	padding: 0;
+}
+header {
+	position: absolute;
+	background-color: #fff;
+	width: 100vw;
+	height: 10vh;
+	top: 0;
+	z-index: 9999;
+}
+h1 {
+	text-align: center;
+}
+
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 20px;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	display: inline-block;
+	white-space: nowrap;
+	word-wrap: normal;
+	direction: ltr;
+}
+
+#map {
+	position: fixed;
+	width:100vw;
+	height:100vh;
+}
+
+#divScheduleCreate {
+	position: absolute;
+    width: 117px;
+    height: 37vh;
+    left: 250px;
+    top: 117px;
+    z-index: 1;
+}
+
+#scheduleCreate {
+	width: 100px;
+    height: 56px;
+    background-color: rgba(255, 255, 255, 1);
+    border: none;
+    border-radius: 4px;
+    backdrop-filter: blur(0px);
+    margin: 8px;
+	cursor: pointer;
+}
+
+#rightSideBar {
+	position: absolute;
+	background-color: #fff;
+	width: 250px;
+	height: 87.4vh;
+	right: 0;
+	bottom: 0;
+}
+#divSearch {
+	margin-top: 5px;
+}
+
+#leftSideBar {
+	position: absolute;
+	background-color: #fff;
+	width: 250px;
+	height: 87.4vh;
+	left: 0;
+	bottom: 0;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+}
+
+#searchInput {
+	height: 30px;
+	width: 199px;
+	font-size: 18px;
+}
+
+#search {
+	width: 30px;
+	height: 30px;
+	background: url(/img/돋보기.png);
+	border: none;
+	vertical-align: middle;
+	padding: 0;
+    margin-left: 6px;
+	margin-bottom: 4px;
+	cursor: pointer;
+}
+
+/* rightSidBar radioButton */
+.rightSelect input[type="radio"]{
+	display: none;
+	margin: 0;
+}
+
+.rightSelect input[type="radio"]+label {
+	display: inline-block;
+	border: none;
+	text-align: center;
+	font-weight: bold;
+	font-size: 0.8rem;
+	margin: 0;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+}
+
+.rightSelect input[type="radio"]:checked+label {
+	background-color: rgb(201, 247, 255);
+	color: #333;
+}
+
+.rightRadioCss {
+	display: flex;
+	justify-content: space-around;
+	padding: 8px 0;
+	align-items: center;
+}
+
+#lodgingImg {
+	width: 25px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+#sectionTitle {
+	text-align: center;
+	font-weight: bold;
+}
+
+.ulPlaceCard {
+	margin: 0;
+	padding: 0;
+}
+
+.placeImg {
+	height: 40px;
+}
+
+.cartImg {
+	width: 65px;
+	height: 40px;
+}
+
+.placeTitle {
+	width: 100%;
+	height: 40px;
+}
+
+.placeCard {
+	margin: 10px 8px;
+    display: flex;
+	box-shadow: rgba(120 ,121 ,135 , 0.3) 0 8px 32px 0;
+}
+
+.iconFlex {
+	display: flex;
+	justify-content: flex-end;
+	position: relative;
+}
+
+.info {
+	margin-right: 10px;
+	cursor: context-menu;
+	font-size: 20px !important;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.add {
+	cursor: context-menu;
+	font-size: 20px !important;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+#leftTop {
+	flex-direction: column;
+}
+
+#cityName {
+    width: 100%;
+    height: 50px;
+	font-size: 1.8rem;
+	display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#day {
+	width: 100%;
+    height: 40px;
+	font-size: 1.5rem;
+	display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#calender {
+	width: 100%;
+    height: 40px;
+	display: flex;
+}
+
+#selectList{
+	width: 100%;
+    height: 40px;
+	display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.leftSelect {
+	display: flex;
+	width: 100%;
+    height: 40px;
+}
+
+.leftSelect input[name="leftSelect"]{
+	display: none;
+	margin: 0;
+}
+
+.leftSelect input[name="leftSelect"]+label {
+	display: inline-block;
+	border: none;
+	text-align: center;
+	font-weight: bold;
+	font-size: 0.8rem;
+	margin: 0;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+}
+
+.leftSelect input[name="leftSelect"]:checked+label {
+	background-color: rgb(201, 247, 255);
+	color: #333;
+}
+
+.leftRadioCss {
+	display: flex;
+	justify-content: space-around;
+	padding: 8px 0;
+	align-items: center;
+}
+
+#scheduleTotalTime {
+	background-color: goldenrod;
+	width: 100%;
+    height: 40px;
+}
+
+#placeAllDelete {
+	background-color: #ff1744;
+	color: white;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+	border: none;
+	cursor: pointer;
+}
+
+#lodgingAddCart {
+	width: 100%;
+    height: 458px;
+}
+
+#scheduleTotalDay {
+	background-color: goldenrod;
+	width: 100%;
+    height: 40px;
+}
+
+#lodgingAllDelete {
+	background-color: #ff1744;
+	color: white;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+	border: none;
+	cursor: pointer;
+}
+
+#placeAddCart {
+	width: 100%;
+    height: 458px;
+}
+
+#divCalender {
+	display: flex;
+	padding: 8px;
+	align-items: center;
+	z-index: 10;
+}
+
+.calender {
+	width: 50%;
+	height: 2rem;
+	border: none;
+	text-align: center;
+	font-size: 1.0rem;
+	cursor: pointer;
+}
+
+#placeName {
+	display: flex;
+	margin: 0 0 0 5px;
+	font-size: 14px;
+}
+
+#scheduleDelete {
+	cursor: pointer;
+	color: #ff1744;
+	font-size: 20px !important;
+}
+/* 페이지네이션 관련 CSS */
+/* ---------------------------------------------- */
+.normal_menu_pagination {
+	text-align: center;
+	font-size: 15px;
+}
+
+.normal_menu_pagination ul {
+	display: inline-block;
+    padding: 0;
+    list-style-type: disc;
+	
+}
+
+.normal_menu_pagination ul li {
+	display: inherit;
+	padding: 0;
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+.page {
+	font-weight: 700;
+	cursor: pointer;
+}
+/* ---------------------------------------------- */
+
+
+/* 업체정보 modal 관련 CSS */
+/* ---------------------------------------------- */
+.modal {
+	display: none; /* 모달을 기본적으로 숨김 */
+	position: fixed; /* 위치를 고정 */
+	z-index: 1; /* 다른 요소들보다 위에 표시 */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto; /* 스크롤 가능하도록 */
+	background-color: rgba(0, 0, 0, 0.5); /* 배경에 약간의 투명도 */
+}
+#placeInfo_modal_content {
+	position: relative;
+    top: 35vh;
+    left: 23vw;
+    background-color: #fefefe;
+    width: 50%;
+    height: 40%;
+}
+
+.placeInfo_title{	
+	display: inline;
+	margin-left: 7px;
+}
+.placeInfo_content{
+	margin: 5px 7px 0 7px;
+    font-family: 'Prtendard-Regular';
+	font-size: 14px;
+}
+.close {
+	position: absolute;
+    border: none;
+    background-color: white;
+    float: right;
+    font-size: 20px;
+    font-weight: 900;
+    right: 8px;
+    z-index: 1;
+	cursor: pointer;
+}
+
+#placeInfoImg {
+	height: 353px;
+	width: 260px;
+}
+
+.placeInfo_modal_body {
+	position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.modalOpen {
+	font-size: 14px;
+	font-family: 'Pretendard-Regular';
+	margin-left: 7px;
+}
+
+.modalAddress {
+	font-size: 14px;
+	font-family: 'Pretendard-Regular';
+	margin-left: 7px;
+}
+
+.modalTel {
+	font-size: 14px;
+	font-family: 'Pretendard-Regular';
+	margin-left: 7px;
+}
+
+.modalTitle {
+	margin-top: 5px;
+	margin-left: 7px;
+	font-size: 14px;
+    font-weight: 900;
+}
+/* ---------------------------------------------- */
+
+/* 일정생성 후 상세페이지 modal 관련 CSS */
+/* ---------------------------------------------- */
+.scheduleModal {
+	display: none; /* 모달을 기본적으로 숨김 */
+	position: fixed; /* 위치를 고정 */
+	z-index: 101; /* 다른 요소들보다 위에 표시 */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto; /* 스크롤 가능하도록 */
+	background-color: rgba(0, 0, 0, 0.5); /* 배경에 약간의 투명도 */
+}
+
+#scheduleCreateModalContent {
+	position: relative;
+    top: 1.1vh;
+    left: 1.1vw;
+    background-color: #fefefe;
+    width: 98%;
+    height: 94%;
+}
+
+#scheduleMap {
+	position: fixed;
+	width:96.8vw;
+	height:94vh;
+}
+
+#dayListButtonArea {
+	position: relative;
+    width: 100%;
+    height: 40px;
+    top: 30px;
+    z-index: 2;
+	bottom: 0px;
+	background-color: #fafafa;
+	display: flex;
+	text-align: center;
+}
+.dayButton {
+	margin: 4px;
+    box-shadow: rgb(31 38 135 / 10%) 0px 8px 32px 0px;
+    cursor: pointer;
+    width: 50px;
+    height: 20px;
+}
+
+.divDayButton{
+	display: flex;
+	align-items: center;
+}
+
+#divScheduleModalClose {
+	position: absolute;
+	background-color: white;
+	right: 0;
+	width: 100%;
+	height: 29px;
+	z-index: 2;
+	border-bottom: solid 1px #bfb4b4;
+}
+#scheduleModalClose {
+	font-size: 29px;
+    color: #ff1744;
+    line-height: 1;
+}
+
+#divScheduleModalRightSidebar {
+	position: absolute;
+    background-color: #fff;
+    width: 250px;
+    height: 86.4vh;
+    right: 0;
+    bottom: 0;
+}
+
+#divScheduleModalLeftSidebar {
+	position: absolute;
+    background-color: #fff;
+    width: 250px;
+    height: 86.4vh;
+    left: 0;
+    bottom: 0;
+}
+
+.rightScheduleModalRadio input[name="rightScheduleModalRadio"]{
+	display: none;
+	margin: 0;
+}
+
+.rightScheduleModalRadio input[name="rightScheduleModalRadio"]+label {
+	display: inline-block;
+	border: none;
+	text-align: center;
+	font-weight: bold;
+	font-size: 0.8rem;
+	margin: 0;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+}
+
+.rightScheduleModalRadio input[name="rightScheduleModalRadio"]:checked+label {
+	background-color: rgb(201, 247, 255);
+	color: #333;
+}
+
+.rightScheduleModalRadioCss {
+	display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    align-items: center;
+    box-shadow: rgba(120 ,121 ,135 , 0.3) 0 8px 25px 0;
+}
+
+.leftScheduleModalRadio input[name="leftScheduleModalRadio"]{
+	display: none;
+	margin: 0;
+}
+
+.leftScheduleModalRadio input[name="leftScheduleModalRadio"]+label {
+	display: inline-block;
+	border: none;
+	text-align: center;
+	font-weight: bold;
+	font-size: 0.8rem;
+	margin: 0;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+}
+
+.leftScheduleModalRadio input[name="leftScheduleModalRadio"]:checked+label {
+	background-color: rgb(201, 247, 255);
+	color: #333;
+}
+
+.leftScheduleModalRadioCss {
+	display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    align-items: center;
+    box-shadow: rgba(120 ,121 ,135 , 0.3) 0 8px 25px 0;
+}
+.addScheduleByDate {
+	width: 100%;
+	height: 752px;
+}

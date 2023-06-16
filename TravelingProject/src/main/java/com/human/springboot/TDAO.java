@@ -74,6 +74,22 @@ public interface TDAO {
 		
 	//  게시물 비공개/공개 판별
 		String sortPost(int post_seq);
+		
+		
+////////////////////////현준//////////////////
+		int placeListCount(int city, String pSeq, String pCategory);
+		
+		ArrayList<ScheduleCreateDTO> mapCreate(int city);
+		
+		ArrayList<ScheduleCreateDTO> allPlaceList(int city,int currentP,String pCategory);
+		ArrayList<ScheduleCreateDTO> scheduleAddPlaceList(int city,int currentP,String pSeq, String pCategory);
+		ArrayList<ScheduleCreateDTO> search(String searchText, String bigCategoryString, String pSeq);
+		ArrayList<ScheduleCreateDTO> searchNull(String searchText, String bigCategoryString);
+		
+		ArrayList<ScheduleCreateDTO> placeInfo(int placeInfoId);
+		
+		ArrayList<ScheduleCreateDTO> markerScheduleCreate(String pSeq);
 	}
+
 
 
