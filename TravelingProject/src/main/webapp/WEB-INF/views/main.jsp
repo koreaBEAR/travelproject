@@ -50,7 +50,7 @@ input.img-button {
         <div class="carousel-inner">
             <%!
             String[] images = {"img1.jpg", "img3.jpg", "img4.jpg", "img6.jpg", "img8.jpg", "img10.jpg", "img11.jpg", "img12.jpg", "img13.jpg", "img14.jpg", "img2.jpg", "img5.jpg", "img7.jpg", "img9.jpg"};
-            String[] captions = {"𝑮𝑨𝑷𝒀𝑬𝑶𝑵𝑮", "𝑮𝒀𝑬𝑶𝑵𝑮𝑱𝑼", "𝑮𝑨𝑵𝑮𝑵𝑬𝑼𝑵𝑮", "𝐁𝐔𝐒𝐀𝐍", "𝐒𝐄𝐎𝐔𝐋", "𝐒𝐄𝐎𝐔𝐋", "𝒀𝑬𝑶𝑺𝑼", "𝑱𝑬𝑱𝑼", "𝑷𝑶𝑯𝑨𝑵𝑮", "𝑮𝑬𝑶𝑱𝑬𝑫𝑶", " 𝑮𝑨𝑵𝑮𝑵𝑬𝑼𝑵𝑮", "𝑮𝑀𝑬𝑶𝑵𝑮𝑱𝑼", "𝐁𝐔𝐒𝐀𝐍", "𝐒𝐄𝐎𝐔𝐋"};
+            String[] captions = {"𝑮𝑨𝑷𝒀𝑬𝑶𝑵𝑮", "𝑮𝒀𝑬𝑶𝑵𝑮𝑱𝑼", "𝑮𝑨𝑵𝑮𝑵𝑬𝑼𝑵𝑮", "𝐁𝐔𝐒𝐀𝐍", "𝐒𝐄𝐎𝐔𝐋", "𝐒𝐄𝐎𝐔𝐋", "𝒀𝑬𝑶𝑺𝑼", "𝑱𝑬𝑱𝑼", "𝑷𝑶𝑯𝑨𝑵𝑮", "𝑮𝑬𝑶𝑱𝑬𝑫𝑶", " 𝑮𝑨𝑵𝑮𝑵𝑬𝑼𝑵𝑮", "𝑮𝒀𝑬𝑶𝑵𝑮𝑱𝑼", "𝐁𝐔𝐒𝐀𝐍", "𝐒𝐄𝐎𝐔𝐋"};
             Random rand = new Random();
             %>
             <% for (int i = 0; i < images.length; i++) { %>
@@ -110,27 +110,8 @@ input.img-button {
         </div>
     </div>
 </div>
-    <!-- Footer section -->
-    <hr>
-	<footer>
-		<div class="footer">
-			<div>
-				<p class="tit">
-					<a href="/contact">고객센터</a>
-				</p>
-				<span class="first">010-8483-5391</span> <span>평일 09:00 -
-					18:00</span> <span>점심 12:00 - 13:00</span> <span>토요일 · 일요일 · 공휴일 휴무</span>
-			</div>
-
-			<div>
-				<span>(주)투어리스트 대표 : 조현빈 사업자등록번호 : 635-81-01124</span>
-				<p>이메일 : human123@human.com 메일로 문의를 남겨주세요.</p>
-				<p>주소 : 충청남도 천안시 동남구 대흥로 215 7층, 8층</p>
-				<span>투어리스트는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 투어리스트는 상품·거래정보 및
-					거래에 대하여 책임을 지지 않습니다.<span>
-			</div>
-		</div>
-	</footer>
+<!-- 푸터 -->
+<%@ include file="./footer.jsp" %>
 </body>
     <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>

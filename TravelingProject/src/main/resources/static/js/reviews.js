@@ -1,5 +1,7 @@
+var placeNum = ''
 $(document)
 .ready(function(){
+	$('.placeModal').css('display','none')
 	loadReview(1)
 })
 .on('click','span[name=pageNum]',function(){
@@ -7,6 +9,28 @@ $(document)
 	$('span[name=page]').css({'background-color':'#fff','color':'#000'})
 	$(this).css({'background-color':'#000','color':'#fff'})
 	loadReview(pageNum);
+})
+.on('click','.divA',function(){
+	placeNum = $('#aceNum').val()
+	$.ajax({
+		url:"/loadReviewOne",
+		type:"post",
+		data:{placeNum:placeNum},
+		dataType:"json",
+		success:function(data){
+			$('.divMain').empty()
+			for(i=1; i<data.length; i++){
+				let placeImg = '<img src="'+ data[i]['placeImg']+'"class="reivewImg">'
+				let placeName = '<p><span class="placeName">'+data[i]['placeName']+'</span></p>'
+				$('.placeImges').append(placeImg)
+				$('.placeName').append(placeName)
+			}
+		}
+	})
+	$('.placeModal').css('display','block')
+})
+.on('click','#closeBtn',function(){
+	$('.placeModal').css('display','none')
 })
 
 function loadReview(pageNum){
@@ -24,13 +48,13 @@ function loadReview(pageNum){
 				pageStr = pageStr + '&nbsp;<span name=pageNum>'+i+'</span>&nbsp;'
 			}
 			$('.viewDivFooter').append(pageStr)
-			$('.divtbl').empty()
+			$('.placeList').empty()
 			for(i=1; i<data.length; i++){
-				let placeImg = '<img src="'+data[i]['placeImg']+'"class="placeImg" alt="'+data[i]['placeId']+'">'
-				let nameStr = "<p>"+data[i]['placeName']+"</p>"
-				let addressStr = "<p>"+data[i]['placeAddress']+"</p>"
-				let div = '<div class="divA"><div class="divImg">'+placeImg+'</div><div class="divB">'+nameStr+addressStr+'</div></div>'
-				$('.divtbl').append(div)
+				let placeImg = '<img src="'+data[i]['placeImg']+'" class="placeImg">'
+				let hiddenId = '<input type="hidden" id="placeNum" name="placeNum" value="'+data[i]['placeId']+'">'
+				let nameStr = "<p><span class=boldText>"+data[i]['placeName']+"</span></p>"
+				let div = '<div class="divA">'+hiddenId+'<div class="divImg">'+placeImg+'</div>'+nameStr+'</div>'
+				$('.placeList').append(div)
 			}
 		}})
 }
