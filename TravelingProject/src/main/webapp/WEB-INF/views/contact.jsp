@@ -64,7 +64,8 @@
 			<button type="button" id=btnselect class="btn btn-primary">확인</button>
 		</div>
 	</div>
-           
+<!-- 푸터 -->
+<%@ include file="./footer.jsp" %>          
 </body>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="http://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>

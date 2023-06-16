@@ -283,9 +283,9 @@ public class Traval_controller {
 		return ja.toString();
 	}
 	
-	@PostMapping("/leadDetail")
+	@PostMapping("/loadReviewOne")
 	@ResponseBody
-	public String loadDetail(HttpServletRequest req) {
+	public String loadReviewOne(HttpServletRequest req) {
 		
 	}
 	

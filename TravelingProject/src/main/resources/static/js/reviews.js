@@ -13,7 +13,7 @@ $(document)
 .on('click','.divA',function(){
 	placeNum = $('#aceNum').val()
 	$.ajax({
-		url:"/loadDetail",
+		url:"/loadReviewOne",
 		type:"post",
 		data:{placeNum:placeNum},
 		dataType:"json",

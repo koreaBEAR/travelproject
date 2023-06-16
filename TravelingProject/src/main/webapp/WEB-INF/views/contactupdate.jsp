@@ -78,8 +78,8 @@ $(document).ready(function() {
             $('#help_password').prop('placeholder', '비밀번호를 입력하세요');
         }
     });
-
-    // Submission Button Event
+	
+    // Submission Button Event 
     $('#btnRegi').click(function(e){
         e.preventDefault();
         
@@ -121,7 +121,7 @@ $(document).ready(function() {
             alert('비밀번호 여부를 체크해주세요.');
             return false;
         }
-		
+        
         let formData = new FormData($('form')[0]);        
 
         // AJAX Form Submission
@@ -141,7 +141,7 @@ $(document).ready(function() {
                 }
             }
         });
-    });
+    }); 
 });
 
 </script>
