@@ -83,8 +83,8 @@ public interface TDAO {
 		
 		ArrayList<ScheduleCreateDTO> allPlaceList(int city,int currentP,String pCategory);
 		ArrayList<ScheduleCreateDTO> scheduleAddPlaceList(int city,int currentP,String pSeq, String pCategory);
-		ArrayList<ScheduleCreateDTO> search(String searchText, String bigCategoryString, String pSeq);
-		ArrayList<ScheduleCreateDTO> searchNull(String searchText, String bigCategoryString);
+		ArrayList<ScheduleCreateDTO> placeSearch(String searchText, String bigCategoryString, String pSeq);
+		ArrayList<ScheduleCreateDTO> placeSearchNull(String searchText, String bigCategoryString);
 		
 		ArrayList<ScheduleCreateDTO> placeInfo(int placeInfoId);
 		
