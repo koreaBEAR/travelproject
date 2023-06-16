@@ -283,10 +283,10 @@ public class Traval_controller {
 		return ja.toString();
 	}
 	
-	@PostMapping("/loadReviewOne")
+	@PostMapping("/loadReviewOne/{placeNum}")
 	@ResponseBody
-	public String loadReviewOne(HttpServletRequest req) {
-		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
+	public String loadReviewOne(@PathVariable("placeNum") int placeNum) {
+		System.out.println("placeNum: "+placeNum);
 		ArrayList <RevDTO> alReviews = tdao.placeReviews(placeNum);
 		int n = tdao.reviewsCheck(placeNum);
 		JSONArray ja = new JSONArray();
@@ -300,6 +300,7 @@ public class Traval_controller {
 					jo.put("placeTel",alReviews.get(i).getPlace_name());
 					jo.put("placeAddress",alReviews.get(i).getPlace_name());
 					jo.put("placeLike", alReviews.get(i).getPlace_like());
+					jo.put("reviewSeq", null);
 					ja.put(jo);
 				}
 			}else {
