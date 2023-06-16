@@ -50,7 +50,7 @@
 		        a.member_nickname, a.review_seq, a.review_content, a.review_date
 	        from travel_rev a, place b
 	        where a.place_seq = #{param1}
-	        and a.place_seq = b.place_seq;
+	        and a.place_seq = b.place_seq
 	</select>
 	<select id="reviewsCheck" resultType="Integer">
 		select count(*)

@@ -4,12 +4,7 @@
 	<div class="mainContainer">
 		<span id="closeBtn">&times;</span>
 		<div class="divMain">
-			<div class="divLeft">
-				<div class="leftContainer">
-					<div class="placeImges">Top</div>
-					<div class="placeName">Bottom</div>
-				</div>
-			</div>
+			
 			<div class="divRight">
 				<div class="rightContainer">
 					<div class="placeContent">Upper</div>
