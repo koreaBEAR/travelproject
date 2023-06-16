@@ -286,7 +286,41 @@ public class Traval_controller {
 	@PostMapping("/loadReviewOne")
 	@ResponseBody
 	public String loadReviewOne(HttpServletRequest req) {
-		
+		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
+		ArrayList <RevDTO> alReviews = tdao.placeReviews(placeNum);
+		int n = tdao.reviewsCheck(placeNum);
+		JSONArray ja = new JSONArray();
+		try {
+			JSONObject jo = new JSONObject();
+			if(n==0) {
+				for(int i = 0; i<alReviews.size(); i++) {					
+					jo.put("placeImg",alReviews.get(i).getPlace_img());
+					jo.put("placeName",alReviews.get(i).getPlace_name());
+					jo.put("placeContent",alReviews.get(i).getPlace_name());
+					jo.put("placeTel",alReviews.get(i).getPlace_name());
+					jo.put("placeAddress",alReviews.get(i).getPlace_name());
+					jo.put("placeLike", alReviews.get(i).getPlace_like());
+					ja.put(jo);
+				}
+			}else {
+				for(int i = 0; i<alReviews.size(); i++) {
+					jo.put("placeImg",alReviews.get(i).getPlace_img());
+					jo.put("placeName",alReviews.get(i).getPlace_name());
+					jo.put("placeContent",alReviews.get(i).getPlace_name());
+					jo.put("placeTel",alReviews.get(i).getPlace_name());
+					jo.put("placeAddress",alReviews.get(i).getPlace_name());
+					jo.put("placeLike", alReviews.get(i).getPlace_like());
+					jo.put("reviewSeq", alReviews.get(i).getReview_seq());
+					jo.put("memberNickName", alReviews.get(i).getMember_nickname());
+					jo.put("reviewContent", alReviews.get(i).getReview_content());
+					jo.put("reviewDate", alReviews.get(i).getReview_date());
+					ja.put(jo);
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return ja.toString();
 	}
 	
 	//정아

@@ -22,7 +22,7 @@ public interface TDAO {
 	
 	//리뷰
 	ArrayList <RevDTO> placeList();
-	ArrayList <RevDTO> placeReviews();
+	ArrayList <RevDTO> placeReviews(int placeSeq);
 	int reviewsCheck(int placeSeq);
 	
 	//정아////////////////

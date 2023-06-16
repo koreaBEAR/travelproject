@@ -21,6 +21,6 @@ public class RevDTO {
 	//travel_rev
 	int review_seq;
 	String member_nickname;
-	String riview_content;
+	String review_content;
 	String review_date;
 }
