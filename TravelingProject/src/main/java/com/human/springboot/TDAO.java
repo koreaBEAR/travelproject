@@ -22,7 +22,8 @@ public interface TDAO {
 	
 	//리뷰
 	ArrayList <RevDTO> placeList();
-	
+	ArrayList <RevDTO> placeReviews();
+	int reviewsCheck(int placeSeq);
 	
 	//정아////////////////
 	//회원관리

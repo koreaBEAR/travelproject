@@ -1,5 +1,7 @@
+var placeNum = ''
 $(document)
 .ready(function(){
+	$('.placeModal').css('display','none')
 	loadReview(1)
 })
 .on('click','span[name=pageNum]',function(){
@@ -9,15 +11,26 @@ $(document)
 	loadReview(pageNum);
 })
 .on('click','.divA',function(){
-	$('#placeModal').dialog({
-		title:'',
-		modal:true,
-		width:800,
-		height:600,
-		resizeable:false,
-		show:'fadeIn',
-		hide:'fadeOut'
+	placeNum = $('#aceNum').val()
+	$.ajax({
+		url:"/loadDetail",
+		type:"post",
+		data:{placeNum:placeNum},
+		dataType:"json",
+		success:function(data){
+			$('.divMain').empty()
+			for(i=1; i<data.length; i++){
+				let placeImg = '<img src="'+ data[i]['placeImg']+'"class="reivewImg">'
+				let placeName = '<p><span class="placeName">'+data[i]['placeName']+'</span></p>'
+				$('.placeImges').append(placeImg)
+				$('.placeName').append(placeName)
+			}
+		}
 	})
+	$('.placeModal').css('display','block')
+})
+.on('click','#closeBtn',function(){
+	$('.placeModal').css('display','none')
 })
 
 function loadReview(pageNum){

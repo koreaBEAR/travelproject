@@ -283,6 +283,12 @@ public class Traval_controller {
 		return ja.toString();
 	}
 	
+	@PostMapping("/leadDetail")
+	@ResponseBody
+	public String loadDetail(HttpServletRequest req) {
+		
+	}
+	
 	//정아
 	@GetMapping("/manage_member")
 	public String manage_member(@RequestParam(defaultValue = "1") int pageNo,

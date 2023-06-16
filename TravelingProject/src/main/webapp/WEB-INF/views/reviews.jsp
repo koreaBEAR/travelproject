@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>place</title>
-<link href="css/main.css" media="screen and (min-width:512px)" rel="stylesheet" >
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/css/review.css">
 </head>
@@ -25,12 +24,7 @@
         </select>
     </div>
 <!--     modal -->
-    <div id="placeModal" class="placeModal" style="display:none">
-    	<div class="modalDialog">
-    		<div class="modalContent">
-    		</div>
-    	</div>
-    </div>
+<%@ include file="./placeModal.jsp" %>
 <!-- 관광명소 div -->
    <section class="placeList" id="placeList"></section>
     <div class=viewDivFooter>
@@ -39,6 +33,5 @@
     </body>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="http://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="js/reviews.js"></script>
 </html>
