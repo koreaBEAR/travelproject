@@ -493,12 +493,19 @@ public class Traval_controller {
 	    String postcode = req.getParameter("postcode");
 	    String address = req.getParameter("address");
 	    String detailAddress = req.getParameter("detailAddress");
-	    double lat = Double.parseDouble(req.getParameter("lat"));
-	    double lng = Double.parseDouble(req.getParameter("lng"));
+	    int like = Integer.parseInt(req.getParameter("like"));
+//	    double lat = Double.parseDouble(req.getParameter("lat"));
+//	    double lng = Double.parseDouble(req.getParameter("lng"));
+	    String latParam = req.getParameter("lat");
+	    String lngParam = req.getParameter("lng");
+	    Double lat = latParam != null && !latParam.isEmpty() ? Double.parseDouble(latParam) : 0.0;
+	    Double lng = lngParam != null && !lngParam.isEmpty() ? Double.parseDouble(lngParam) : 0.0;
 
-	    System.out.println(lat);
+
+	    
 	    String place_address = postcode + "," + address + "," + detailAddress;
 
+	    	    
 	    String[] fileNames = req.getParameterValues("imageNames[]");
 	    System.out.println(Arrays.toString(fileNames));
 	    
@@ -513,7 +520,7 @@ public class Traval_controller {
 	    }
 	    String img = String.join(",", imageUrls);
 
-	    tdao.place_insert(city, place, name, place_address, tel, open, content, img,lat,lng);
+	    tdao.place_insert(city, place, name, place_address, tel, open, content, img, lat, lng, like);
 	    return "manage_place";
 	}
 

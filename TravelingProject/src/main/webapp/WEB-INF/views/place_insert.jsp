@@ -182,6 +182,7 @@ input[type=button]:hover, input[type=submit]:hover {
 
 <script>
 let fileNames = [];
+let like = 0;
 $(document)
 .on('click', '#btnUpload', function() {
 	let imageNames = fileNames;
@@ -202,7 +203,8 @@ $(document)
             tel: $('#tel').val(),
             open: $('#open').val(),
             content: $('#content').val(),
-            imageNames: fileNames
+            imageNames: fileNames,
+            like : like
         },
         beforeSend: function() {
         	 if ($('#city').val() === '지역') {
