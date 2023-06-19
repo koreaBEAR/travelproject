@@ -24,6 +24,8 @@
   img {
     display: block;
     margin: 50px auto;
+    max-width: 100%;
+    max-height: 100%;
   }
 
   h2 {
@@ -50,7 +52,7 @@
 
 <body>
   <%@ include file="./header.jsp" %>
-  <img src="/error/error.jpg">
+  <img src="/error/error.png">
   <h2>
     <a href="/main">
       <img src="/error/arrow.gif">
