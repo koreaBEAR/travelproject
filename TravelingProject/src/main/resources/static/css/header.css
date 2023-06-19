@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+@font-face {
+    font-family: 'KCC-Ganpan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-Ganpan.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* 상단 헤더 */
 .Mainhead {
     display: flex; 
@@ -27,6 +34,10 @@
 
 /* 메인헤더 카테고리*/
 .dong {
+ 	font-family: 'KCC-Ganpan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-Ganpan.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
     padding: 20px 30px;
     height: auto;
     width: auto;
@@ -44,19 +55,19 @@
     padding-right: 5px;
 }
 
-#head_login{
+/* #head_login{
     text-decoration-line:none;
     color:black;
     font-size:13px;
     padding: 15px 15px;
-}
+} */
 
 #head_mypage{
     text-decoration-line:none;
-    color:black;
+    color: black;
     font-size:13px;
     padding: 15px 15px;
-    font-size:medium
+    font-size:medium;
 }
 #head_login:hover{
     color:rgb(255, 255, 255);
