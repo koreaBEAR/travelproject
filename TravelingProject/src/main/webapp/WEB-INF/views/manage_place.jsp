@@ -185,7 +185,7 @@ a.index {
 	<div class="section">
 	<form method="get" action="/place/search">
 		<select name=type id="searchForm" >
-			<option value="b.city_name|| c.place_category_name|| a.place_name|| a.place_address|| a.place_tel">전체</option>
+			<option value="a.place_seq||b.city_name|| c.place_category_name|| a.place_name|| a.place_address|| a.place_tel">전체</option>
 			<option value="b.city_name">지역</option>
 			<option value="c.place_category_name">분류</option>
 			<option value="a.place_name">업체명</option>
