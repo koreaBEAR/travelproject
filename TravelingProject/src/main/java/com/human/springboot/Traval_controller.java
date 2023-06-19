@@ -283,40 +283,41 @@ public class Traval_controller {
 		return ja.toString();
 	}
 	
-	@PostMapping("/loadReviewOne/{placeNum}")
+	@PostMapping("/loadReviewOne")
 	@ResponseBody
-	public String loadReviewOne(@PathVariable("placeNum") int placeNum) {
-		System.out.println("placeNum: "+placeNum);
-		ArrayList <RevDTO> alReviews = tdao.placeReviews(placeNum);
+	public String loadReviewOne(HttpServletRequest req) {
+		String dataValue="";
+		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
 		int n = tdao.reviewsCheck(placeNum);
+		try {
+			if(n==0) {
+				dataValue = "zero";
+			}else if(n>=1) {
+				dataValue = "overOne";
+			}else {
+				dataValue = "error";
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dataValue;
+	}
+	@PostMapping("/loadPlaceInfo")
+	@ResponseBody
+	public String loadPlaceInfo(HttpServletRequest req) {
+		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
+		ArrayList <RevDTO> alPlace = tdao.reviewPlace(placeNum);
 		JSONArray ja = new JSONArray();
 		try {
 			JSONObject jo = new JSONObject();
-			if(n==0) {
-				for(int i = 0; i<alReviews.size(); i++) {					
-					jo.put("placeImg",alReviews.get(i).getPlace_img());
-					jo.put("placeName",alReviews.get(i).getPlace_name());
-					jo.put("placeContent",alReviews.get(i).getPlace_name());
-					jo.put("placeTel",alReviews.get(i).getPlace_name());
-					jo.put("placeAddress",alReviews.get(i).getPlace_name());
-					jo.put("placeLike", alReviews.get(i).getPlace_like());
-					jo.put("reviewSeq", null);
-					ja.put(jo);
-				}
-			}else {
-				for(int i = 0; i<alReviews.size(); i++) {
-					jo.put("placeImg",alReviews.get(i).getPlace_img());
-					jo.put("placeName",alReviews.get(i).getPlace_name());
-					jo.put("placeContent",alReviews.get(i).getPlace_name());
-					jo.put("placeTel",alReviews.get(i).getPlace_name());
-					jo.put("placeAddress",alReviews.get(i).getPlace_name());
-					jo.put("placeLike", alReviews.get(i).getPlace_like());
-					jo.put("reviewSeq", alReviews.get(i).getReview_seq());
-					jo.put("memberNickName", alReviews.get(i).getMember_nickname());
-					jo.put("reviewContent", alReviews.get(i).getReview_content());
-					jo.put("reviewDate", alReviews.get(i).getReview_date());
-					ja.put(jo);
-				}
+			for(int i=0; i<alPlace.size(); i++) {				
+				jo.put("placeImg", alPlace.get(i).getPlace_img());
+				jo.put("placeName", alPlace.get(i).getPlace_name());
+				jo.put("placeContent", alPlace.get(i).getPlace_content());
+				jo.put("placeTel", alPlace.get(i).getPlace_tel());
+				jo.put("placeAddress", alPlace.get(i).getPlace_address());
+				jo.put("placeLike", alPlace.get(i).getPlace_like());
+				ja.put(jo);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

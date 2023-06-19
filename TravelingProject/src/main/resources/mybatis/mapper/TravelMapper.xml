@@ -42,7 +42,7 @@
     
 	<!-- 리뷰 -->
 	<select id="placeList" resultType="com.human.springboot.RevDTO">
-		select place_seq, place_img, place_name, place_address from place order by place_seq
+		select place_seq, place_img, place_name from place order by place_seq
 	</select>
 	<select id="placeReviews" resultType="com.human.springboot.RevDTO">
 		select a.place_seq, b.place_img, b.place_name, b.place_address,
@@ -52,10 +52,16 @@
 	        where a.place_seq = #{param1}
 	        and a.place_seq = b.place_seq
 	</select>
+	<select id="reviewPlace" resultType="com.human.springboot.RevDTO">
+		select place_seq, place_img, place_name, place_address, place_like, place_tel, place_content
+			from place
+			where place_seq = #{param1}
+	</select> 
 	<select id="reviewsCheck" resultType="Integer">
 		select count(*)
-			from travel_rev
-			where place_seq=#{param1}
+	        from travel_rev a, place b
+	        where a.place_seq = #{param1}
+	        and a.place_seq = b.place_seq
 	</select>
 	
 	<!--정아  -->

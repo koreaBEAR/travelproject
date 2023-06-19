@@ -6,18 +6,37 @@ $(document)
 		let placeNum = $(this).find('#placeNum').val()
 		console.log("placeNum: "+placeNum)
 		$.ajax({
-			url:"/loadReviewOne/"+placeNum,
+			url:"/loadReviewOne",
 			type:"post",
-			data:{},
-			dataType:"json",
+			data:{placeNum:placeNum},
+			dataType:"text",
 			success:function(data){
-				for(i=1; i<data.length; i++){
-					let placeImg = '<img src="'+ data[i]['placeImg']+'"class="reivewImg">'
-					let placeName = '<p><span class="placeName">'+data[i]['placeName']+'</span></p>'
-					let placeContnet = '<p><span class="placeContent">'+data[i]['placeContent']+'</span></p>'
-					let placeTel = '<p><span class="placeTel>'+data[i]['placeTel']+'</span></p>'
-					let placeAddress = '<p><span class="placeAddress">'+data[i]['placeAddress']+'</span></p>'
-					let divLeft = '<div class="divLeft"><div class="leftContainer"><div class="placeImges">'+placeImg+'</div><div class="placeName">'+placeName+'</div></div></div>'
+				console.log(data)
+				if(data=="zero"){
+					$.ajax({
+						url:"/loadPlaceInfo",
+						type:"post",
+						data:{placeNum:placeNum},
+						dataType:"json",
+						success:function(data){
+							let divLeft = ''
+							let divRight = ''
+							$('.divMain').empty()
+							for(i=0; i<data.length; i++){
+								let placeImg = '<img src="'+ data[i]['placeImg']+'"class="reivewImg">'
+								let placeName = '<p><span class="placeName">'+data[i]['placeName']+'</span></p>'
+								let placeContnet = '<p><span class="placeContent">'+data[i]['placeContent']+'</span></p>'
+								let placeTel = '<p><span class="placeTel>'+data[i]['placeTel']+'</span></p>'
+								let placeAddress = '<p><span class="placeAddress">'+data[i]['placeAddress']+'</span></p>'
+								let placeLike = '<p><span class="placeLike">'+data[i]['placeLike']+'</span></p>'
+								divLeft = '<div class="divLeft"><div class="leftContainer"><div class="placeImges">'+placeImg+'</div><div class="placeName">'+placeName+'</div></div></div>'
+								divRight = '<div class="divRight"><div class="rightContainer"><div class="placeContent">'+placeContnet+placeTel+placeAddress+'</div><div class="placeIcon">'+placeLike+'</div><div class="placeReviews">reviews</div></div></div>'
+							}
+								console.log("divLeft: "+divLeft)
+								console.log("divRight: "+divRight)
+								$('.divMain').append(divLeft,divRight)
+						}
+					})
 				}
 			}
 		})
@@ -33,11 +52,6 @@ $(document)
 .on('click','#closeBtn',function(){
 	$('.placeModal').css('display','none')
 })
-//.on('click','.divA',function(){
-//	$('.placeModal').css('display','block')
-//	let placeNum = $(this).find('#placeNum').val()
-//	console.log("placeNum: "+placeNum)
-//})
 
 function loadReview(pageNum){
 	$.ajax({
