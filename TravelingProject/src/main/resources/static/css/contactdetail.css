@@ -79,9 +79,9 @@ h1 {
 }
 
 .boardBtn {	
-	background-color: #007BFF;
-	color: white;
-	border: none;
+	background-color: #F3732F;
+	color: #fff;
+	border: 0.5px solid #F3732F;
 	padding: 10px 20px;
 	text-align: center;
 	text-decoration: none;
@@ -94,6 +94,7 @@ h1 {
 }
 
 .boardBtn:hover {
-	background-color: white;
-	color: #007BFF;
+	border: 0.5px solid #F3732F;
+	color: #F3732F;
+	background-color: #fff;
 }

@@ -22,7 +22,7 @@
 }
 .TourList a {
 text-decoration: none; /* Remove underline */
-color: #77c6fc;
+color: #F8B48F;
 }
 
 </style>

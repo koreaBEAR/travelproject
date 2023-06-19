@@ -42,22 +42,22 @@ textarea {
 }
 
 #updatelist td button {
-	background-color: #a3a1a1;
-	color: #e3dede;
+    background-color: #F3732F;
+    color: #fff;
 	position: relative;
-	border: none;
+	border: 0.5px solid #F3732F;
 	display: inline-block;
 	padding: 15px 30px;
 	border-radius: 15px;
-	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 	text-decoration: none;
 	font-weight: 600;
 	transition: 0.25s;
 }
 
 #updatelist td button:hover {
-	color: #1e6b7b;
-	background: aliceblue;;
+	border: 0.5px solid #F3732F;
+	color: #F3732F;
+	background-color: #fff;
 }
 
 #updatelist tr:nth-child(even) {

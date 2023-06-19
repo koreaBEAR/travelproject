@@ -29,14 +29,14 @@ h1 {
 }
 
 .table01 tr:hover td {
-    background-color: hsl(171, 23%, 94%);
+    background-color: rgba(253, 227, 213, 0.8);
 }
 
 .table01 th {
 	font-size: 20px;
 	padding: 17px;
 	text-align: left;
-	background-color: #6cbff7;
+	background-color: #F3732F;
 	color: #fff;
 }
 
@@ -55,16 +55,18 @@ h1 {
 #btnwrite {
 	margin-top :10px;
 	padding: 10px 30px;
-	background-color: #3498db;
+	background-color: #F3732F;
 	color: #fff;
-	border: none;
+	border: 0.5px solid #F3732F;
 	border-radius: 10px;
 	cursor: pointer;
 	font-size: 15px;
 }
 
 #btnwrite:hover {
-	background-color: #2980b9;
+	border: 0.5px solid #F3732F;
+	color: #F3732F;
+	background-color: #fff;
 }
  
 /*  페이지네이션 */
@@ -120,14 +122,16 @@ h1 {
 #btnsearch {
 	margin-top :10px;
 	padding: 10px 20px;
-	background-color: #3498db;
+	background-color: #F3732F;
 	color: #fff;
-	border: none;
+	border: 0.5px solid #F3732F;
 	border-radius: 10px;
 	cursor: pointer;
 }
 #btnsearch:hover {
-	background-color: #2980b9;
+	border: 0.5px solid #F3732F;
+	color: #F3732F;
+	background-color: #fff;
 }
 
 /* 비번입력 dialog */
@@ -158,9 +162,9 @@ h2{
     display: block;
     width: 30%;
     padding: 5px;
-    border: none;
+	border: 0.5px solid #F3732F;
     border-radius: 10px;
-    background-color: #007bff;
+    background-color: #F3732F;
     color: #fff;
     font-size: 18px;
     text-align: center;
@@ -169,7 +173,9 @@ h2{
 }
 
 #typeDlg .btn:hover {
-    background-color: #0056b3;
+	border: 0.5px solid #F3732F;
+	color: #F3732F;
+	background-color: #fff;
 }
 
 #typeDlg .btn:active {
