@@ -31,7 +31,7 @@ input.img-button {
 
  html { 
   scroll-behavior: smooth; 
-}  
+} 
 
 </style>
 <body>
