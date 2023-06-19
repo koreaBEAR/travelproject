@@ -136,6 +136,7 @@
 }
 .placeContent{
 	flex:3;
+	height:auto;
 }
 .placeIcon{
 	flex:1;

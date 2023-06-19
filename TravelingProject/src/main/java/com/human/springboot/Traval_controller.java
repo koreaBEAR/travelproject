@@ -341,7 +341,7 @@ public class Traval_controller {
 				jo.put("placeLike", alPlace.get(i).getPlace_like());
 				jo.put("reviewNickName",alPlace.get(i).getMember_nickname());
 				jo.put("reviewContent",alPlace.get(i).getReview_content());
-				jo.put("reviewContent",alPlace.get(i).getReview_date());
+				jo.put("reviewDate",alPlace.get(i).getReview_date());
 				ja.put(jo);
 			}
 		}catch(Exception e) {
