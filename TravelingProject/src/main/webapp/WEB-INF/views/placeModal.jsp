@@ -4,14 +4,6 @@
 	<div class="mainContainer">
 		<span id="closeBtn">&times;</span>
 		<div class="divMain">
-			
-			<div class="divRight">
-				<div class="rightContainer">
-					<div class="placeContent">Upper</div>
-					<div class="placeIcon">Middle</div>
-					<div class="placeReviews">Lower</div>
-				</div>
-			</div>
 		</div>
     </div>
 </div>

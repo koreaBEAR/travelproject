@@ -147,15 +147,7 @@
 	width:calc(100%-30px);
 	height:100%;
 }
-.placeImges{
-	background:blue;
-}
-.placeName{
-	background:green;
-}
-.placeContent{
-	background:yellow;
-}
-.placeReviews{
-	background:pink;
+.reivewImg{
+	width:100%;
+	height:500px;		
 }
