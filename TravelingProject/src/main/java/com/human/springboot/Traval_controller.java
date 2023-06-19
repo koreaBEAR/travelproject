@@ -495,12 +495,19 @@ public class Traval_controller {
 	    String postcode = req.getParameter("postcode");
 	    String address = req.getParameter("address");
 	    String detailAddress = req.getParameter("detailAddress");
-	    double lat = Double.parseDouble(req.getParameter("lat"));
-	    double lng = Double.parseDouble(req.getParameter("lng"));
+	    int like = Integer.parseInt(req.getParameter("like"));
+//	    double lat = Double.parseDouble(req.getParameter("lat"));
+//	    double lng = Double.parseDouble(req.getParameter("lng"));
+	    String latParam = req.getParameter("lat");
+	    String lngParam = req.getParameter("lng");
+	    Double lat = latParam != null && !latParam.isEmpty() ? Double.parseDouble(latParam) : 0.0;
+	    Double lng = lngParam != null && !lngParam.isEmpty() ? Double.parseDouble(lngParam) : 0.0;
 
-	    System.out.println(lat);
+
+	    
 	    String place_address = postcode + "," + address + "," + detailAddress;
 
+	    	    
 	    String[] fileNames = req.getParameterValues("imageNames[]");
 	    System.out.println(Arrays.toString(fileNames));
 	    
@@ -515,7 +522,7 @@ public class Traval_controller {
 	    }
 	    String img = String.join(",", imageUrls);
 
-	    tdao.place_insert(city, place, name, place_address, tel, open, content, img,lat,lng);
+	    tdao.place_insert(city, place, name, place_address, tel, open, content, img, lat, lng, like);
 	    return "manage_place";
 	}
 
@@ -1051,6 +1058,176 @@ public class Traval_controller {
 		tdao.contactdelete(help_seq);
 
 		return "contact";
+	}
+	
+	
+	
+///////////////현준///////////////////////
+	@GetMapping("/schedulecreate")
+	public String Admin() {
+		return "scheduleCreate";
+	}
+
+	// 맵을 그리는 컨트롤러
+	@PostMapping("/mapCreate")
+	@ResponseBody
+	public String mapCreate(HttpServletRequest req) {
+		int city = Integer.parseInt(req.getParameter("city"));
+
+		ArrayList<ScheduleCreateDTO> mc = new ArrayList<ScheduleCreateDTO>();
+
+		mc = tdao.mapCreate(city);
+
+		JSONArray ja = new JSONArray();
+		for ( int i = 0; i < mc.size(); i++ ) {
+			JSONObject jo = new JSONObject();
+
+			jo.put("lat",mc.get(i).city_lat);
+			jo.put("lng",mc.get(i).city_lng);
+
+			ja.put(jo);
+		}
+		return ja.toString();
+	}
+	
+	//업체를 불러오는 컨트롤러
+	@PostMapping("/placeList")
+	@ResponseBody
+	public String placeList(HttpServletRequest req) {
+		int city = Integer.parseInt(req.getParameter("city"));
+		int currentP = Integer.parseInt(req.getParameter("currentP"));
+		String pSeq = req.getParameter("pSeq");
+		String pCategory = req.getParameter("pCategory");
+
+		ArrayList<ScheduleCreateDTO> pl = new ArrayList<ScheduleCreateDTO>();
+
+		if ( pCategory.equals("1") ) {
+			pCategory = "5,6";
+		}
+		else if ( pCategory.equals("2") ){
+			pCategory = "1,2,3,4";
+		}
+		
+		if (pSeq == "") {
+			pl = tdao.allPlaceList(city,currentP,pCategory);
+		}
+		else {
+			pl = tdao.scheduleAddPlaceList(city,currentP,pSeq,pCategory);
+		}
+
+		JSONArray ja = new JSONArray();
+
+		for ( int i = 0; i < pl.size(); i++ ) {
+
+			JSONObject jo = new JSONObject();
+			
+			jo.put("seq",pl.get(i).place_seq);
+			jo.put("name",pl.get(i).place_name);
+			jo.put("img",pl.get(i).place_img);
+
+			ja.put(jo);
+		}
+		return ja.toString();
+	}
+
+	//마커를 그리기 위한 컨트롤러
+	@PostMapping("/markerScheduleCreate")
+	@ResponseBody
+	public String markerScheduleCreate(HttpServletRequest req) {
+		String pSeq = req.getParameter("pSeq");
+
+		ArrayList<ScheduleCreateDTO> msc = new ArrayList<ScheduleCreateDTO>();
+		
+		msc = tdao.markerScheduleCreate(pSeq);
+		
+		JSONArray ja = new JSONArray();
+		for ( int i = 0; i < msc.size(); i++ ) {
+			JSONObject jo = new JSONObject();
+			
+			jo.put("seq", msc.get(i).place_seq);
+			jo.put("lat",msc.get(i).place_lat);
+			jo.put("lng",msc.get(i).place_lng);
+			
+			ja.put(jo);
+		}
+		return ja.toString();
+	}
+
+	//업체 개수를 체크하는 컨트롤러
+	@PostMapping("/placeListCount")
+	@ResponseBody
+	public String placeListCount(HttpServletRequest req) {
+		int city = Integer.parseInt(req.getParameter("city"));
+		String pSeq = req.getParameter("pSeq");
+		String pCategory = req.getParameter("pCategory");
+		int a_count = 0;
+
+		if ( pCategory.equals("1") ) {
+			pCategory = "5,6";
+		}
+		else if ( pCategory.equals("2") ){
+			pCategory = "1,2,3,4";
+		}
+
+		a_count = tdao.placeListCount(city,pSeq,pCategory);
+
+		return String.valueOf(a_count);
+	}
+
+	//검색을 위한 컨트롤러
+	@PostMapping("/placeSearch")
+	@ResponseBody
+	public String placeSearch(HttpServletRequest req) {
+		String searchText = req.getParameter("search");
+		String bigCategory = req.getParameter("bigCategory");
+		String pSeq = req.getParameter("pSeq");
+		
+		ArrayList<ScheduleCreateDTO> search = new ArrayList<ScheduleCreateDTO>();
+		
+		if ( pSeq == "" ) {
+			search = tdao.placeSearchNull(searchText,bigCategory);
+		}
+		else {
+			search = tdao.placeSearch(searchText,bigCategory,pSeq);
+		}
+
+
+		JSONArray ja = new JSONArray();
+		for ( int i = 0; i < search.size(); i++ ){
+			JSONObject jo = new JSONObject();
+			jo.put("seq",search.get(i).place_seq);
+			jo.put("name",search.get(i).place_name);
+			jo.put("img",search.get(i).place_img);
+
+			ja.put(jo);
+			}
+			return ja.toString();
+	}
+
+	//업체정보를 위한 컨트롤러
+	@PostMapping("/placeInfo")
+	@ResponseBody
+	public String placeInfo(HttpServletRequest req) {
+		int placeInfoId = Integer.parseInt(req.getParameter("placeInfoId"));
+
+		ArrayList<ScheduleCreateDTO> placeInfo = new ArrayList<ScheduleCreateDTO>();
+
+		placeInfo = tdao.placeInfo(placeInfoId);
+		
+		JSONArray ja = new JSONArray();
+		for ( int i = 0; i < placeInfo.size(); i++ ){
+			JSONObject jo = new JSONObject();
+
+			jo.put("name",placeInfo.get(i).place_name);
+			jo.put("address",placeInfo.get(i).place_address);
+			jo.put("tel",placeInfo.get(i).place_tel);
+			jo.put("content",placeInfo.get(i).place_content);
+			jo.put("img",placeInfo.get(i).place_img);
+			jo.put("open",placeInfo.get(i).place_open);
+
+			ja.put(jo);
+		}
+		return ja.toString();
 	}
 	
 }

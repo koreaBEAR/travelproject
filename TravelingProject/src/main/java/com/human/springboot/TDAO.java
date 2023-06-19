@@ -38,7 +38,7 @@ public interface TDAO {
 		LDTO place_view(int place_seq);
 		void place_delete(int place_seq);
 		void place_update(int city, int category, String name, String address, String tel, String open, String content, String img ,double lat, double lng, int place_seq);
-		void place_insert(int city, int category, String name, String address, String tel, String open, String content, String img ,double lat, double lng);
+		void place_insert(int city, int category, String name, String address, String tel, String open, String content, String img ,double lat, double lng, int like);
 		ArrayList<LDTO> place_paging(@Param("pageNo") int pageNo, @Param("amount") int amount);
 		int place_TotalCount();
 		ArrayList<LDTO> psearch_paging(@Param("pageNo") int pageNo, @Param("amount") int amount, String type, String keyword);
@@ -75,6 +75,22 @@ public interface TDAO {
 		
 	//  게시물 비공개/공개 판별
 		String sortPost(int post_seq);
+		
+		
+////////////////////////현준//////////////////
+		int placeListCount(int city, String pSeq, String pCategory);
+		
+		ArrayList<ScheduleCreateDTO> mapCreate(int city);
+		
+		ArrayList<ScheduleCreateDTO> allPlaceList(int city,int currentP,String pCategory);
+		ArrayList<ScheduleCreateDTO> scheduleAddPlaceList(int city,int currentP,String pSeq, String pCategory);
+		ArrayList<ScheduleCreateDTO> placeSearch(String searchText, String bigCategoryString, String pSeq);
+		ArrayList<ScheduleCreateDTO> placeSearchNull(String searchText, String bigCategoryString);
+		
+		ArrayList<ScheduleCreateDTO> placeInfo(int placeInfoId);
+		
+		ArrayList<ScheduleCreateDTO> markerScheduleCreate(String pSeq);
 	}
+
 
 
