@@ -124,6 +124,12 @@ $('#help_password').keypress(function(event) {
     }
 });
 
+$('#keyword').keypress(function(event) {
+    if (event.which == 13) { // Enter key code
+        event.preventDefault(); // Prevent default form submission
+        $('#btnsearch').click(); // Trigger search button click
+    }
+});
 // 다이얼로그 비밀번호창
 $( "#typeDlg" ).dialog({
     autoOpen: false,

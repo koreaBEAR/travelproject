@@ -193,7 +193,7 @@ const h1 = document.getElementById('target');
 h1.scrollIntoView({behavior: "smooth"});
 
 setTimeout(() => {
- window.scrollBy(0, -100);  
+ window.scrollBy(0, -150);  
 }, 500);  
 }
 
