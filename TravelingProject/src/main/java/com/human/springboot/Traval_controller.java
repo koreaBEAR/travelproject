@@ -324,6 +324,31 @@ public class Traval_controller {
 		}
 		return ja.toString();
 	}
+	@PostMapping("/loadReviewInfo")
+	@ResponseBody
+	public String loadReviewInfo(HttpServletRequest req) {
+		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
+		ArrayList <RevDTO> alPlace = tdao.placeReviews(placeNum);
+		JSONArray ja = new JSONArray();
+		try {
+			JSONObject jo = new JSONObject();
+			for(int i=0; i<alPlace.size(); i++) {				
+				jo.put("placeImg", alPlace.get(i).getPlace_img());
+				jo.put("placeName", alPlace.get(i).getPlace_name());
+				jo.put("placeContent", alPlace.get(i).getPlace_content());
+				jo.put("placeTel", alPlace.get(i).getPlace_tel());
+				jo.put("placeAddress", alPlace.get(i).getPlace_address());
+				jo.put("placeLike", alPlace.get(i).getPlace_like());
+				jo.put("reviewNickName",alPlace.get(i).getMember_nickname());
+				jo.put("reviewContent",alPlace.get(i).getReview_content());
+				jo.put("reviewContent",alPlace.get(i).getReview_date());
+				ja.put(jo);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return ja.toString();
+	}
 	
 	//정아
 	@GetMapping("/manage_member")
