@@ -283,46 +283,72 @@ public class Traval_controller {
 		return ja.toString();
 	}
 	
-//	@PostMapping("/loadReviewOne/{placeNum}")
-//	@ResponseBody
-//	public String loadReviewOne(@PathVariable("placeNum") int placeNum) {
-//		System.out.println("placeNum: "+placeNum);
-//		ArrayList <RevDTO> alReviews = tdao.placeReviews(placeNum);
-//		int n = tdao.reviewsCheck(placeNum);
-//		JSONArray ja = new JSONArray();
-//		try {
-//			JSONObject jo = new JSONObject();
-//			if(n==0) {
-//				for(int i = 0; i<alReviews.size(); i++) {					
-//					jo.put("placeImg",alReviews.get(i).getPlace_img());
-//					jo.put("placeName",alReviews.get(i).getPlace_name());
-//					jo.put("placeContent",alReviews.get(i).getPlace_name());
-//					jo.put("placeTel",alReviews.get(i).getPlace_name());
-//					jo.put("placeAddress",alReviews.get(i).getPlace_name());
-//					jo.put("placeLike", alReviews.get(i).getPlace_like());
-//					jo.put("reviewSeq", null);
-//					ja.put(jo);
-//				}
-//			}else {
-//				for(int i = 0; i<alReviews.size(); i++) {
-//					jo.put("placeImg",alReviews.get(i).getPlace_img());
-//					jo.put("placeName",alReviews.get(i).getPlace_name());
-//					jo.put("placeContent",alReviews.get(i).getPlace_name());
-//					jo.put("placeTel",alReviews.get(i).getPlace_name());
-//					jo.put("placeAddress",alReviews.get(i).getPlace_name());
-//					jo.put("placeLike", alReviews.get(i).getPlace_like());
-//					jo.put("reviewSeq", alReviews.get(i).getReview_seq());
-//					jo.put("memberNickName", alReviews.get(i).getMember_nickname());
-//					jo.put("reviewContent", alReviews.get(i).getReview_content());
-//					jo.put("reviewDate", alReviews.get(i).getReview_date());
-//					ja.put(jo);
-//				}
-//			}
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		return ja.toString();
-//	}
+	@PostMapping("/loadReviewOne")
+	@ResponseBody
+	public String loadReviewOne(HttpServletRequest req) {
+		String dataValue="";
+		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
+		int n = tdao.reviewsCheck(placeNum);
+		try {
+			if(n==0) {
+				dataValue = "zero";
+			}else if(n>=1) {
+				dataValue = "overOne";
+			}else {
+				dataValue = "error";
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dataValue;
+	}
+	@PostMapping("/loadPlaceInfo")
+	@ResponseBody
+	public String loadPlaceInfo(HttpServletRequest req) {
+		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
+		ArrayList <RevDTO> alPlace = tdao.reviewPlace(placeNum);
+		JSONArray ja = new JSONArray();
+		try {
+			JSONObject jo = new JSONObject();
+			for(int i=0; i<alPlace.size(); i++) {				
+				jo.put("placeImg", alPlace.get(i).getPlace_img());
+				jo.put("placeName", alPlace.get(i).getPlace_name());
+				jo.put("placeContent", alPlace.get(i).getPlace_content());
+				jo.put("placeTel", alPlace.get(i).getPlace_tel());
+				jo.put("placeAddress", alPlace.get(i).getPlace_address());
+				jo.put("placeLike", alPlace.get(i).getPlace_like());
+				ja.put(jo);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return ja.toString();
+	}
+	@PostMapping("/loadReviewInfo")
+	@ResponseBody
+	public String loadReviewInfo(HttpServletRequest req) {
+		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
+		ArrayList <RevDTO> alPlace = tdao.placeReviews(placeNum);
+		JSONArray ja = new JSONArray();
+		try {
+			JSONObject jo = new JSONObject();
+			for(int i=0; i<alPlace.size(); i++) {				
+				jo.put("placeImg", alPlace.get(i).getPlace_img());
+				jo.put("placeName", alPlace.get(i).getPlace_name());
+				jo.put("placeContent", alPlace.get(i).getPlace_content());
+				jo.put("placeTel", alPlace.get(i).getPlace_tel());
+				jo.put("placeAddress", alPlace.get(i).getPlace_address());
+				jo.put("placeLike", alPlace.get(i).getPlace_like());
+				jo.put("reviewNickName",alPlace.get(i).getMember_nickname());
+				jo.put("reviewContent",alPlace.get(i).getReview_content());
+				jo.put("reviewDate",alPlace.get(i).getReview_date());
+				ja.put(jo);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return ja.toString();
+	}
 	
 	//정아
 	@GetMapping("/manage_member")
@@ -494,12 +520,19 @@ public class Traval_controller {
 	    String postcode = req.getParameter("postcode");
 	    String address = req.getParameter("address");
 	    String detailAddress = req.getParameter("detailAddress");
-	    double lat = Double.parseDouble(req.getParameter("lat"));
-	    double lng = Double.parseDouble(req.getParameter("lng"));
+	    int like = Integer.parseInt(req.getParameter("like"));
+//	    double lat = Double.parseDouble(req.getParameter("lat"));
+//	    double lng = Double.parseDouble(req.getParameter("lng"));
+	    String latParam = req.getParameter("lat");
+	    String lngParam = req.getParameter("lng");
+	    Double lat = latParam != null && !latParam.isEmpty() ? Double.parseDouble(latParam) : 0.0;
+	    Double lng = lngParam != null && !lngParam.isEmpty() ? Double.parseDouble(lngParam) : 0.0;
 
-	    System.out.println(lat);
+
+	    
 	    String place_address = postcode + "," + address + "," + detailAddress;
 
+	    	    
 	    String[] fileNames = req.getParameterValues("imageNames[]");
 	    System.out.println(Arrays.toString(fileNames));
 	    
@@ -514,7 +547,7 @@ public class Traval_controller {
 	    }
 	    String img = String.join(",", imageUrls);
 
-	    tdao.place_insert(city, place, name, place_address, tel, open, content, img,lat,lng);
+	    tdao.place_insert(city, place, name, place_address, tel, open, content, img, lat, lng, like);
 	    return "manage_place";
 	}
 

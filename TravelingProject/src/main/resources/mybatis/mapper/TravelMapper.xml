@@ -42,7 +42,7 @@
     
 	<!-- 리뷰 -->
 	<select id="placeList" resultType="com.human.springboot.RevDTO">
-		select place_seq, place_img, place_name, place_address from place order by place_seq
+		select place_seq, place_img, place_name from place order by place_seq
 	</select>
 	<select id="placeReviews" resultType="com.human.springboot.RevDTO">
 		select a.place_seq, b.place_img, b.place_name, b.place_address,
@@ -52,10 +52,16 @@
 	        where a.place_seq = #{param1}
 	        and a.place_seq = b.place_seq
 	</select>
+	<select id="reviewPlace" resultType="com.human.springboot.RevDTO">
+		select place_seq, place_img, place_name, place_address, place_like, place_tel, place_content
+			from place
+			where place_seq = #{param1}
+	</select> 
 	<select id="reviewsCheck" resultType="Integer">
 		select count(*)
-			from travel_rev
-			where place_seq=#{param1}
+	        from travel_rev a, place b
+	        where a.place_seq = #{param1}
+	        and a.place_seq = b.place_seq
 	</select>
 	
 	<!--정아  -->
@@ -163,8 +169,8 @@
 	</select>
 <!-- 업체등록 -->	
 	<insert id="place_insert">
-		insert into place(place_seq, place_date, place_city, place_category, place_name, place_address, place_tel, place_open, place_content, place_img, place_lat, place_lng) 
-		values(place_num.nextval,to_char(sysdate,'yyyy/mm/dd'), #{param1}, #{param2}, #{param3},#{param4},#{param5},#{param6},#{param7},#{param8},#{param9},#{param10})
+		insert into place(place_seq, place_date, place_city, place_category, place_name, place_address, place_tel, place_open, place_content, place_img, place_lat, place_lng ,place_like) 
+		values(place_num.nextval,to_char(sysdate,'yyyy/mm/dd'), #{param1}, #{param2}, #{param3},#{param4},#{param5},#{param6},#{param7},#{param8},#{param9},#{param10},#{param11})
 	</insert>	
 <!-- 업체보기 -->	
 	<select id="place_view" resultType="com.human.springboot.LDTO" >

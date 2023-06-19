@@ -23,6 +23,7 @@ public interface TDAO {
 	//리뷰
 	ArrayList <RevDTO> placeList();
 	ArrayList <RevDTO> placeReviews(int placeSeq);
+	ArrayList <RevDTO> reviewPlace(int placeSeq);
 	int reviewsCheck(int placeSeq);
 	
 	//정아////////////////
@@ -37,7 +38,7 @@ public interface TDAO {
 		LDTO place_view(int place_seq);
 		void place_delete(int place_seq);
 		void place_update(int city, int category, String name, String address, String tel, String open, String content, String img ,double lat, double lng, int place_seq);
-		void place_insert(int city, int category, String name, String address, String tel, String open, String content, String img ,double lat, double lng);
+		void place_insert(int city, int category, String name, String address, String tel, String open, String content, String img ,double lat, double lng, int like);
 		ArrayList<LDTO> place_paging(@Param("pageNo") int pageNo, @Param("amount") int amount);
 		int place_TotalCount();
 		ArrayList<LDTO> psearch_paging(@Param("pageNo") int pageNo, @Param("amount") int amount, String type, String keyword);

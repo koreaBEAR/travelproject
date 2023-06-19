@@ -16,15 +16,13 @@
 <form action="contactupate" method="post" enctype="multipart/form-data"> 
 <table id=updatelist border=1>
 	<tr><td>카테고리</td><td>
-	     <select id=mySelect >
-	      <option value="선택해주세요">선택해주세요</option>
-          <option value="수정요청">수정요청</option>
-          <option value="Q&A">Q&A</option>
-        </select></td></tr>
+	     <select id="mySelect" name="help_category">
+    		<option value="수정요청" ${updatelists.help_category == '수정요청' ? 'selected' : ''}>수정요청</option>
+    		<option value="Q&A" ${updatelists.help_category == 'Q&A' ? 'selected' : ''}>Q&A</option>
+		 </select></td></tr>
     <tr><td>제목</td><td><input class=contborder type=text id=help_title name=help_title  value='${updatelists.help_title}'>
-    								<input type=hidden id=help_seq name=help_seq value='${updatelists.help_seq}' readonly >
-    								<input type=hidden id= help_category name=help_category  readonly >
-    								<input type=hidden id= member_id name=member_id  readonly ></td></tr>
+                    <input type=hidden id=help_seq name=help_seq value='${updatelists.help_seq}' readonly >
+                    <input type=hidden id= member_id name=member_id  readonly ></td></tr>
     <tr><td>내용</td><td><textarea class=contborder name="help_content" id="help_content">${updatelists.help_content}</textarea></td></tr>
     <tr><td>이미지</td>
     <td><input class=contborder type="file" id=help_img name="help_img" multiple></td></tr>
@@ -41,32 +39,20 @@
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
 $(document).ready(function() {
-
+	
 	$('#btncancel').click(function(){
 	    document.location= '/contact';
 	});
 
-    let help_category = '';
-
-    // When select is focused, hide the default option
-    $('#mySelect').focus(function() {
-        $('option:first', this).hide();
-    });
-
-    // When select loses focus, if no option is selected, show the default option
-    $('#mySelect').blur(function() {
-        if (this.value == '') {
-            $('option:first', this).show();
-        }
-    });
-
+	let help_category = $('#mySelect').val();
+    $('#help_category').val(help_category);
+    
     $('#mySelect').change(function() {        
         help_category = $(this).val();
         $('#help_category').val(help_category);
-       
     });
 
-    // Password Field Control Handlers
+    // 패스워드 공개/비공개 설정
 	$('input[type=radio][name=passwrite]').change(function() {
         if (this.value == 'open') {
             $('#help_password').val('');
@@ -79,7 +65,7 @@ $(document).ready(function() {
         }
     });
 	
-    // Submission Button Event 
+// 등록 버튼
     $('#btnRegi').click(function(e){
         e.preventDefault();
         
@@ -99,15 +85,9 @@ $(document).ready(function() {
                 $('#help_password').val('');
                 return false; 
             }
-        }
-      
-        // 카테고리가 선택되지 않았을 경우 리턴펄스
-		if ($('#mySelect option:selected').val() == "선택해주세요") {
-    		alert('카테고리를 선택해주세요.');
-    	return false;
-		}
+        }      
         
-        // Form Field Check
+        // 제목, 내용 공백체크
         if($('#help_title').val()=='') {
             alert('제목을 입력해주세요');
             return false;
@@ -122,25 +102,25 @@ $(document).ready(function() {
             return false;
         }
         
-        let formData = new FormData($('form')[0]);        
+        let formData = new FormData($('form')[0]);    
 
-        // AJAX Form Submission
-        $.ajax({
-            url:'/contactupate',
-            processData: false,
-            contentType: false,
-            data: formData,
-            type:'post', 
-            
-            success:function(data){
-                if(data == "ok"){
-                    alert('update성공')
-                    document.location= '/contact';
-                }else{
-                    alert('update실패')
-                }
-            }
-        });
+     // AJAX Form Submission
+     $.ajax({
+         url:'/contactupate',
+         processData: false,
+         contentType: false,
+         data: formData,
+         type:'post', 
+         
+         success:function(data){
+             if(data == "ok"){
+                 alert('update성공')
+                 document.location= '/contact';
+             }else{
+                 alert('update실패')
+             }
+         }
+     });
     }); 
 });
 
