@@ -172,6 +172,25 @@ a.index {
 	cursor: pointer;
 	float: right;
 }
+
+
+.upward-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.upward {
+  display: block;
+  width: 50px; /* 이미지의 너비를 조절할 수 있습니다 */
+  height: 50px; /* 이미지의 높이를 조절할 수 있습니다 */
+}
+
+.upward img {
+  width: 100%;
+  height: 100%;
+}
+
 </style>
 <%@ include file="./header.jsp" %>
 <body>	
@@ -251,6 +270,12 @@ a.index {
   		</c:if>
 		<a href="?pageNo=${endPage}&amount=${amount}" class="btn">>></a>
 	</div>
+	
+	<div class="upward-container">
+  <a href="#" class="upward">
+    <img src="/error/upward.gif">
+  </a>
+</div>
 
 </div>
 
