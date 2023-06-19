@@ -77,6 +77,7 @@ public interface TDAO {
 		
 		
 ////////////////////////현준//////////////////
+		int placeListAllCount(int city, String pSeq);
 		int placeListCount(int city, String pSeq, String pCategory);
 		
 		ArrayList<ScheduleCreateDTO> mapCreate(int city);

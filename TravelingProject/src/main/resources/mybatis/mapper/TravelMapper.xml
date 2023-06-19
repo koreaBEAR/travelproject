@@ -331,12 +331,18 @@ where city_name like '%' || #{param1} || '%'
 	
 <!-- 현준 -->
 
-
-<!-- 업체개수 count-->
-	<select id="placeListSelectCount" resultType="_int">
+<!-- 선택지역에 모든 업체개수 count-->
+	<select id="placeListAllCount" resultType="_int">
 		select count(*) r_
 		  from place
-		 where place_city = #{param1}
+		 where place_city = ${param1}
+		   and place_category in (${param2})
+	</select>
+<!-- 일정에 추가된 업체 제외한 업체개수 count-->
+	<select id="placeListCount" resultType="_int">
+		select count(*) r_
+		  from place
+		 where place_city = ${param1}
 		   and place_category in (${param3})
 		   and not place_seq in (${param2})
 	</select>

@@ -1,8 +1,5 @@
 @charset "UTF-8";
-@font-face {
-	font-family: cookie;
-	src: url('/font/CookieRun Regular.otf')
-}
+
 * {
 	font-family: cookie;
 	margin : 0;
@@ -42,21 +39,21 @@ h1 {
 
 #divScheduleCreate {
 	position: absolute;
-    width: 117px;
-    height: 37vh;
-    left: 250px;
-    top: 117px;
-    z-index: 1;
+	width: 117px;
+	height: 37vh;
+	left: 250px;
+	top: 117px;
+	z-index: 1;
 }
 
 #scheduleCreate {
 	width: 100px;
-    height: 56px;
-    background-color: rgba(255, 255, 255, 1);
-    border: none;
-    border-radius: 4px;
-    backdrop-filter: blur(0px);
-    margin: 8px;
+	height: 56px;
+	background-color: rgba(255, 255, 255, 1);
+	border: none;
+	border-radius: 4px;
+	backdrop-filter: blur(0px);
+	margin: 8px;
 	cursor: pointer;
 }
 
@@ -93,13 +90,15 @@ h1 {
 #search {
 	width: 30px;
 	height: 30px;
-	background: url(/img/돋보기.png);
 	border: none;
 	vertical-align: middle;
 	padding: 0;
-    margin-left: 6px;
+	margin-left: 6px;
 	margin-bottom: 4px;
 	cursor: pointer;
+	font-size: 32px;
+	font-weight: bold;
+	background-color: #fff;
 }
 
 /* rightSidBar radioButton */
@@ -133,8 +132,8 @@ h1 {
 
 #lodgingImg {
 	width: 25px;
-    height: 20px;
-    vertical-align: middle;
+	height: 20px;
+	vertical-align: middle;
 }
 
 #sectionTitle {
@@ -142,7 +141,7 @@ h1 {
 	font-weight: bold;
 }
 
-.ulPlaceCard {
+.divPlaceCard {
 	margin: 0;
 	padding: 0;
 }
@@ -163,7 +162,7 @@ h1 {
 
 .placeCard {
 	margin: 10px 8px;
-    display: flex;
+	display: flex;
 	box-shadow: rgba(120 ,121 ,135 , 0.3) 0 8px 32px 0;
 }
 
@@ -193,35 +192,35 @@ h1 {
 }
 
 #cityName {
-    width: 100%;
-    height: 50px;
+	width: 100%;
+	height: 50px;
 	font-size: 1.8rem;
 	display: flex;
-    justify-content: space-around;
-    align-items: center;
+	justify-content: space-around;
+	align-items: center;
 }
 
 #day {
 	width: 100%;
-    height: 40px;
+	height: 40px;
 	font-size: 1.5rem;
 	display: flex;
-    justify-content: space-around;
-    align-items: center;
+	justify-content: space-around;
+	align-items: center;
 }
 
 #calender {
 	width: 100%;
-    height: 40px;
+	height: 40px;
 	display: flex;
 }
 
 #selectList{
 	width: 100%;
-    height: 40px;
+	height: 40px;
 	display: flex;
-    justify-content: space-around;
-    align-items: center;
+	justify-content: space-around;
+	align-items: center;
 }
 
 .leftSelect {
@@ -261,40 +260,40 @@ h1 {
 #scheduleTotalTime {
 	background-color: goldenrod;
 	width: 100%;
-    height: 40px;
+	height: 40px;
 }
 
 #placeAllDelete {
 	background-color: #ff1744;
 	color: white;
-    width: 100%;
-    height: 40px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+	width: 100%;
+	height: 40px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 	border: none;
 	cursor: pointer;
 }
 
 #lodgingAddCart {
 	width: 100%;
-    height: 458px;
+	height: 458px;
 }
 
 #scheduleTotalDay {
 	background-color: goldenrod;
 	width: 100%;
-    height: 40px;
+	height: 40px;
 }
 
 #lodgingAllDelete {
 	background-color: #ff1744;
 	color: white;
-    width: 100%;
-    height: 40px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+	width: 100%;
+	height: 40px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 	border: none;
 	cursor: pointer;
 }
@@ -340,16 +339,16 @@ h1 {
 
 .normal_menu_pagination ul {
 	display: inline-block;
-    padding: 0;
-    list-style-type: disc;
+	padding: 0;
+	list-style-type: disc;
 	
 }
 
 .normal_menu_pagination ul li {
 	display: inherit;
 	padding: 0;
-    margin-right: 3px;
-    margin-left: 3px;
+	margin-right: 2px;
+	margin-left: 2px;
 }
 
 .page {
@@ -374,11 +373,11 @@ h1 {
 }
 #placeInfo_modal_content {
 	position: relative;
-    top: 35vh;
-    left: 23vw;
-    background-color: #fefefe;
-    width: 50%;
-    height: 40%;
+	top: 35vh;
+	left: 23vw;
+	background-color: #fefefe;
+	width: 50%;
+	height: 40%;
 }
 
 .placeInfo_title{	
@@ -387,18 +386,18 @@ h1 {
 }
 .placeInfo_content{
 	margin: 5px 7px 0 7px;
-    font-family: 'Prtendard-Regular';
+	font-family: 'Prtendard-Regular';
 	font-size: 14px;
 }
 .close {
 	position: absolute;
-    border: none;
-    background-color: white;
-    float: right;
-    font-size: 20px;
-    font-weight: 900;
-    right: 8px;
-    z-index: 1;
+	border: none;
+	background-color: white;
+	float: right;
+	font-size: 20px;
+	font-weight: 900;
+	right: 8px;
+	z-index: 1;
 	cursor: pointer;
 }
 
@@ -409,8 +408,8 @@ h1 {
 
 .placeInfo_modal_body {
 	position: relative;
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .modalOpen {
@@ -455,11 +454,11 @@ h1 {
 
 #scheduleCreateModalContent {
 	position: relative;
-    top: 1.1vh;
-    left: 1.1vw;
-    background-color: #fefefe;
-    width: 98%;
-    height: 94%;
+	top: 1.1vh;
+	left: 1.1vw;
+	background-color: #fefefe;
+	width: 98%;
+	height: 94%;
 }
 
 #scheduleMap {
@@ -470,10 +469,10 @@ h1 {
 
 #dayListButtonArea {
 	position: relative;
-    width: 100%;
-    height: 40px;
-    top: 30px;
-    z-index: 2;
+	width: 100%;
+	height: 40px;
+	top: 30px;
+	z-index: 2;
 	bottom: 0px;
 	background-color: #fafafa;
 	display: flex;
@@ -481,10 +480,11 @@ h1 {
 }
 .dayButton {
 	margin: 4px;
-    box-shadow: rgb(31 38 135 / 10%) 0px 8px 32px 0px;
-    cursor: pointer;
-    width: 50px;
-    height: 20px;
+	box-shadow: rgb(31 38 135 / 10%) 0px 8px 32px 0px;
+	cursor: pointer;
+	width: 60px;
+	height: 27px;
+	border-radius: 7px;
 }
 
 .divDayButton{
@@ -509,20 +509,20 @@ h1 {
 
 #divScheduleModalRightSidebar {
 	position: absolute;
-    background-color: #fff;
-    width: 250px;
-    height: 86.4vh;
-    right: 0;
-    bottom: 0;
+	background-color: #fff;
+	width: 250px;
+	height: 86.4vh;
+	right: 0;
+	bottom: 0;
 }
 
 #divScheduleModalLeftSidebar {
 	position: absolute;
-    background-color: #fff;
-    width: 250px;
-    height: 86.4vh;
-    left: 0;
-    bottom: 0;
+	background-color: #fff;
+	width: 250px;
+	height: 86.4vh;
+	left: 0;
+	bottom: 0;
 }
 
 .rightScheduleModalRadio input[name="rightScheduleModalRadio"]{
@@ -548,10 +548,10 @@ h1 {
 
 .rightScheduleModalRadioCss {
 	display: flex;
-    justify-content: space-around;
-    padding: 8px 0;
-    align-items: center;
-    box-shadow: rgba(120 ,121 ,135 , 0.3) 0 8px 25px 0;
+	justify-content: space-around;
+	padding: 8px 0;
+	align-items: center;
+	box-shadow: rgba(120 ,121 ,135 , 0.3) 0 8px 25px 0;
 }
 
 .leftScheduleModalRadio input[name="leftScheduleModalRadio"]{
@@ -577,12 +577,16 @@ h1 {
 
 .leftScheduleModalRadioCss {
 	display: flex;
-    justify-content: space-around;
-    padding: 8px 0;
-    align-items: center;
-    box-shadow: rgba(120 ,121 ,135 , 0.3) 0 8px 25px 0;
+	justify-content: space-around;
+	padding: 8px 0;
+	align-items: center;
+	box-shadow: rgba(120 ,121 ,135 , 0.3) 0 8px 25px 0;
 }
 .addScheduleByDate {
 	width: 100%;
 	height: 752px;
+}
+
+.leftRadioSelectPlaceCss {
+	height: 712px;
 }

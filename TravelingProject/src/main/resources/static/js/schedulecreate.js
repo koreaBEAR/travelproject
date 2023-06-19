@@ -3,8 +3,8 @@ $(document)
 .ready(before_date(3))
 .ready(datePicker)
 .ready(function() {
-  $('#place').click();
-  $('#placeSelect').click();
+  $('input:radio[name=select]').attr('checked',true);
+  $('input:radio[name=leftSelect]').attr('checked',true);
 })
 .ready(function() {
   $('#searchInput').keypress(function(key) {
@@ -15,17 +15,6 @@ $(document)
   })
 })
 
-.ready(function() {
-  let columns = document.querySelectorAll(".column");
-  columns.forEach((column) => {
-    new Sortable(column, {
-      group: "shared",
-      animation: 150,
-      ghostClass: "blue-background-class"
-    });
-  });
-})
-
 .on('click', '#search', search) // 검색 이벤트
 .on('click', '.page', pagination) //페이지네이션 이벤트
 .on('click', '.page', placeListPageChange) //페이지에 맞는 리스트 구성을 위한 이벤트
@@ -33,9 +22,8 @@ $(document)
 .on('click', '#scheduleDelete', scheduleDelete) //일정에 추가되어 있는 업체를 선택부분만 삭제하는 이벤트
 .on('change', '.calender', dateCalculation) //여행의 시작날짜와 종료날짜의 기간계산을 위한 이벤트
 .on('click', '.info', placeInfo) //업체정보를 띄우기 위한 이벤트
-.on('click', '#scheduleCreate', scheduleCreate) //일정생성 이벤트
+.on('click', '#scheduleCreate', scheduleDetailCreate) //일정생성 이벤트
 .on('click', '#scheduleModalClose', scheduleModalClose)
-
 
 //초기 위도,경도를 통한 선택지역 맵 불러오기
 function mapCreate() {
@@ -56,6 +44,7 @@ function mapCreate() {
         // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
         map = new kakao.maps.Map(mapContainer, mapOption)
         placeListCount(2,null);
+        placeList(2,null)
       }
     }
   });
@@ -105,7 +94,7 @@ let placeCommonString = [];
 
 //우측 리스트에 업체를 불러오고 placeCommonString 배열에 업체 그리는 코드를 저장하는 함수입니다.
 function placeList(city,pSeq) {
-  let cp = $('#hidden_currentP').val()
+  let cP = $('#hidden_currentP').val()
   let pCategory = $("#rightRadioCurrentP").val();
 
   $.ajax ({
@@ -113,13 +102,13 @@ function placeList(city,pSeq) {
     type : "post",
     data : {
           city : city,
-          currentP: cp,
+          currentP: cP,
           pSeq: pSeq,
           pCategory : pCategory
     },
     dataType : "json",
     success:function(data) {
-      $('#ulPlaceCard').empty();
+      $('#divPlaceCard').empty();
 
       for ( let i = 0; i < data.length; i++ ) {
         let placeSeq = data[i].seq;
@@ -127,20 +116,23 @@ function placeList(city,pSeq) {
         let placeImg = data[i].img;
 
         let commonString = `
-        <li id='placeCard${placeSeq}' class='placeCard list-group-item' draggable='true' value='${placeSeq}'>
-          <div class='placeImg'>
-            <img class='cartImg' src='${placeImg}'>
-          </div>
-          <div class='placeTitle'>
-            <span id='placeName'><h7>${placeName}</h7></span>
-            <div class='iconFlex' id='${placeSeq}' onclick = 'selectPlaceDelete(this);'>
-              <i id='scheduleDelete'title="목록에서 삭제" class="material-icons">clear</i>
-            </div>
-          </div>
-        </li>`;
+        <div id='divPlaceCard${placeSeq}' class="draggable" draggable="true" value='${placeSeq}'>
+	        <li id='placeCard${placeSeq}' class='placeCard' value='${placeSeq}'>
+	          <div class='placeImg'>
+	            <img class='cartImg' src='${placeImg}'>
+	          </div>
+	          <div class='placeTitle'>
+	            <span id='placeName'><h7>${placeName}</h7></span>
+	            <div class='iconFlex' id='${placeSeq}' onclick = 'selectPlaceDelete(this);'>
+	              <i id='scheduleDelete'title="목록에서 삭제" class="material-icons">clear</i>
+	            </div>
+	          </div>
+	        </li>
+	       </div> `;
         placeCommonString[i] = (commonString);
         html = [];
         html.push(
+					"<div>",
           "<li class='placeCard column'>",
           "<div class='placeImg'><img class='cartImg' src='",placeImg,"'></div>",
           "<div class='placeTitle'>",
@@ -148,9 +140,9 @@ function placeList(city,pSeq) {
           "<div class='iconFlex'>",
           "<div title='장소정보' id='placeInfo'><i id='",placeSeq,"'class='material-icons info'>info</i></div>",
           "<div title='장소추가' id='",placeSeq,"' onclick = 'selectPlaceAdd(this);'><i id='placeAdd' class='material-icons add'>add</i></div>",
-          "</div></div></li>"
+          "</div></div></li></div>"
         );
-        $('#ulPlaceCard').append(html.join(""));
+        $('#divPlaceCard').append(html.join(""));
       }
     }
   })
@@ -161,7 +153,7 @@ let placeSeqList = [];
 
 // //일정에 업체를 추가하는 함수입니다.
 function selectPlaceAdd(tagId) {
-  let rightRadioCp = Number($('#rightRadioCurrentP').val());
+  let rightRadioCP = Number($('#rightRadioCurrentP').val());
   let pSeq = "";
 
   for ( let i = 0; i < placeSeqList.length; i++ ) {
@@ -170,7 +162,7 @@ function selectPlaceAdd(tagId) {
     }
   }
 
-  if ( rightRadioCp == 1 ) {
+  if ( rightRadioCP == 1 ) {
     for ( let i = 0; i < placeSeqList.length; i++ ) {
       if ( i != placeSeqList.length-1 ) {
         pSeq += placeSeqList[i] + ',';
@@ -180,7 +172,7 @@ function selectPlaceAdd(tagId) {
       }
     }
   }
-  else if ( rightRadioCp == 2 ) {
+  else if ( rightRadioCP == 2 ) {
     placeSeqList[placeSeqList.length] = (tagId.id);
     for ( let i = 0; i < placeSeqList.length; i++ ) {
       if ( i != placeSeqList.length-1 ) {
@@ -199,19 +191,19 @@ function selectPlaceAdd(tagId) {
 
 //좌측 리스트에 추가하는 업체를 그리는 함수입니다.
 function placeAppend() {
-  let rightRadioCp = Number($('#rightRadioCurrentP').val());
+  let rightRadioCP = Number($('#rightRadioCurrentP').val());
 
-  if ( rightRadioCp == 1 ) {
+  if ( rightRadioCP == 1 ) {
     $('#lodgingSelect').click();
     leftRadio('lodgingSelect')
     selectPlace = $(this).parent().parent().parent().parent().index();
-    $('#ulLodgingAddCard').append(placeCommonString[selectPlace]);
+    $('#divLodgingAddCart').append(placeCommonString[selectPlace]);
   }
-  else if ( rightRadioCp == 2 ) {
+  else if ( rightRadioCP == 2 ) {
     $('#placeSelect').click();
     leftRadio('placeSelect')
-    selectPlace = $(this).parent().parent().parent().parent().index();
-    $('#ulPlaceAddCard').append(placeCommonString[selectPlace]);
+    selectPlace = $(this).parent().parent().parent().parent().parent().index();
+    $('#divPlaceAddCart').append(placeCommonString[selectPlace]);
   }
 }
 
@@ -243,23 +235,23 @@ function selectPlaceDelete(tagId) {
 
 //일정에 추가되어있는 업체를 원하는 업체만 지우는 함수입니다.
 function scheduleDelete() {
-  $(this).parent().parent().parent().remove();
+  $(this).parent().parent().parent().parent().remove();
 }
 
 //일정에 추가되어있는 업체를 전부 취소하고 지우는 함수입니다.
 function allDelete(tagId) {
-  let placeAddCardlen = $('#ulPlaceAddCard').children().length;
-  let lodgingAddCardlen = $('#ulLodgingAddCard').children().length;
+  let placeAddCartlen = $('#divPlaceAddCart').children().length;
+  let lodgingAddCartlen = $('#divLodgingAddCart').children().length;
   let thisId = tagId.id;
 
   if ( thisId == 'placeAllDelete') {
-    for ( let i = 0; i < placeAddCardlen; i++ ) {
-      placeDeleteSeq = $('#ulPlaceAddCard li:eq(0)').val();
+    for ( let i = 0; i < placeAddCartlen; i++ ) {
+      placeDeleteSeq = $('#divPlaceAddCart div:eq(0)').children('li').val();
       for ( let j = 0; j < markers.length; j++ ) {
         if ( placeDeleteSeq == markers[j].Gb ) {
           markers[j].setMap(null);
           markers.splice(j,1);
-          $('#ulPlaceAddCard li:eq(0)').remove();
+          $('#divPlaceAddCart div:eq(0)').remove();
           placeSeqList.splice(j,1);
         }
       }
@@ -273,17 +265,17 @@ function allDelete(tagId) {
         pSeq += placeSeqList[i];
       }
     }
-    $('#ulPlaceAddCard').empty();
+    $('#divPlaceAddCart').empty();
     placeList(2,pSeq);
   }
   else if ( thisId == 'lodgingAllDelete' ) {
-    for ( let i = 0; i < lodgingAddCardlen; i++ ) {
-      lodgingDeleteSeq = $('#ulLodgingAddCard li:eq(0)').val();
+    for ( let i = 0; i < lodgingAddCartlen; i++ ) {
+      lodgingDeleteSeq = $('#divLodgingAddCart div:eq(0)').children('li').val();
       for ( let j = 0; j < markers.length; j++ ) {
         if ( lodgingDeleteSeq == markers[j].Gb ) {
           markers[j].setMap(null);
           markers.splice(j,1);
-          $('#ulLodgingAddCard li:eq(0)').remove();
+          $('#divLodgingAddCart div:eq(0)').remove();
           placeSeqList.splice(j,1);
         }
       }
@@ -297,7 +289,7 @@ function allDelete(tagId) {
         pSeq += placeSeqList[i];
       }
     }
-    $('#ulLodgingAddCard').empty();
+    $('#divLodgingAddCart').empty();
     placeList(2,pSeq);
   }
 }
@@ -305,14 +297,13 @@ function allDelete(tagId) {
 //업체의 개수를 가져오는 함수입니다.
 function placeListCount(city,pSeq){
   pCategory = $("#rightRadioCurrentP").val();
-
-	$.ajax({
+	$.ajax({	
 		url: "/placeListCount",
 		type: "post",
 		data: {
 			  city: city,
-        pSeq: pSeq,
-        pCategory: pCategory
+              pSeq: pSeq,
+              pCategory: pCategory
 		},
 		dataType: "json",
 		success:function(count) {
@@ -329,33 +320,33 @@ function pagination(){
 	thisText = $(this).text();
 	last = Math.ceil(dataLength / 12);
 	
-	cp = Number($("#hidden_currentP").val());
+	cP = Number($("#hidden_currentP").val());
 	
 	if (thisText == "처음") {
-		cp = 1;
-		$("#hidden_currentP").val(cp);
+		cP = 1;
+		$("#hidden_currentP").val(cP);
 	}
-	else if (thisText == "이전" && cp - 1 > 0) {
-		cp -= 1;
-		$("#hidden_currentP").val(cp);
+	else if (thisText == "이전" && cP - 1 > 0) {
+		cP -= 1;
+		$("#hidden_currentP").val(cP);
 	}
-	else if (thisText == "다음" && cp + 1 < last + 1) {
-		cp += 1;
-		$("#hidden_currentP").val(cp);
+	else if (thisText == "다음" && cP + 1 < last + 1) {
+		cP += 1;
+		$("#hidden_currentP").val(cP);
 	}
 	else if (thisText == "마지막") {
-		cp = last;
-		$("#hidden_currentP").val(cp);
+		cP = last;
+		$("#hidden_currentP").val(cP);
 	}
 	else if ($.isNumeric(thisText)) {
-		cp = Number(thisText);
-		$("#hidden_currentP").val(cp);
+		cP = Number(thisText);
+		$("#hidden_currentP").val(cP);
 	}
 		
-	startIndex = Math.floor(cp / 5) * 5 + 1;
-	if (cp % 5 == 0) startIndex = (Math.floor(cp / 5) - 1) * 5 + 1;
+	startIndex = Math.floor(cP / 5) * 5 + 1;
+	if (cP % 5 == 0) startIndex = (Math.floor(cP / 5) - 1) * 5 + 1;
 	
-	if (cp <= 5) {
+	if (cP <= 5) {
 		if (last > 5) {
 			for (i = 1; i <= 5; i++)
 			$("#ul_pageNumber").append(`<li id='np${i}' class='page pnum'>${i}</li>`);
@@ -377,7 +368,7 @@ function pagination(){
 			}
 		}
 	}
-	$(`#np${cp}`).css("color","red")
+	$(`#np${cP}`).css("color","red")
 }
 
 //페이지 이동 시 cityNum과 일정에 추가된 업체의 seqNum을 PlaceList에 보내는 함수입니다.
@@ -397,15 +388,15 @@ function placeListPageChange() {
 //검색 이벤트 함수 입니다.
 function placeSearch() {
   searchText = $('#searchInput').val();
-  let rightRadioCp = Number($('#rightRadioCurrentP').val());
+  let rightRadioCP = Number($('#rightRadioCurrentP').val());
   let bigCategory = '';
   let pSeq = '';
 
-  if ( rightRadioCp == 1 ) {
+  if ( rightRadioCP == 1 ) {
     bigCategory = '5,6'
     $('#lodgingSelect').click();
   }
-  else if ( rightRadioCp == 2 ) {
+  else if ( rightRadioCP == 2 ) {
     bigCategory = '1,2,3,4'
     $('#placeSelect').click();
   }
@@ -429,24 +420,26 @@ function placeSearch() {
     },
     dataType: 'json',
     success:function(data) {
-      $('#ulPlaceCard').empty();
+      $('#divPlaceCard').empty();
       for ( let i = 0; i < data.length; i++ ) {
         let placeSeq = data[i].seq;
         let placeName = data[i].name;
         let placeImg = data[i].img;
 
         let commonString = `
-        <li id='placeCard${placeSeq}' class='placeCard' value='${placeSeq}'>
-          <div class='placeImg'>
-            <img class='cartImg' src='${placeImg}'>
-          </div>
-          <div class='placeTitle'>
-            <span id='placeName'><h7>${placeName}</h7></span>
-            <div class='iconFlex' id='${placeSeq}' onclick = 'selectPlaceDelete(this);'>
-              <i id='scheduleDelete'title="목록에서 삭제" class="material-icons">clear</i>
-            </div>
-          </div>
-        </li>`
+        <div id='divPlaceCard${placeSeq}'class="draggable" draggable="true" value='${placeSeq}'>
+	        <li id='placeCard${placeSeq}' class='placeCard' value='${placeSeq}'>
+	          <div class='placeImg'>
+	            <img class='cartImg' src='${placeImg}'>
+	          </div>
+	          <div class='placeTitle'>
+	            <span id='placeName'><h7>${placeName}</h7></span>
+	            <div class='iconFlex' id='${placeSeq}' onclick = 'selectPlaceDelete(this);'>
+	              <i id='scheduleDelete'title="목록에서 삭제" class="material-icons">clear</i>
+	            </div>
+	          </div>
+	        </li>
+	       </div>`
         placeCommonString[i] = (commonString);
         html = [];
         html.push(
@@ -459,7 +452,7 @@ function placeSearch() {
           "<div title='장소추가' id='",placeSeq,"' onclick = 'selectPlaceAdd(this);'><i id='placeAdd' class='material-icons add'>add</i></div>",
           "</div></div></li>"
         );
-        $('#ulPlaceCard').append(html.join(""));
+        $('#divPlaceCard').append(html.join(""));
       }
       $('#placeListCount').val(data.length);
 			pagination();
@@ -635,29 +628,29 @@ function rightRadio(tagId) {
 //좌측 사이드바에 숙박&명소 클릭 시 이벤트발생 함수입니다.
 function leftRadio(tagId) {
   let thisId = tagId.id;
-  let leftRadioCp = Number($("#leftRadioCurrentP").val());
+  let leftRadioCP = Number($("#leftRadioCurrentP").val());
   
   if ( thisId == 'lodgingSelect') {
-    leftRadioCp = 1;
+    leftRadioCP = 1;
+    $("#leftRadioCurrentP").val(leftRadioCP);
     $('#leftRadioSelectLodging').attr('style','display: block')
     $('#leftRadioSelectPlace').attr('style','display: none')
     
   }
   else if ( thisId == 'placeSelect') {
-    leftRadioCp = 2;
+    leftRadioCP = 2;
+    $("#leftRadioCurrentP").val(leftRadioCP);
     $('#leftRadioSelectPlace').attr('style','display: block')
     $('#leftRadioSelectLodging').attr('style','display: none')
   }
 }
 
 //일정상세페이지 modal을 생성하는 함수입니다.
-function scheduleCreate() {
+function scheduleDetailCreate() {
   $('.scheduleModal').css('display','block');
   let calculation = $('#day').text().split('');
   calculation = calculation[0];
-
-  console.log(calculation);
-
+	
   $.ajax({
     url: "/mapCreate",
     type: "post",
@@ -680,10 +673,12 @@ function scheduleCreate() {
   $('input:radio[name=leftScheduleModalRadio]').attr('checked',true);
 
   $('#placeAddCartCopy').empty();
-  $('#ulPlaceAddCard').clone().appendTo('#placeAddCartCopy');
+  $('#divPlaceAddCart').clone().appendTo('#placeAddCartCopy');
+  $('#lodgingAddCartcopy').empty();
+  $('#divLodgingAddCart').clone().appendTo('#lodgingAddCartCopy');
 
   $('.addScheduleByDate').empty();
-  $('#dayListButtonArea').empty();
+  $('#dayListButtonArea div:eq(0)').empty();
   for ( let i = 1; i < calculation; i++ ) {
     $('#dayListButtonArea').append(`
     <div class="divDayButton" onclick="openDayDetailPlan(${i})">
@@ -692,8 +687,106 @@ function scheduleCreate() {
     </div>
     `);
   }
+	$('#dayButton1').trigger('click').css('background-color','red');
+	$('.scheduleDate1').attr('style','display:block;');
+	$('#placeAddCartCopy').attr('style','display: block')
+	$('#lodgingAddCartCopy').attr('style','display: none')
+	draggables = document.querySelectorAll(".draggable");
+	console.log(draggables);
+	
 }
 
+function rightScheduleModalRadio(tagId) {
+	let thisId = tagId.id;
+	let rightScheduleModalRadioCP = Number($('#rightScheduleModalRadioCurrentP').val());
+	
+	if ( thisId == 'rightScheduleModalRadioLodging') {
+    rightScheduleModalRadioCP = 1;
+    $("#rightScheduleModalRadioCurrentP").val(rightScheduleModalRadioCP);
+    $('#lodgingAddCartCopy').attr('style','display: block')
+    $('#placeAddCartCopy').attr('style','display: none')
+    
+  }
+  else if ( thisId == 'rightScheduleModalRadioPlace') {
+    rightScheduleModalRadioCP = 2;
+    $("#rightScheduleModalRadioCurrentP").val(rightScheduleModalRadioCP);
+    $('#placeAddCartCopy').attr('style','display: block')
+    $('#lodgingAddCartCopy').attr('style','display: none')
+  }
+}
+
+function leftScheduleModalRadio(tagId){
+	let thisId = tagId.id;
+	let leftScheduleModalRadioCP = Number($('#leftScheduleModalRadioCurrentP').val());
+	let dayListButtonAreaCP = Number($('#dayListButtonAreaCurrentP').val());
+	
+	if ( thisId == 'leftScheduleModalRadioLodging') {
+    leftScheduleModalRadioCP = 1;
+    $("#leftScheduleModalRadioCurrentP").val(leftScheduleModalRadioCP);
+    $(`#leftRadioSelectLodging${dayListButtonAreaCP}`).attr('style','display: block;')
+    $(`#leftRadioSelectPlace${dayListButtonAreaCP}`).attr('style','display: none;')
+    
+  }
+  else if ( thisId == 'leftScheduleModalRadioPlace') {
+    leftScheduleModalRadioCP = 2;
+    $("#leftScheduleModalRadioCurrentP").val(leftScheduleModalRadioCP);
+    $(`#leftRadioSelectPlace${dayListButtonAreaCP}`).attr('style','display: block;')
+    $(`#leftRadioSelectLodging${dayListButtonAreaCP}`).attr('style','display: none;')
+  }
+}
+
+function openDayDetailPlan(buttonNum) {
+	let bNum = buttonNum;
+	
+	$('.dayButton').css('background-color','white');
+	$(`#dayButton${bNum}`).css('background-color','red');
+	$('#dayListButtonAreaCurrentP').val(bNum);
+	$('.scheduleStyle').attr('style','display:none;')
+	$(`.scheduleDate${bNum}`).attr('style','display:block;')
+	$('.modalContainer').attr('style','display:none;')
+	$(`#leftRadioSelectPlace${bNum}`).attr('style','display:block;')
+}
+
+(() => {
+    const $ = (select) => document.querySelectorAll(select);
+    const draggables = $('.draggable');
+    const containers = $('.container');
+
+    draggables.forEach(el => {
+        el.addEventListener('dragstart', () => {
+            el.classList.add('dragging');
+        });
+
+        el.addEventListener('dragend', () => {
+            el.classList.remove('dragging')
+        });
+    });
+
+    function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
+      
+        return draggableElements.reduce((closest, child) => {
+          const box = child.getBoundingClientRect() //해당 엘리먼트에 top값, height값 담겨져 있는 메소드를 호출해 box변수에 할당
+          const offset = y - box.top - box.height / 2 //수직 좌표 - top값 - height값 / 2의 연산을 통해서 offset변수에 할당
+          if (offset < 0 && offset > closest.offset) { // (예외 처리) 0 이하 와, 음의 무한대 사이에 조건
+            return { offset: offset, element: child } // Element를 리턴
+          } else {
+            return closest
+          }
+        }, { offset: Number.NEGATIVE_INFINITY }).element
+    };
+
+    containers.forEach(container => {
+        container.addEventListener('dragover', e => {
+            e.preventDefault()
+            const afterElement = getDragAfterElement(container, e.clientY);
+            const draggable = document.querySelector('.dragging')
+            // container.appendChild(draggable)
+            container.insertBefore(draggable, afterElement)
+        })
+    });
+})();
+   
 //일정상세페이지 modal을 종료하는 함수입니다.
 function scheduleModalClose() {
   $('.scheduleModal').css('display','none');
