@@ -1090,7 +1090,7 @@ public class Traval_controller {
 ///////////////현준///////////////////////
 	@GetMapping("/schedulecreate")
 	public String Admin() {
-		return "scheduleCreate";
+		return "schedulecreate";
 	}
 
 	// 맵을 그리는 컨트롤러
@@ -1193,9 +1193,14 @@ public class Traval_controller {
 		else if ( pCategory.equals("2") ){
 			pCategory = "1,2,3,4";
 		}
-
-		a_count = tdao.placeListCount(city,pSeq,pCategory);
-
+		
+		if ( pSeq == "" || pSeq == null ) {
+			a_count = tdao.placeListAllCount(city,pCategory);
+		}
+		else {
+			a_count = tdao.placeListCount(city,pSeq,pCategory);
+		}
+			
 		return String.valueOf(a_count);
 	}
 
