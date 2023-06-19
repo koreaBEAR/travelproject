@@ -1,8 +1,8 @@
 @charset "UTF-8";
 :root {
   --button-color: #ffffff;
-  --button-bg-color: #00ffff;
-  --button-hover-bg-color: #0080ff;
+  --button-bg-color: #F3732F;
+  --button-hover-bg-color: #ffffff;
 }
 .page {
   display: flex;
@@ -102,8 +102,8 @@ button{
 	text-align: center;
 	text-decoration: none;
 	
-	border: none;
-	border-radius: 4px;
+	border: 0.5px solid #F3732F;
+	border-radius: 8px;
 	
 	display: inline-block;
 	width: auto;
@@ -117,8 +117,10 @@ button{
 button:active,
 button:hover,
 button:focus {
-  background: var(--button-hover-bg-color);
-  outline: 0;
+	background: var(--button-hover-bg-color);
+  	border: 0.5px solid #F3732F;
+	color: #F3732F;
+	outline: 0;
 }
 button:disabled {
   opacity: 0.5;
