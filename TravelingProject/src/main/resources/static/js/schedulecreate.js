@@ -559,7 +559,7 @@ function before_date(day){
   }
 
   //캘린더의 옵션을 setting하는 함수입니다.
-  function datePicker() {
+function datePicker() {
   $('#startDate').datepicker({
 		changeMonth: true,
 		changeYear: true,
