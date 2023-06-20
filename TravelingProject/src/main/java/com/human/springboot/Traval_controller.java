@@ -491,7 +491,7 @@ public class Traval_controller {
 	    place_seq = place_seq.replaceFirst(",", "");
 	    place_seq = place_seq.replace("on,", "");
 	    String[] placeSeqArray = place_seq.split(",");
-	    System.out.println(Arrays.toString(placeSeqArray));
+	    System.out.println("placeSeqArray:"+Arrays.toString(placeSeqArray));
 	    
 	    for (String seq : placeSeqArray) {
 	        int placeSeq = Integer.parseInt(seq);

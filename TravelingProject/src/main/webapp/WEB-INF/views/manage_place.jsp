@@ -291,7 +291,7 @@ a.index {
 <script>
 $(document)
 .on('click', '#btnDelete', function() {
-	var placeSeqs = [];            //console.log(placeSeqs);
+	var placeSeqs = [];          
     $('input.checkGroup:checked').each(function() {
         placeSeqs.push($(this).val());
     });

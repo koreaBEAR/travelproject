@@ -185,6 +185,31 @@ a.index {
 	position: relative;
 }
 
+#help_category::before {
+  content: "Category: ";
+  font-weight: bold;
+}
+
+#help_title::before {
+  content: "Title: ";
+  font-weight: bold;
+}
+
+#member_id::before {
+  content: "ID: ";
+  font-weight: bold;
+}
+
+#help_created::before {
+  content: "Created: ";
+  font-weight: bold;
+}
+
+#help_content::before {
+  content: "Content: ";
+  font-weight: bold;
+}
+
 #helpDlg textarea {
 	width: 100%;
 	height: 100px;
@@ -224,6 +249,7 @@ a.index {
   right: 0;
   color: white;
 }
+
 </style>
 <body>
 <%@ include file="./header.jsp" %>
