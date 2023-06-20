@@ -34,11 +34,12 @@
     <td><input class=contborder type="file" id=img name="img" multiple></td></tr>
     <tr><td>비밀글 설정</td><td><input type=radio name="passwrite" value="open">공개글
                            <input type=radio name="passwrite" value="secret">비밀글</td></tr>
-    <tr><td>비밀번호</td><td><input class=contborder type=password id=help_password name=help_password placeholder="비밀번호를 입력하세요"></td></tr>
-    <tr><td colspan="2"><button class="btn" id=btnRegi>등록</button>
-            <button type="button" class="btn" id="btncancel">취소</button></td></tr>      
-    
+    <tr><td>비밀번호</td><td><input class=contborder type=password id=help_password name=help_password placeholder="비밀번호를 입력하세요"></td></tr>  
     </table>
+    <div class="button-container">
+      <button class="writeBtn" id="btnRegi">등록</button>
+      <button type="button" class="writeBtn" id="btncancel">취소</button>
+    </div>
 </form>
 </body>
 <script src="https://code.jquery.com/jquery-latest.js"></script>

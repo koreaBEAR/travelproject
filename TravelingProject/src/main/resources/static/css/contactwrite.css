@@ -33,6 +33,10 @@ textarea {
 	border: none;
 }
 
+/* #updatelist tr:nth-child(even) {
+	background-color:  rgba(253, 227, 213, 0.3);
+}  */
+
 #updatelist td input[type="text"][readonly], #updatelist td textarea[readonly]
 	{
 	background-color: #f5f5f5;
@@ -41,59 +45,32 @@ textarea {
 	width: 100%;
 }
 
-#updatelist td button {
+/* 버튼 위치 */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Adjust the margin as needed */
+}
+
+.writeBtn {
+	margin-left: 10px;
     background-color: #F3732F;
     color: #fff;
 	position: relative;
 	border: 0.5px solid #F3732F;
 	display: inline-block;
-	padding: 15px 30px;
+	padding: 10px 30px;
 	border-radius: 15px;
 	text-decoration: none;
 	font-weight: 600;
+	font-size: 20px;
 	transition: 0.25s;
 }
 
-#updatelist td button:hover {
+.writeBtn:hover {
 	border: 0.5px solid #F3732F;
 	color: #F3732F;
 	background-color: #fff;
-}
-
-#updatelist tr:nth-child(even) {
-	background-color: #f2f2f2;
-}
-
-.seqinput {
-	border: none;
-}
-
-.Mainhead {
-	margin-bottom: 10px;
-}
-
-.title_img {
-	height: 70px;
-	margin-top: 5px;
-}
-
-#lo {
-	float: right;
-	border: 2px solid #000;
-}
-
-#mobiList {
-	visibility: hidden;
-}
-
-.categorynav1 {
-	line-height: 50px
-}
-
-.gnb1>li {
-	margin-right: 5%;
-	display: inline-block;
-	position: relative;
 }
 
 
@@ -113,5 +90,5 @@ textarea {
 }
 
 #mySelect:focus {
-    border-color: #4CAF50;      /* Green border when dropdown is focused */
+    border-color: #F3732F;     /* Green border when dropdown is focused */
 }
