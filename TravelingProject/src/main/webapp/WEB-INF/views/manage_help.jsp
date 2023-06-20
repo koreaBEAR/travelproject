@@ -326,6 +326,7 @@ a.index {
     <%@include file="manage_error.jsp" %>
 </c:if> 
 
+<%@ include file="./footer.jsp" %>
 </body>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
