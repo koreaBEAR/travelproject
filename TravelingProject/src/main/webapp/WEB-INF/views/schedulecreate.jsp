@@ -63,16 +63,20 @@
 		</div>
 		<div id="leftRadioSelectPlace" style="display: none;">
 			<div>
-				<button id="placeAllDelete" onclick="allDelete(this)">명소전체삭제</button>
+				<button id="placeAllDelete" class="addAllDelete" onclick="allDelete(this)">명소전체삭제</button>
 			</div>
-			<div id="divPlaceAddCart" class="container"></div>
+			<div class="addCartCss">
+				<ul id="ulPlaceAddCart" ondrop="drop(event)" ondragover="allowDrop(event);"></ul>
+			</div>
 		</div>
 
 		<div id="leftRadioSelectLodging" style="display: block;">
 			<div>
-				<button id="lodgingAllDelete" onclick="allDelete(this)">숙박전체삭제</button>
+				<button id="lodgingAllDelete" class="addAllDelete" onclick="allDelete(this)">숙박전체삭제</button>
 			</div>
-			<div id="divLodgingAddCart" class="container"></div>
+			<div  class="addCartCss">
+				<ul  id="ulLodgingAddCart" ondrop="drop(event)" ondragover="allowDrop(event);"></ul>
+			</div>
 		</div>
 	</div>
 	<div id="divPlaceInfo" class="modal">
@@ -95,8 +99,8 @@
 					<label for="rightScheduleModalRadioPlace" style="width: 100%; height: 20px;"><span>명소</span></label>
 					<input type="hidden" id="rightScheduleModalRadioCurrentP" value="2">
 				</div>
-				<div id="placeAddCartCopy"></div>
-				<div id="lodgingAddCartCopy"></div>
+				<div id="placeAddCartCopy" class="addCartCopy"></div>
+				<div id="lodgingAddCartCopy" class="addCartCopy"></div>
 			</div>
 			<div id="divScheduleModalLeftSidebar">
 				<div class="leftScheduleModalRadio leftScheduleModalRadioCss">
@@ -107,15 +111,19 @@
 					<input type="hidden" id="leftScheduleModalRadioCurrentP" value="2">
 				</div>
 				<div class="scheduleDate1 scheduleStyle" style="display: none;">
-					<div id="leftRadioSelectPlace1" class="leftRadioSelectPlaceCss container" style="display: block;">
+					<div id="leftRadioSelectPlace1" class="modalContainer" style="display: block;">
+						<ul ondrop="drop(event)" class="leftRadioSelectPlaceCss" ondragover="allowDrop(event);"></ul>
 					</div>
-					<div id="leftRadioSelectLodging1" class="leftRadioSelectPlaceCss container" style="display: none;">
+					<div id="leftRadioSelectLodging1" class="modalContainer" style="display: none;">
+						<ul ondrop="drop(event)" class="leftRadioSelectPlaceCss" ondragover="allowDrop(event);"></ul>
 					</div>
 				</div>
 				<div class="scheduleDate2 scheduleStyle" style="display: none;">
-					<div id="leftRadioSelectPlace2" class="leftRadioSelectPlaceCss container" style="display: none;">
+					<div id="leftRadioSelectPlace2" class="modalContainer" style="display: none;">
+						<ul ondrop="drop(event)" class="leftRadioSelectPlaceCss" ondragover="allowDrop(event);"></ul>
 					</div>
-					<div id="leftRadioSelectLodging2" class="leftRadioSelectPlaceCss container" style="display: none;">
+					<div id="leftRadioSelectLodging2" class="modalContainer" style="display: none;">
+						<ul ondrop="drop(event)" class="leftRadioSelectPlaceCss" ondragover="allowDrop(event);"></ul>
 					</div>
 				</div>
 			</div>
@@ -128,8 +136,6 @@
         </div>
      -->
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js" integrity="sha512-zYXldzJsDrNKV+odAwFYiDXV2Cy37cwizT+NkuiPGsa9X1dOz04eHvUWVuxaJ299GvcJT31ug2zO4itXBjFx4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=83a5e10151ba0f12ecdb1a465d31b58e&libraries=services"></script>
