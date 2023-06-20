@@ -24,8 +24,14 @@
                     <input type=hidden id=help_seq name=help_seq value='${updatelists.help_seq}' readonly >
                     <input type=hidden id= member_id name=member_id  readonly ></td></tr>
     <tr><td>내용</td><td><textarea class=contborder name="help_content" id="help_content">${updatelists.help_content}</textarea></td></tr>
-    <tr><td>이미지</td>
-    <td><input class=contborder type="file" id=help_img name="help_img" multiple></td></tr>
+    <tr>
+    <td>이미지</td>
+    <td>
+    	<input type=text id="showimg"  value="${updatelists.help_img}">
+        <input type="hidden" id="old_img" name="old_img" value="${updatelists.help_img}">
+        <input class="contborder" type="file" id="help_img" name="help_img" multiple>
+    </td>
+    </tr>
     <tr><td>비밀글 설정</td><td><input type=radio name="passwrite" value="open">공개글
                            <input type=radio name="passwrite" value="secret">비밀글</td></tr>
     <tr><td>비밀번호</td><td><input class=contborder type=password id=help_password name=help_password placeholder="비밀번호를 입력하세요"></td></tr>
@@ -65,6 +71,22 @@ $(document).ready(function() {
         }
     });
 	
+    $('#help_img').change(function() {
+        // If files were selected
+        if(this.files.length > 0) {
+            var fileNames = [];
+            for(var i=0; i<this.files.length; i++) {
+                fileNames.push(this.files[i].name);
+            }
+            // Join file names and set as value of "showimg"
+            $('#showimg').val(fileNames.join(", "));
+        } else {
+            // If no file was selected, set "showimg" value back to original value
+            $('#showimg').val($('#old_img').val());
+        }
+    });
+    
+    
 // 등록 버튼
     $('#btnRegi').click(function(e){
         e.preventDefault();
