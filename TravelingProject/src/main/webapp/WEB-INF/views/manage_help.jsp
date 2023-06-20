@@ -355,8 +355,12 @@ $(document)
     	imageUrl += '<img src="/img/contact/' + images[i] + '" class="uploaded-image">';
     }
     $('#help_img').html(imageUrl);
-    //$('#help_img').html('<img src="' + help_img + '" class="uploaded-image">');
-	console.log(imageUrl);	 
+    
+    if(images == null || images == ''){
+     $('#help_img').hide();
+    }
+    
+	//console.log(imageUrl);	 
 	//console.log(help_seq);
     $('#helpDlg').dialog({
         'beforeClose':function(e,u){
