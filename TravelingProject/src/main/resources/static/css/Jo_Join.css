@@ -36,6 +36,7 @@
   z-index: 999;
   height: 800px;
   margin: 0 auto;
+  margin-top:1%;
   width: 600px;
 }
 label {
@@ -108,9 +109,10 @@ input[id=birth]{
 .select input[type=radio]+label{
     display: inline-block;
     cursor: pointer;
-    height: 24px;
+    height: 40px;
     width: 90px;
     border: 1px solid #F3732F;
+    border-radius:10px;
     line-height: 24px;
     text-align: center;
     font-weight:bold;
