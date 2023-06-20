@@ -1,4 +1,50 @@
 @charset "UTF-8";
+
+/* 폰트 */
+@font-face {
+    font-family: 'OTWelcomeRA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');
+    font-style: normal;
+}
+/* 라벨&input join */
+.form{
+	margin-top:8%;
+	
+}
+.form label {
+	font-weight: 700;
+	font-size: 20px; /* adjust this value as necessary */
+}
+
+.form input {
+  font-size: 18px; /* adjust this value as necessary */
+   font-weight: normal;
+}
+
+/* input[type='date']::-webkit-calendar-picker-indicator {
+  position: absolute; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent; 
+  color: transparent; 
+  cursor: pointer;
+}
+
+input[type='date']::before {
+  content: attr(placeholder); 
+  width: 100%;
+  height: 100%;
+}
+
+input[type='date']:valid::before {
+  display: none; 
+} */
+
+
+
+
 :root {
   --button-color: #0f0f0f;
   --button-bg-color: #F3732F;
@@ -30,14 +76,16 @@
 	padding:0;
 }
 .container {
-  background: rgba(255, 255, 255, 0.7);
-  place-content: center;
-  display: flex;
-  z-index: 999;
-  height: 800px;
-  margin: 0 auto;
-  width: 600px;
+	font-family: 'OTWelcomeRA';
+	background: rgba(255, 255, 255, 0.7);
+	place-content: center;
+	display: flex;
+	z-index: 999;
+	height: 800px;
+	margin: 0 auto;
+	width: 600px;
 }
+
 label {
   color:  black;
   font-size: 14px;
@@ -106,16 +154,18 @@ input[id=birth]{
     display: none;
 }
 .select input[type=radio]+label{
+	border-radius: 15px;
     display: inline-block;
     cursor: pointer;
-    height: 24px;
+    height: 35px;
     width: 90px;
     border: 1px solid #F3732F;
     line-height: 24px;
     text-align: center;
     font-weight:bold;
-    font-size:13px;
+    font-size:20px;
 }
+
 .select input[type=radio]+label{
     background-color: #fff;
     color: #F3732F;
