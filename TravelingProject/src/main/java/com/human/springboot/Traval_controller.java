@@ -1107,7 +1107,7 @@ public class Traval_controller {
 	
 	
 ///////////////현준///////////////////////
-	@GetMapping("/schedulecreate")
+	@GetMapping("/schedulecreate/{cityNum}/{cityName}")
 	public String Admin() {
 		return "schedulecreate";
 	}

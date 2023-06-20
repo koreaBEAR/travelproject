@@ -25,14 +25,19 @@ $(document)
 .on('change', '.calender', dateCalculation) //여행의 시작날짜와 종료날짜의 기간계산을 위한 이벤트
 .on('click', '.info', placeInfo) //업체정보를 띄우기 위한 이벤트
 .on('click', '#scheduleCreate', scheduleDetailCreate) //일정생성 이벤트
-.on('click', '#scheduleModalClose', scheduleModalClose)
+.on('click', '#scheduleModalClose', scheduleModalClose) // 모달을 닫는 함수
+
+// URL에 cityNum과 cityName을 변수에 저장하는 코드
+tempAry = window.location.pathname.split('/');
+cityNum = tempAry[2];
+cityName = decodeURIComponent(tempAry[3]);
 
 //초기 위도,경도를 통한 선택지역 맵 불러오기
 function mapCreate() {
   $.ajax({
     url: "/mapCreate",
     type: "post",
-    data: {city: 2},
+    data: {city: cityNum},
     dataType: "json",
     success:function(data) {
       for ( let i = 0; i < data.length; i++ ) {
@@ -45,8 +50,9 @@ function mapCreate() {
         }
         // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
         map = new kakao.maps.Map(mapContainer, mapOption)
-        placeListCount(2,null);
-        placeList(2,null)
+        placeListCount(cityNum,null);
+        placeList(cityNum,null)
+        $('#cityName').text(cityName);
       }
     }
   });
@@ -183,8 +189,8 @@ function selectPlaceAdd(tagId) {
       }
     }
   }
-  placeList(2,pSeq);
-  placeListCount(2,pSeq)
+  placeList(cityNum,pSeq);
+  placeListCount(cityNum,pSeq)
   markerScheduleCreate(tagId.id)
   $('#searchInput').val("");
 }
@@ -229,8 +235,8 @@ function selectPlaceDelete(tagId) {
       markers.splice(i,1);
     }
   }
-  placeList(2,pSeq);
-  placeListCount(2,pSeq);
+  placeList(cityNum,pSeq);
+  placeListCount(cityNum,pSeq);
 }
 
 //일정에 추가되어있는 업체를 원하는 업체만 지우는 함수입니다.
@@ -266,7 +272,7 @@ function allDelete(tagId) {
       }
     }
     $('#ulPlaceAddCart').empty();
-    placeList(2,pSeq);
+    placeList(cityNum,pSeq);
   }
   else if ( thisId == 'lodgingAllDelete' ) {
     for ( let i = 0; i < lodgingAddCartlen; i++ ) {
@@ -290,7 +296,7 @@ function allDelete(tagId) {
       }
     }
     $('#ulLodgingAddCart').empty();
-    placeList(2,pSeq);
+    placeList(cityNum,pSeq);
   }
 }
 
@@ -318,7 +324,7 @@ function pagination(){
 	$("#ul_pageNumber").empty();
 	dataLength = Number($("#placeListCount").val());
 	thisText = $(this).text();
-	last = Math.ceil(dataLength / 12);
+	last = Math.ceil(dataLength / 8);
 	
 	cP = Number($("#hidden_currentP").val());
 	
@@ -382,7 +388,7 @@ function placeListPageChange() {
       pSeq += placeSeqList[i];
     }
   }
-  placeList(2,pSeq);
+  placeList(cityNum,pSeq);
 }
 
 //검색 이벤트 함수 입니다.
@@ -621,8 +627,8 @@ function rightRadio(tagId) {
       pSeq += placeSeqList[i];
     }
   }
-  placeList(2,pSeq);
-  placeListCount(2,pSeq);
+  placeList(cityNum,pSeq);
+  placeListCount(cityNum,pSeq);
 }
 
 //좌측 사이드바에 숙박&명소 클릭 시 이벤트발생 함수입니다.
@@ -650,11 +656,12 @@ function scheduleDetailCreate() {
   $('.scheduleModal').css('display','block');
   let calculation = $('#day').text().split('');
   calculation = calculation[0];
+  let city = cityNum;
 	
   $.ajax({
     url: "/mapCreate",
     type: "post",
-    data: {city: 2},
+    data: {city: city},
     dataType: "json",
     success:function(data) {
         cityLat = data[data.length-1].lat
@@ -750,37 +757,35 @@ let dragEl;
 let dropEl;
 
 let drag = function(ev){
-    dragEl = ev.target;
+	dragEl = ev.target;
 }
 let allowDrop = function(ev){
-    ev.preventDefault();
+	ev.preventDefault();
 }
 let drop = function(ev){
-    if(ev.target.tagName == 'ul' || ev.target.tagName == 'UL'){
-        dropEl = ev.target;
-        dropEl.append(dragEl);
-        console.log('ul');
-    } else if(ev.target.tagName == 'li' || ev.target.tagName == 'LI'){
-        dropEl = ev.target;
-        let ul = ev.target.parentNode;
-        ul.insertBefore(dragEl, dropEl);
-        console.log('li');
-    }
+	if(ev.target.tagName == 'ul' || ev.target.tagName == 'UL'){
+		dropEl = ev.target;
+		dropEl.append(dragEl);
+	} else if(ev.target.tagName == 'li' || ev.target.tagName == 'LI'){
+		dropEl = ev.target;
+		let ul = ev.target.parentNode;
+		ul.insertBefore(dragEl, dropEl);
+	}
 }
-   
+
 //일정상세페이지 modal을 종료하는 함수입니다.
 function scheduleModalClose() {
-  $('.scheduleModal').css('display','none');
-  $('#ulPlaceAddCart').removeAttr('style');
+	$('.scheduleModal').css('display','none');
+	$('#ulPlaceAddCart').removeAttr('style');
 }
 
 // 일정 상세경로 클릭 시 길찾기
 function roadFind() {
-  let options =
-  "top=15, left=80, width=1100, height=900, status=no, menubar=no, toolbar=no, resizable=no";
-  window.open(
-    "Https://map.kakao.com/?sName=천안시청&eName=휴먼교육센터",
-    "길찾기",
-    options
-  );
+	let options =
+	"top=15, left=80, width=1100, height=900, status=no, menubar=no, toolbar=no, resizable=no";
+	window.open(
+	"Https://map.kakao.com/?sName=천안시청&eName=휴먼교육센터",
+	"길찾기",
+	options
+	);
 }
