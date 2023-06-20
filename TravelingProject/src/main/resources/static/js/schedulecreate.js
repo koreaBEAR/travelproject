@@ -686,6 +686,7 @@ function scheduleDetailCreate() {
 
   $('.addScheduleByDate').empty();
   $('#dayListButtonArea div:eq(0)').empty();
+  $('#dayListButtonArea').empty();
   for ( let i = 1; i < calculation; i++ ) {
     $('#dayListButtonArea').append(`
     <div class="divDayButton" onclick="openDayDetailPlan(${i})">
@@ -694,11 +695,15 @@ function scheduleDetailCreate() {
     </div>
     `);
   }
+  $('.leftRadioSelectPlaceCss').empty();
 	$('#dayButton1').trigger('click').css('background-color','red');
 	$('.scheduleDate1').attr('style','display:block;');
 	$('#placeAddCartCopy').attr('style','display: block')
 	$('#lodgingAddCartCopy').attr('style','display: none')
-	$('#ulPlaceAddCart').attr('style','height: 697px;')
+	$('.ulPlaceAddCartCss').attr('style','height: 697px;')
+	$('.ulLodgingAddCartCss').attr('style','height: 697px;')
+	
+	
 }
 
 function rightScheduleModalRadio(tagId) {
@@ -758,6 +763,7 @@ let dropEl;
 
 let drag = function(ev){
 	dragEl = ev.target;
+	
 }
 let allowDrop = function(ev){
 	ev.preventDefault();
@@ -765,7 +771,12 @@ let allowDrop = function(ev){
 let drop = function(ev){
 	if(ev.target.tagName == 'ul' || ev.target.tagName == 'UL'){
 		dropEl = ev.target;
-		dropEl.append(dragEl);
+		if ( dragEl.tagName == 'img' || dragEl.tagName == 'IMG') {
+			return false;
+		}
+		else {
+		dropEl.append(dragEl);			
+		}
 	} else if(ev.target.tagName == 'li' || ev.target.tagName == 'LI'){
 		dropEl = ev.target;
 		let ul = ev.target.parentNode;
@@ -776,7 +787,10 @@ let drop = function(ev){
 //일정상세페이지 modal을 종료하는 함수입니다.
 function scheduleModalClose() {
 	$('.scheduleModal').css('display','none');
+	$('.ulPlaceAddCart').removeAttr('style');
 	$('#ulPlaceAddCart').removeAttr('style');
+	$('.ulLodgingAddCartCss').removeAttr('style');
+	$('#ulLodgingAddCart').removeAttr('style');
 }
 
 // 일정 상세경로 클릭 시 길찾기
