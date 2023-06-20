@@ -110,6 +110,7 @@ input[type=button]:hover, input[type=submit]:hover {
 
 <body>
 <%@ include file="./header.jsp" %>
+<c:if test="${sessionScope.memberClass == 'admin'}">
 <div class="section">
 <table>
 	<tr>
@@ -178,6 +179,11 @@ input[type=button]:hover, input[type=submit]:hover {
 </table>
 </div>
 
+</c:if>
+<c:if test="${sessionScope.memberClass != 'admin'}">
+    <%@include file="manage_error.jsp" %>
+</c:if> 
+
 </body>
 
 <script>
@@ -186,7 +192,7 @@ let like = 0;
 $(document)
 .on('click', '#btnUpload', function() {
 	let imageNames = fileNames;
-    
+   
     $.ajax({
         url: '/place_upload',
         type: 'post',

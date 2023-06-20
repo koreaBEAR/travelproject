@@ -617,7 +617,6 @@ public class Traval_controller {
 	    double lat = Double.parseDouble(req.getParameter("lat"));
 	    double lng = Double.parseDouble(req.getParameter("lng"));
 
-	    System.out.println(lat);
 	    String place_address = postcode + "," + address + "," + detailAddress;
 
 	    String[] fileNames = req.getParameterValues("imageNames[]");

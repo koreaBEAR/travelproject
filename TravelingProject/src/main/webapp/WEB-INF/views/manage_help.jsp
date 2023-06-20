@@ -227,7 +227,7 @@ a.index {
 </style>
 <body>
 <%@ include file="./header.jsp" %>
-
+<c:if test="${sessionScope.memberClass == 'admin'}">
 	<div class="nav">
 	<h2><a href ="/manage_member" class="index">회원관리</a></h2>
 	<h2><a href ="/manage_place" class="index">업체관리</a></h2>
@@ -321,6 +321,10 @@ a.index {
     <div><button id="btnUpload" >등록</button><button id="btnCancel">취소</button></div>   
 </div> 
  
+</c:if>
+<c:if test="${sessionScope.memberClass != 'admin'}">
+    <%@include file="manage_error.jsp" %>
+</c:if> 
 
 </body>
 <script src="http://code.jquery.com/jquery-latest.js"></script>

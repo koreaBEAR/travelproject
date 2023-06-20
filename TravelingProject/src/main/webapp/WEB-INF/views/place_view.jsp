@@ -55,6 +55,7 @@
 </style>
 <body>
 <%@ include file="./header.jsp" %>
+<c:if test="${sessionScope.memberClass == 'admin'}">
 <div class="section">
 <table>
 	<tr>
@@ -101,7 +102,13 @@
 	</tr>
 </table>
 </div>
+
+</c:if>
+<c:if test="${sessionScope.memberClass != 'admin'}">
+    <%@include file="manage_error.jsp" %>
+</c:if> 
 </body>
+
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 $(document)
