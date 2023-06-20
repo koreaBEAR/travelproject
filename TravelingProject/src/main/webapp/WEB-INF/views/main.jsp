@@ -175,7 +175,7 @@ $(document)
     });
 	
     $(document).on('click', '#btnCreate', function(){
-        document.location="/tour/"+city_num;
+        document.location="/schedulecreate/"+city_num;
     });
     
     $('#myModal').on('hidden.bs.modal', function() {

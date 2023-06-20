@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://cdn.jsdelivr.net/gh/sunn-us/SUITE/fonts/static/woff2/SUITE.css" rel="stylesheet">
 <link rel="stylesheet" href="css/Jo_Join.css">
 <meta charset="UTF-8">
 <title>JoinUs</title>
