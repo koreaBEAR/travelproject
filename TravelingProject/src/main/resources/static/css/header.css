@@ -38,12 +38,13 @@
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-Ganpan.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-    padding: 20px 30px;
+    padding: 20px 40px;
     height: auto;
     width: auto;
     text-align: right;
-    background-color: #F8B48F;
+    background-color: #fabd9c;
     border-radius: 20px;
+    font-size: 20px;
 }
 
 #head_line{
@@ -69,17 +70,17 @@
     padding: 15px 15px;
     font-size:medium;
 }
-#head_login:hover{
+/* #head_login:hover{
     color:rgb(255, 255, 255);
     border-radius:10px 10px 10px 10px;
     background-color:rgb(158, 227, 255);
     padding:5px 15px;
-}
+} */
 
 #head_mypage:hover{
     color:rgb(255, 255, 255);
     border-radius:10px 10px 10px 10px;
-    background-color:rgb(158, 227, 255);
+    background-color: #f5905a;
     padding:5px 15px;
 }
 
