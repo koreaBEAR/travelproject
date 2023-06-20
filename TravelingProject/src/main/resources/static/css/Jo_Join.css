@@ -87,11 +87,15 @@ input {
   align-items: center;
   height: 100px; 
 }
-.joinButton, #btnback {
-  margin: 10px; /* Adjust the margin as desired */
-  font-size: 20px;
-  /* Add other styles for the buttons */
+.joinButton {
+	font-size: 20px;
+	color: rgb(255, 255, 255);
 }
+.joinButton, #btnback {
+	margin: 10px;
+}
+
+
 button{
 	-webkit-appearance: none;
 	-moz-appearance: none;
