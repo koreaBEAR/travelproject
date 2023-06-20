@@ -177,7 +177,7 @@ a.index {
 .upward-container {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  right: 10px;
 }
 
 .upward {
@@ -194,7 +194,7 @@ a.index {
 </style>
 <%@ include file="./header.jsp" %>
 <body>	
-
+<c:if test="${sessionScope.memberClass == 'admin'}">
 	<div class="nav">
 	<h2><a href ="/manage_member" class="index">회원관리</a></h2>
 	<h2><a href ="/manage_place" class="index">업체관리</a></h2>
@@ -279,6 +279,10 @@ a.index {
 
 </div>
 
+</c:if>
+<c:if test="${sessionScope.memberClass != 'admin'}">
+    <%@include file="manage_error.jsp" %>
+</c:if> 
 </body>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>

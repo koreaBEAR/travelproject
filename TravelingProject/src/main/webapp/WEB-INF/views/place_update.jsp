@@ -110,6 +110,7 @@ input[type=button]:hover, input[type=submit]:hover {
 
 <body>
 <%@ include file="./header.jsp" %>
+<c:if test="${sessionScope.memberClass == 'admin'}">
 <div class="section">
 <table>
 	<tr>
@@ -182,6 +183,11 @@ input[type=button]:hover, input[type=submit]:hover {
 	</tr>	
 </table>
 </div>
+
+</c:if>
+<c:if test="${sessionScope.memberClass != 'admin'}">
+    <%@include file="manage_error.jsp" %>
+</c:if> 
 
 </body>
 

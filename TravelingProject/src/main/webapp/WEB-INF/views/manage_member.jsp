@@ -169,7 +169,7 @@ a.index {
 </style>
 <body>	
 <%@ include file="./header.jsp" %>
-<%-- <c:if test="${sessionScope.member_class == 'admin'}">   --%>
+<c:if test="${sessionScope.memberClass == 'admin'}">
 	
 	<div class="nav">
 	<h2><a href ="/manage_member" class="index">회원관리</a></h2>
@@ -253,10 +253,10 @@ a.index {
 
 	
 </div>	
-<%-- </c:if>
-<c:if test="${sessionScope.member_class != 'admin'}">
+</c:if>
+<c:if test="${sessionScope.memberClass != 'admin'}">
     <%@include file="manage_error.jsp" %>
-</c:if> --%>
+</c:if> 
 	
 </body>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
