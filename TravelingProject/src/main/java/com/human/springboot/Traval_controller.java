@@ -350,6 +350,12 @@ public class Traval_controller {
 		return ja.toString();
 	}
 	
+	//마이페이지
+	@GetMapping("/myPage")
+	public String loadMyPage() {
+		return "myPage";
+	}
+	
 	//정아
 	@GetMapping("/manage_member")
 	public String manage_member(@RequestParam(defaultValue = "1") int pageNo,
