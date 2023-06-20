@@ -185,6 +185,31 @@ a.index {
 	position: relative;
 }
 
+#help_category::before {
+  content: "Category: ";
+  font-weight: bold;
+}
+
+#help_title::before {
+  content: "Title: ";
+  font-weight: bold;
+}
+
+#member_id::before {
+  content: "ID: ";
+  font-weight: bold;
+}
+
+#help_created::before {
+  content: "Created: ";
+  font-weight: bold;
+}
+
+#help_content::before {
+  content: "Content: ";
+  font-weight: bold;
+}
+
 #helpDlg textarea {
 	width: 100%;
 	height: 100px;
@@ -224,6 +249,7 @@ a.index {
   right: 0;
   color: white;
 }
+
 </style>
 <body>
 <%@ include file="./header.jsp" %>
@@ -398,7 +424,6 @@ $(document)
 })
 
 
-
 .on("click",'#btnsearch', function(){
 	if (!$('#searchForm').find('option:selected').val()) {
 		alert("검색 기준을 선택하세요.");
@@ -410,6 +435,7 @@ $(document)
 	}
 	$('#searchForm').submit();
 	})
+
 	
 .ready(function(){
    if('${errorMessage}'!='') {
@@ -417,6 +443,7 @@ $(document)
 	   $("#errorMessage").css("color", "grey");
    }
 })	
+
 
 $(document)
 .ready(function() {
@@ -433,5 +460,11 @@ function CountChange() {
 	url.searchParams.set("amount", selectedAmount);
 	window.location.href = url.href;
 }
+
+$(document)
+.on('click', '#tblhelp tr:gt(0) td:not(:last-child)', function() {
+	   let help_seq = $(this).closest('tr').find('td').eq(0).text();
+	   window.location.href = "/contactdetail/" + help_seq;
+	})
 </script>
 </html>
