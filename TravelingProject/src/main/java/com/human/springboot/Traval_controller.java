@@ -559,33 +559,35 @@ public class Traval_controller {
 	}
 
 	
-	//이미지 업로드
+	// 이미지 업로드
 	@PostMapping("/upload_image")
 	public String uploadImage(@RequestParam("images") MultipartFile[] images) {
 	    try {
 	        for (MultipartFile image : images) {
 	            String originalFilename = image.getOriginalFilename();
-	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename; 
+	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename;
 	            File dest = new File(filePath);
 	            image.transferTo(dest);
 	            System.out.println(dest);
 	        }
-	        return "manage_place"; 
+	        return "manage_place";
 	    } catch (IOException e) {
-	    	
 	        e.printStackTrace();
 	        for (MultipartFile image : images) {
 	            String originalFilename = image.getOriginalFilename();
-	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename; 
+	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename;
 	            File file = new File(filePath);
+	            System.out.println("filePath" + filePath);
 	            if (file.exists() && file.isFile()) {
+	                System.out.println("delete" + file);
 	                file.delete();
 	            }
 	        }
 
-	        return "redirect:/manage_place"; 
+	        return "redirect:/manage_place";
 	    }
 	}
+
 
 	
 	//업체상세보기	

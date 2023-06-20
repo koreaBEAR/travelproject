@@ -2,9 +2,11 @@ $(document)
 .ready(mapCreate)
 .ready(before_date(3))
 .ready(datePicker)
-.ready(function() {
-  $('input:radio[name=select]').attr('checked',true);
-  $('input:radio[name=leftSelect]').attr('checked',true);
+.ready(function() {	
+	$('input:radio[name=select]').attr('checked',true);
+	$('input:radio[name=leftSelect]').attr('checked',true);
+	$('#leftRadioSelectPlace').attr('style','display: block')
+	$('#leftRadioSelectLodging').attr('style','display: none')
 })
 .ready(function() {
   $('#searchInput').keypress(function(key) {
@@ -116,8 +118,7 @@ function placeList(city,pSeq) {
         let placeImg = data[i].img;
 
         let commonString = `
-        <div id='divPlaceCard${placeSeq}' class="draggable" draggable="true" value='${placeSeq}'>
-	        <li id='placeCard${placeSeq}' class='placeCard' value='${placeSeq}'>
+	        <li id='placeCard${placeSeq}' class='placeCard' draggable="true" ondragstart= "drag(event)" value='${placeSeq}'>
 	          <div class='placeImg'>
 	            <img class='cartImg' src='${placeImg}'>
 	          </div>
@@ -127,8 +128,7 @@ function placeList(city,pSeq) {
 	              <i id='scheduleDelete'title="목록에서 삭제" class="material-icons">clear</i>
 	            </div>
 	          </div>
-	        </li>
-	       </div> `;
+	        </li>`;
         placeCommonString[i] = (commonString);
         html = [];
         html.push(
@@ -197,13 +197,13 @@ function placeAppend() {
     $('#lodgingSelect').click();
     leftRadio('lodgingSelect')
     selectPlace = $(this).parent().parent().parent().parent().index();
-    $('#divLodgingAddCart').append(placeCommonString[selectPlace]);
+    $('#ulLodgingAddCart').append(placeCommonString[selectPlace]);
   }
   else if ( rightRadioCP == 2 ) {
     $('#placeSelect').click();
     leftRadio('placeSelect')
     selectPlace = $(this).parent().parent().parent().parent().parent().index();
-    $('#divPlaceAddCart').append(placeCommonString[selectPlace]);
+    $('#ulPlaceAddCart').append(placeCommonString[selectPlace]);
   }
 }
 
@@ -235,23 +235,23 @@ function selectPlaceDelete(tagId) {
 
 //일정에 추가되어있는 업체를 원하는 업체만 지우는 함수입니다.
 function scheduleDelete() {
-  $(this).parent().parent().parent().parent().remove();
+  $(this).parent().parent().parent().remove();
 }
 
 //일정에 추가되어있는 업체를 전부 취소하고 지우는 함수입니다.
 function allDelete(tagId) {
-  let placeAddCartlen = $('#divPlaceAddCart').children().length;
-  let lodgingAddCartlen = $('#divLodgingAddCart').children().length;
+  let placeAddCartlen = $('#ulPlaceAddCart').children().length;
+  let lodgingAddCartlen = $('#ulLodgingAddCart').children().length;
   let thisId = tagId.id;
 
   if ( thisId == 'placeAllDelete') {
     for ( let i = 0; i < placeAddCartlen; i++ ) {
-      placeDeleteSeq = $('#divPlaceAddCart div:eq(0)').children('li').val();
+      placeDeleteSeq = $('#ulPlaceAddCart').children('li').val();
       for ( let j = 0; j < markers.length; j++ ) {
         if ( placeDeleteSeq == markers[j].Gb ) {
           markers[j].setMap(null);
           markers.splice(j,1);
-          $('#divPlaceAddCart div:eq(0)').remove();
+          $('#ulPlaceAddCart ul:eq(0)').remove();
           placeSeqList.splice(j,1);
         }
       }
@@ -265,17 +265,17 @@ function allDelete(tagId) {
         pSeq += placeSeqList[i];
       }
     }
-    $('#divPlaceAddCart').empty();
+    $('#ulPlaceAddCart').empty();
     placeList(2,pSeq);
   }
   else if ( thisId == 'lodgingAllDelete' ) {
     for ( let i = 0; i < lodgingAddCartlen; i++ ) {
-      lodgingDeleteSeq = $('#divLodgingAddCart div:eq(0)').children('li').val();
+      lodgingDeleteSeq = $('#ulLodgingAddCart').children('li').val();
       for ( let j = 0; j < markers.length; j++ ) {
         if ( lodgingDeleteSeq == markers[j].Gb ) {
           markers[j].setMap(null);
           markers.splice(j,1);
-          $('#divLodgingAddCart div:eq(0)').remove();
+          $('#ulLodgingAddCart ul:eq(0)').remove();
           placeSeqList.splice(j,1);
         }
       }
@@ -289,7 +289,7 @@ function allDelete(tagId) {
         pSeq += placeSeqList[i];
       }
     }
-    $('#divLodgingAddCart').empty();
+    $('#ulLodgingAddCart').empty();
     placeList(2,pSeq);
   }
 }
@@ -427,7 +427,7 @@ function placeSearch() {
         let placeImg = data[i].img;
 
         let commonString = `
-        <div id='divPlaceCard${placeSeq}'class="draggable" draggable="true" value='${placeSeq}'>
+        <div id='divPlaceCard${placeSeq}'draggable="true" ondragstart= "drag(event)" value='${placeSeq}'>
 	        <li id='placeCard${placeSeq}' class='placeCard' value='${placeSeq}'>
 	          <div class='placeImg'>
 	            <img class='cartImg' src='${placeImg}'>
@@ -673,9 +673,9 @@ function scheduleDetailCreate() {
   $('input:radio[name=leftScheduleModalRadio]').attr('checked',true);
 
   $('#placeAddCartCopy').empty();
-  $('#divPlaceAddCart').clone().appendTo('#placeAddCartCopy');
+  $('#ulPlaceAddCart').clone().appendTo('#placeAddCartCopy');
   $('#lodgingAddCartcopy').empty();
-  $('#divLodgingAddCart').clone().appendTo('#lodgingAddCartCopy');
+  $('#ulLodgingAddCart').clone().appendTo('#lodgingAddCartCopy');
 
   $('.addScheduleByDate').empty();
   $('#dayListButtonArea div:eq(0)').empty();
@@ -691,9 +691,7 @@ function scheduleDetailCreate() {
 	$('.scheduleDate1').attr('style','display:block;');
 	$('#placeAddCartCopy').attr('style','display: block')
 	$('#lodgingAddCartCopy').attr('style','display: none')
-	draggables = document.querySelectorAll(".draggable");
-	console.log(draggables);
-	
+	$('#ulPlaceAddCart').attr('style','height: 697px;')
 }
 
 function rightScheduleModalRadio(tagId) {
@@ -745,51 +743,35 @@ function openDayDetailPlan(buttonNum) {
 	$(`.scheduleDate${bNum}`).attr('style','display:block;')
 	$('.modalContainer').attr('style','display:none;')
 	$(`#leftRadioSelectPlace${bNum}`).attr('style','display:block;')
+	$('input:radio[name=leftScheduleModalRadio]').attr('checked',true);
 }
 
-(() => {
-    const $ = (select) => document.querySelectorAll(select);
-    const draggables = $('.draggable');
-    const containers = $('.container');
+let dragEl;
+let dropEl;
 
-    draggables.forEach(el => {
-        el.addEventListener('dragstart', () => {
-            el.classList.add('dragging');
-        });
-
-        el.addEventListener('dragend', () => {
-            el.classList.remove('dragging')
-        });
-    });
-
-    function getDragAfterElement(container, y) {
-        const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
-      
-        return draggableElements.reduce((closest, child) => {
-          const box = child.getBoundingClientRect() //해당 엘리먼트에 top값, height값 담겨져 있는 메소드를 호출해 box변수에 할당
-          const offset = y - box.top - box.height / 2 //수직 좌표 - top값 - height값 / 2의 연산을 통해서 offset변수에 할당
-          if (offset < 0 && offset > closest.offset) { // (예외 처리) 0 이하 와, 음의 무한대 사이에 조건
-            return { offset: offset, element: child } // Element를 리턴
-          } else {
-            return closest
-          }
-        }, { offset: Number.NEGATIVE_INFINITY }).element
-    };
-
-    containers.forEach(container => {
-        container.addEventListener('dragover', e => {
-            e.preventDefault()
-            const afterElement = getDragAfterElement(container, e.clientY);
-            const draggable = document.querySelector('.dragging')
-            // container.appendChild(draggable)
-            container.insertBefore(draggable, afterElement)
-        })
-    });
-})();
+let drag = function(ev){
+    dragEl = ev.target;
+}
+let allowDrop = function(ev){
+    ev.preventDefault();
+}
+let drop = function(ev){
+    if(ev.target.tagName == 'ul' || ev.target.tagName == 'UL'){
+        dropEl = ev.target;
+        dropEl.append(dragEl);
+        console.log('ul');
+    } else if(ev.target.tagName == 'li' || ev.target.tagName == 'LI'){
+        dropEl = ev.target;
+        let ul = ev.target.parentNode;
+        ul.insertBefore(dragEl, dropEl);
+        console.log('li');
+    }
+}
    
 //일정상세페이지 modal을 종료하는 함수입니다.
 function scheduleModalClose() {
   $('.scheduleModal').css('display','none');
+  $('#ulPlaceAddCart').removeAttr('style');
 }
 
 // 일정 상세경로 클릭 시 길찾기
