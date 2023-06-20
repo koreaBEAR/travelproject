@@ -2,7 +2,6 @@ package com.human.springboot;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -947,37 +946,7 @@ public class Traval_controller {
 	public String contactwrite() {
 
 		return "contactwrite";
-	}
-	
-	//고객센터 이미지 업로드
-//	@PostMapping("/Insert_image")
-//	public String Insert_image(@RequestParam("images") MultipartFile[] images) {
-//	    try {
-//	        for (MultipartFile image : images) {
-//	            String originalFilename = image.getOriginalFilename();
-//	            String decodedFilename = URLDecoder.decode(originalFilename, "UTF-8");
-//	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/contact/" + decodedFilename;
-//	            File dest = new File(filePath);
-//	            image.transferTo(dest);
-//	            System.out.println("img="+dest);
-//	        }
-//	        return "contact"; 
-//	    } catch (IOException e) {
-//	    	
-//	        e.printStackTrace();
-//	        for (MultipartFile image : images) {
-//	            String originalFilename = image.getOriginalFilename();
-//	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/contact/" + originalFilename; 
-//	            File file = new File(filePath);
-//	            if (file.exists() && file.isFile()) {
-//	                file.delete();
-//	            }
-//	        }
-//
-//	        return "redirect:/contact"; 
-//	    }
-//	}
-	
+	}	
 	
 	
 	// 고객센터 문의 insert
