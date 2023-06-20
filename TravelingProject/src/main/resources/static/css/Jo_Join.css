@@ -52,6 +52,16 @@
 	padding:0;
 }
 .container {
+<<<<<<< HEAD
+  background: rgba(255, 255, 255, 0.7);
+  place-content: center;
+  display: flex;
+  z-index: 999;
+  height: 800px;
+  margin: 0 auto;
+  margin-top:1%;
+  width: 600px;
+=======
 	font-family: 'OTWelcomeRA';
 	background: rgba(255, 255, 255, 0.7);
 	place-content: center;
@@ -60,6 +70,7 @@
 	height: 100%;
 	margin: 0 auto;
 	width: 600px;
+>>>>>>> branch 'main' of https://github.com/koreaBEAR/travelproject.git
 }
 
 label {
@@ -149,10 +160,19 @@ input[id=birth]{
     border-radius: 15px;
     display: inline-block;
     cursor: pointer;
+<<<<<<< HEAD
+    height: 40px;
+=======
     height: 35px;
+>>>>>>> branch 'main' of https://github.com/koreaBEAR/travelproject.git
     width: 90px;
     border: 1px solid #F3732F;
+<<<<<<< HEAD
+    border-radius:10px;
+    line-height: 24px;
+=======
     line-height: 43px;
+>>>>>>> branch 'main' of https://github.com/koreaBEAR/travelproject.git
     text-align: center;
     font-weight: bold;
     font-size: 20px;

@@ -24,6 +24,7 @@ public interface TDAO {
 	ArrayList <RevDTO> placeList();
 	ArrayList <RevDTO> placeReviews(int placeSeq);
 	ArrayList <RevDTO> reviewPlace(int placeSeq);
+	ArrayList <RevDTO> reviewContent(int placeSeq);
 	int reviewsCheck(int placeSeq);
 	
 	//정아////////////////

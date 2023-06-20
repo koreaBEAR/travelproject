@@ -1,3 +1,4 @@
+let currentPage = 1
 $(document)
 .ready(function(){
 	$('.placeModal').css('display','none')
@@ -54,16 +55,31 @@ $(document)
 								let placeTel = '<p><span class="placeTel">'+data[i]['placeTel']+'</span></p>'
 								let placeAddress = '<p><span class="placeAddress">'+data[i]['placeAddress']+'</span></p>'
 								let placeLike = '<p><span class="placeLike">'+data[i]['placeLike']+'</span></p>'
-								let reviewNickName = '<p><span class="memberNickName">'+data[i]['reviewNickName']+'</span></p>'
-								let reviewContent = '<p><span class="reviewContent">'+data[i]['reviewContent']+'</span></p>'
-								let reviewDate = '<p><span class="reviewDate">'+data[i]['reviewDate']+'</span></p>'
-								let placeReview = reviewNickName+reviewContent+reviewDate
 								divLeft = '<div class="divLeft"><div class="leftContainer"><div class="placeImges">'+placeImg+'</div><div class="placeName">'+placeName+'</div></div></div>'
-								divRight = '<div class="divRight"><div class="rightContainer"><div class="placeContent">'+placeContnet+placeTel+placeAddress+'</div><div class="placeIcon">'+placeLike+'</div><div class="placeReviews">'+placeReview+'</div></div></div>'
+								divRight = '<div class="divRight"><div class="rightContainer"><div class="placeContent">'+placeContnet+placeTel+placeAddress+'</div><div class="placeIcon">'+placeLike+'</div><div class="placeReviews"></div></div></div>'
 							}
-								console.log("divLeft: "+divLeft)
-								console.log("divRight: "+divRight)
-								$('.divMain').append(divLeft,divRight)
+							console.log("divLeft: "+divLeft)
+							console.log("divRight: "+divRight)
+							$('.divMain').append(divLeft,divRight)
+							$('.placeReviews').empty()
+								$.ajax({
+									url:"/loadReviewContent",
+									type:"post",
+									data:{placeNum:placeNum, page:currentPage},
+									dataType:"json",
+									success:function(data){
+										for(i=0; i<data.length; i++){
+											let placeReview =''
+											let reviewNickName = '<p><span class="memberNickName">'+data[i]['reviewNickName']+'</span></p>'
+											let reviewContent = '<p><span class="reviewContent">'+data[i]['reviewContent']+'</span></p>'
+											let reviewDate = '<p><span class="reviewDate">'+data[i]['reviewDate']+'</span></p>'
+											placeReview = '<div class="reviewblock">'+reviewNickName+reviewContent+reviewDate+'</div>'
+											console.log("placeReview: "+placeReview)
+											$('.placeReviews').append(placeReview)
+										}
+									}
+								})
+								
 						}
 					})
 				}
