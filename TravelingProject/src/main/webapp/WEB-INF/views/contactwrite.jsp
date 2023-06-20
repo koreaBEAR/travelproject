@@ -7,8 +7,8 @@
 <html>
 <head>
 <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUITE/fonts/static/woff2/SUITE.css" rel="stylesheet">
-	<title>게시판 글작성</title>
-	<link rel="stylesheet" href="/css/contactwrite.css">
+   <title>게시판 글작성</title>
+   <link rel="stylesheet" href="/css/contactwrite.css">
 </head>
 <style>
 
@@ -19,16 +19,16 @@
 
 <form action="/contactinsert" method="post" enctype="multipart/form-data">                
 <table id=updatelist border=1>
-	<tr><td>카테고리</td><td>
-	     <select id=mySelect>
-	      <option value="선택해주세요">선택해주세요</option>
+   <tr><td>카테고리</td><td>
+        <select id=mySelect>
+         <option value="선택해주세요">선택해주세요</option>
           <option value="수정요청">수정요청</option>
           <option value="Q&A">Q&A</option>
         </select></td></tr>
     <tr><td>제목</td><td><input class=contborder type=text id=help_title name=help_title placeholder="제목을 입력하세요">
-    								<input type=hidden id= help_seq name=help_seq  readonly >
-    								<input type=hidden id= help_category name=help_category  readonly >
-    								<input type=hidden id= member_id name=member_id  readonly ></td></tr>
+                            <input type=hidden id= help_seq name=help_seq  readonly >
+                            <input type=hidden id= help_category name=help_category  readonly >
+                            <input type=hidden id= member_id name=member_id  readonly ></td></tr>
     <tr><td>내용</td><td><textarea class=contborder name="help_content" id="help_content" placeholder="내용을 입력하세요"></textarea></td></tr>
     <tr><td>이미지</td>
     <td><input class=contborder type="file" id=img name="img" multiple></td></tr>
@@ -36,7 +36,7 @@
                            <input type=radio name="passwrite" value="secret">비밀글</td></tr>
     <tr><td>비밀번호</td><td><input class=contborder type=password id=help_password name=help_password placeholder="비밀번호를 입력하세요"></td></tr>
     <tr><td colspan="2"><button class="btn" id=btnRegi>등록</button>
-            <button type="button" class="btn" id="btncancel">취소</button></td></tr>		
+            <button type="button" class="btn" id="btncancel">취소</button></td></tr>      
     
     </table>
 </form>
@@ -46,9 +46,9 @@
 <script>
 $(document).ready(function() {
 
-	$('#btncancel').click(function(){
-	    document.location= '/contact';
-	});
+   $('#btncancel').click(function(){
+       document.location= '/contact';
+   });
 
     let help_category = '';
 
@@ -71,7 +71,7 @@ $(document).ready(function() {
     });
 
     // Password Field Control Handlers
-	$('input[type=radio][name=passwrite]').change(function() {
+   $('input[type=radio][name=passwrite]').change(function() {
         if (this.value == 'open') {
             $('#help_password').val('');
             $('#help_password').prop('readonly', true);
@@ -106,10 +106,10 @@ $(document).ready(function() {
         }
 
         // 카테고리가 선택되지 않았을 경우 리턴펄스
-		if ($('#mySelect option:selected').val() == "선택해주세요") {
-    		alert('카테고리를 선택해주세요.');
-    	return false;
-		}
+      if ($('#mySelect option:selected').val() == "선택해주세요") {
+          alert('카테고리를 선택해주세요.');
+       return false;
+      }
 
         // Form Field Check
         if($('#help_title').val()=='') {
@@ -120,7 +120,7 @@ $(document).ready(function() {
             alert('내용을 입력해주세요.');
             return false;
         }
-		
+      
         // 비밀번호 체크여부
         if (!$('input[type=radio][name=passwrite]').is(':checked')) {
             alert('비밀번호 여부를 체크해주세요.');
@@ -130,9 +130,9 @@ $(document).ready(function() {
         let formData = new FormData($('form')[0]);        
         
         // 이미지 삽입이 안될시 null값 자동입력
-		if ($('#img').val()==null) {
-			$('#img').val('');
-		}
+      if ($('#img').val()==null) {
+         $('#img').val('');
+      }
 
         // AJAX Form Submission
         $.ajax({

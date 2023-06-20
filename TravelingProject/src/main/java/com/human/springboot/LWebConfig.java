@@ -13,5 +13,6 @@ public class LWebConfig implements WebMvcConfigurer {
 	            .addResourceLocations("file:C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/");
 
 	}
+	
 
 }

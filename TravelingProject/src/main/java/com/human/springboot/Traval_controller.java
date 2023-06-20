@@ -2,6 +2,7 @@ package com.human.springboot;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -941,46 +942,81 @@ public class Traval_controller {
 
 		return "contactwrite";
 	}
+	
+	//고객센터 이미지 업로드
+//	@PostMapping("/Insert_image")
+//	public String Insert_image(@RequestParam("images") MultipartFile[] images) {
+//	    try {
+//	        for (MultipartFile image : images) {
+//	            String originalFilename = image.getOriginalFilename();
+//	            String decodedFilename = URLDecoder.decode(originalFilename, "UTF-8");
+//	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/contact/" + decodedFilename;
+//	            File dest = new File(filePath);
+//	            image.transferTo(dest);
+//	            System.out.println("img="+dest);
+//	        }
+//	        return "contact"; 
+//	    } catch (IOException e) {
+//	    	
+//	        e.printStackTrace();
+//	        for (MultipartFile image : images) {
+//	            String originalFilename = image.getOriginalFilename();
+//	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/contact/" + originalFilename; 
+//	            File file = new File(filePath);
+//	            if (file.exists() && file.isFile()) {
+//	                file.delete();
+//	            }
+//	        }
+//
+//	        return "redirect:/contact"; 
+//	    }
+//	}
+	
+	
+	
+	// 고객센터 문의 insert
+	   @PostMapping("/contactinsert")
+	   @ResponseBody
+	   public String prodInsert(HttpServletRequest req,
+	         @RequestParam(value = "img", required = false) MultipartFile[] imgs,
+	         @RequestParam("help_category") String help_category, @RequestParam("help_title") String help_title,
+	         @RequestParam("help_content") String help_content, @RequestParam("help_password") String help_password) {
 
-// 고객센터 문의 insert
-	@PostMapping("/contactinsert")
-	@ResponseBody
-	public String prodInsert(HttpServletRequest req,
-			@RequestParam(value = "img", required = false) MultipartFile[] imgs,
-			@RequestParam("help_category") String help_category, @RequestParam("help_title") String help_title,
-			@RequestParam("help_content") String help_content, @RequestParam("help_password") String help_password) {
+	      String insertval = "ok";
 
-		String insertval = "ok";
+	      try {
+	         HttpSession session = req.getSession();
+	         String member_id = (String) session.getAttribute("id");
 
-		try {
-			HttpSession session = req.getSession();
-			String member_id = (String) session.getAttribute("id");
+	         List<String> fileNames1 = new ArrayList<>();
 
-			List<String> fileNames1 = new ArrayList<>();
-// 이미지 파일이 업로드되었는지 확인
-			if (imgs != null && imgs.length > 0) {
-				for (MultipartFile file : imgs) {
-					if (!file.isEmpty()) {
-						String fileName = file.getOriginalFilename();
-						fileNames1.add(fileName);
-						String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/contact";
-						File newFile = new File(filePath + fileName);
-						System.out.println(newFile);
-						file.transferTo(newFile);
-					}
-				}
-			}
+	         String filePath = req.getServletContext().getRealPath("/img/contact/");
+	         
+	         File folder = new File(filePath);
+	         if (!folder.exists()) {
+	             folder.mkdirs();
+	         }
+	         for (MultipartFile file : imgs) {
+	        	    if (!file.isEmpty()) {
+	        	        String fileName = file.getOriginalFilename();
+	        	        String filePathAndName = filePath + fileName;
+	        	        File newFile = new File(filePathAndName);
+	        	        file.transferTo(newFile);
+	        	        fileNames1.add(fileName);  // 파일 이름을 리스트에 추가
+	        	    }
+	        	}
 
-			String help_img = String.join(",", fileNames1);
-			tdao.contactinsert(member_id, help_category, help_title, help_content, help_img, help_password);
 
-		} catch (Exception e) {
-			insertval = "fail";
-			e.printStackTrace();
-		}
+	         String help_img = String.join(",", fileNames1);
+	         tdao.contactinsert(member_id, help_category, help_title, help_content, help_img, help_password);
 
-		return insertval;
-	}
+	      } catch (Exception e) {
+	         insertval = "fail";
+	         e.printStackTrace();
+	      }
+
+	      return insertval;
+	   }
 
 	@PostMapping("/contactupate")
 	@ResponseBody
