@@ -283,13 +283,15 @@ a.index {
 <c:if test="${sessionScope.memberClass != 'admin'}">
     <%@include file="manage_error.jsp" %>
 </c:if> 
+
+<%@ include file="./footer.jsp" %>
 </body>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
 <script>
 $(document)
 .on('click', '#btnDelete', function() {
-	var placeSeqs = [];            //console.log(placeSeqs);
+	var placeSeqs = [];          
     $('input.checkGroup:checked').each(function() {
         placeSeqs.push($(this).val());
     });

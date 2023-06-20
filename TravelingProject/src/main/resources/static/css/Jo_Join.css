@@ -1,4 +1,26 @@
 @charset "UTF-8";
+
+/* 폰트 */
+@font-face {
+    font-family: 'OTWelcomeRA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');
+    font-style: normal;
+}
+/* 라벨&input join */
+.form{
+	margin-top:8%;
+	
+}
+.form label {
+	font-weight: 700;
+	font-size: 20px; /* adjust this value as necessary */
+}
+
+.form input {
+  font-size: 18px; /* adjust this value as necessary */
+   font-weight: normal;
+}
+
 :root {
   --button-color: #0f0f0f;
   --button-bg-color: #F3732F;
@@ -30,6 +52,7 @@
 	padding:0;
 }
 .container {
+<<<<<<< HEAD
   background: rgba(255, 255, 255, 0.7);
   place-content: center;
   display: flex;
@@ -38,7 +61,18 @@
   margin: 0 auto;
   margin-top:1%;
   width: 600px;
+=======
+	font-family: 'OTWelcomeRA';
+	background: rgba(255, 255, 255, 0.7);
+	place-content: center;
+	display: flex;
+	z-index: 999;
+	height: 100%;
+	margin: 0 auto;
+	width: 600px;
+>>>>>>> branch 'main' of https://github.com/koreaBEAR/travelproject.git
 }
+
 label {
   color:  black;
   font-size: 14px;
@@ -57,6 +91,22 @@ input {
   border-bottom:1px solid lightgray;
   width: 100%;
 }
+
+.joinbtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; 
+}
+.joinButton {
+	font-size: 20px;
+	color: rgb(255, 255, 255);
+}
+.joinButton, #btnback {
+	margin: 10px;
+}
+
+
 button{
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -106,18 +156,30 @@ input[id=birth]{
 .select input[type=radio]{
     display: none;
 }
-.select input[type=radio]+label{
+.select input[type=radio]+label {
+    border-radius: 15px;
     display: inline-block;
     cursor: pointer;
+<<<<<<< HEAD
     height: 40px;
+=======
+    height: 35px;
+>>>>>>> branch 'main' of https://github.com/koreaBEAR/travelproject.git
     width: 90px;
     border: 1px solid #F3732F;
+<<<<<<< HEAD
     border-radius:10px;
     line-height: 24px;
+=======
+    line-height: 43px;
+>>>>>>> branch 'main' of https://github.com/koreaBEAR/travelproject.git
     text-align: center;
-    font-weight:bold;
-    font-size:13px;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #fff;
+    color: #F3732F;
 }
+
 .select input[type=radio]+label{
     background-color: #fff;
     color: #F3732F;

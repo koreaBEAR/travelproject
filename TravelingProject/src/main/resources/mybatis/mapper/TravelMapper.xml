@@ -372,9 +372,9 @@ where city_name like '%' || #{param1} || '%'
 							  and place_category in (${param3})
 							order by place_name asc
 						) a
-				  where rownum <![CDATA[<]]> (#{param2} * 12) + 1 
+				  where rownum <![CDATA[<]]> (#{param2} * 8) + 1 
          	   )
- 		 where r_ <![CDATA[>=]]> ((#{param2} - 1) * 12) + 1
+ 		 where r_ <![CDATA[>=]]> ((#{param2} - 1) * 8) + 1
 	</select>
 <!-- 일정에 추가된 업체 제외한 업체리스트 -->
 	<select id="scheduleAddPlaceList" resultType="com.human.springboot.ScheduleCreateDTO">
@@ -387,9 +387,9 @@ where city_name like '%' || #{param1} || '%'
 							  and not place_seq in (${param3})
 							order by place_name asc
 						) a
-				  where rownum <![CDATA[<]]> (#{param2} * 12) + 1 
+				  where rownum <![CDATA[<]]> (#{param2} * 8) + 1 
          	   )
- 		 where r_ <![CDATA[>=]]> ((#{param2} - 1) * 12) + 1
+ 		 where r_ <![CDATA[>=]]> ((#{param2} - 1) * 8) + 1
 	</select>
 <!-- 일정에 추가된 업체의 마커를 생성 -->
 	<select id="markerScheduleCreate" resultType="com.human.springboot.ScheduleCreateDTO">

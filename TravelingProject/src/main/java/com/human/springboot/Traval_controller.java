@@ -2,6 +2,7 @@ package com.human.springboot;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -512,7 +513,7 @@ public class Traval_controller {
 	    place_seq = place_seq.replaceFirst(",", "");
 	    place_seq = place_seq.replace("on,", "");
 	    String[] placeSeqArray = place_seq.split(",");
-	    System.out.println(Arrays.toString(placeSeqArray));
+	    System.out.println("placeSeqArray:"+Arrays.toString(placeSeqArray));
 	    
 	    for (String seq : placeSeqArray) {
 	        int placeSeq = Integer.parseInt(seq);
@@ -580,33 +581,35 @@ public class Traval_controller {
 	}
 
 	
-	//이미지 업로드
+	// 이미지 업로드
 	@PostMapping("/upload_image")
 	public String uploadImage(@RequestParam("images") MultipartFile[] images) {
 	    try {
 	        for (MultipartFile image : images) {
 	            String originalFilename = image.getOriginalFilename();
-	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename; 
+	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename;
 	            File dest = new File(filePath);
 	            image.transferTo(dest);
 	            System.out.println(dest);
 	        }
-	        return "manage_place"; 
+	        return "manage_place";
 	    } catch (IOException e) {
-	    	
 	        e.printStackTrace();
 	        for (MultipartFile image : images) {
 	            String originalFilename = image.getOriginalFilename();
-	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename; 
+	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename;
 	            File file = new File(filePath);
+	            System.out.println("filePath" + filePath);
 	            if (file.exists() && file.isFile()) {
+	                System.out.println("delete" + file);
 	                file.delete();
 	            }
 	        }
 
-	        return "redirect:/manage_place"; 
+	        return "redirect:/manage_place";
 	    }
 	}
+
 
 	
 	//업체상세보기	
@@ -1126,7 +1129,7 @@ public class Traval_controller {
 	
 	
 ///////////////현준///////////////////////
-	@GetMapping("/schedulecreate")
+	@GetMapping("/schedulecreate/{cityNum}/{cityName}")
 	public String Admin() {
 		return "schedulecreate";
 	}

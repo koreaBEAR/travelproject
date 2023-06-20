@@ -61,7 +61,7 @@ h1 {
 	position: absolute;
 	background-color: #fff;
 	width: 250px;
-	height: 87.4vh;
+	height: 86.9vh;
 	right: 0;
 	bottom: 0;
 }
@@ -73,7 +73,7 @@ h1 {
 	position: absolute;
 	background-color: #fff;
 	width: 250px;
-	height: 87.4vh;
+	height: 86.9vh;
 	left: 0;
 	bottom: 0;
 	text-align: center;
@@ -91,10 +91,7 @@ h1 {
 	width: 30px;
 	height: 30px;
 	border: none;
-	vertical-align: middle;
-	padding: 0;
-	margin-left: 6px;
-	margin-bottom: 4px;
+	vertical-align: top;
 	cursor: pointer;
 	font-size: 32px;
 	font-weight: bold;
@@ -151,13 +148,13 @@ h1 {
 }
 
 .cartImg {
-	width: 65px;
-	height: 40px;
+	width: 60px;
+	height: 60px;
 }
 
 .placeTitle {
 	width: 100%;
-	height: 40px;
+	height: 60px;
 }
 
 .placeCard {
@@ -202,7 +199,7 @@ h1 {
 
 #day {
 	width: 100%;
-	height: 40px;
+	height: 30px;
 	font-size: 1.5rem;
 	display: flex;
 	justify-content: space-around;
@@ -217,7 +214,7 @@ h1 {
 
 #selectList{
 	width: 100%;
-	height: 40px;
+	height: 25px;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
@@ -226,7 +223,7 @@ h1 {
 .leftSelect {
 	display: flex;
 	width: 100%;
-    height: 40px;
+    height: 35px;
 }
 
 .leftSelect input[name="leftSelect"]{
@@ -263,11 +260,11 @@ h1 {
 	height: 40px;
 }
 
-#placeAllDelete {
+.addAllDelete {
 	background-color: #ff1744;
 	color: white;
 	width: 100%;
-	height: 40px;
+	height: 35px;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
@@ -275,9 +272,10 @@ h1 {
 	cursor: pointer;
 }
 
-#lodgingAddCart {
+.addCartCss {
 	width: 100%;
-	height: 458px;
+	height: 555px;
+	overflow-y: auto;
 }
 
 #scheduleTotalDay {
@@ -286,33 +284,16 @@ h1 {
 	height: 40px;
 }
 
-#lodgingAllDelete {
-	background-color: #ff1744;
-	color: white;
-	width: 100%;
-	height: 40px;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	border: none;
-	cursor: pointer;
-}
-
-#placeAddCart {
-	width: 100%;
-    height: 458px;
-}
-
 #divCalender {
 	display: flex;
-	padding: 8px;
+	padding: 5px;
 	align-items: center;
 	z-index: 10;
 }
 
 .calender {
 	width: 50%;
-	height: 2rem;
+	height: 1rem;
 	border: none;
 	text-align: center;
 	font-size: 1.0rem;
@@ -323,6 +304,7 @@ h1 {
 	display: flex;
 	margin: 0 0 0 5px;
 	font-size: 14px;
+	height: 35px;
 }
 
 #scheduleDelete {
@@ -589,4 +571,20 @@ h1 {
 
 .leftRadioSelectPlaceCss {
 	height: 712px;
+}
+
+#placeAddCartCopy {
+	height: 708px;
+}
+
+#lodgingAddCartCopy {
+	height: 708px;
+}
+
+.addCartCopy {
+	overflow-y: auto;
+}
+
+.scheduleStyle {
+	overflow-y: auto;
 }
