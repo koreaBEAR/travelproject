@@ -424,7 +424,6 @@ $(document)
 })
 
 
-
 .on("click",'#btnsearch', function(){
 	if (!$('#searchForm').find('option:selected').val()) {
 		alert("검색 기준을 선택하세요.");
@@ -436,6 +435,7 @@ $(document)
 	}
 	$('#searchForm').submit();
 	})
+
 	
 .ready(function(){
    if('${errorMessage}'!='') {
@@ -443,6 +443,7 @@ $(document)
 	   $("#errorMessage").css("color", "grey");
    }
 })	
+
 
 $(document)
 .ready(function() {
@@ -459,5 +460,11 @@ function CountChange() {
 	url.searchParams.set("amount", selectedAmount);
 	window.location.href = url.href;
 }
+
+$(document)
+.on('click', '#tblhelp tr:gt(0) td:not(:last-child)', function() {
+	   let help_seq = $(this).closest('tr').find('td').eq(0).text();
+	   window.location.href = "/contactdetail/" + help_seq;
+	})
 </script>
 </html>
