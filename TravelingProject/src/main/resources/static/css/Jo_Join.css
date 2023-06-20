@@ -5,17 +5,35 @@
   --button-hover-bg-color: #ffffff;
 }
 .page {
-  background: lightgray;
   display: flex;
   flex-direction: column;
   height: calc(100% - 40px);
   position: absolute;
   place-content: center;
   width: calc(100% - 40px);
+  overflow: hidden;
+}
+#backImg{
+	position:absolute;
+	z-index: -1;
+	max-width: 100%;
+	height:auto;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+.sliceShow{
+	margin:0 auto;
+	position:relative;
+	width:100%;
+	height:auto;
+	padding:0;
 }
 .container {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.7);
+  place-content: center;
   display: flex;
+  z-index: 999;
   height: 800px;
   margin: 0 auto;
   width: 600px;

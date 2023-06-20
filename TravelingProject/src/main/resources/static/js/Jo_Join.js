@@ -1,6 +1,34 @@
 let str_gender = ''
 $(document)
 .ready(function(){
+	var images=[
+		"/img/63빌딩.jpg",
+		"/img/강릉메인.jpg",
+		"/img/경주메인.jpg",
+		"/img/부산메인.jpg",
+		"/img/여수메인.jpg",
+		"/img/제주메인.jpg",
+		"/img/포항메인.jpg"
+	]
+	function getRandomImage(){
+		var randomIndex = Math.floor(Math.random() * images.length)
+		return images[randomIndex]
+	}
+	function changeImage(){
+		var randomImage = getRandomImage()
+		$('.slideShow img').attr('src',randomImage)
+	}
+	changeImage()
+	
+	$(window).on('beforeunload',function(){
+		changeImage()
+	})
+	 $('input').keypress(function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault(); // 폼 전송 방지
+      $('.btnsubmit').click(); // 버튼 클릭
+    }
+  })
 	let pw=$('#joinPw').val()
 	let chk=$('#pwCheck').val()
 	if(pw==''||chk==''){

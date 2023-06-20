@@ -9,6 +9,9 @@
 </head>
 <body>
 <div class="page">
+		<div class="slideShow">
+			<div><img src="" id="backImg"></div>
+		</div>
 		<div class="container">
 			<div class="form">
 				<label for="id">아이디</label>

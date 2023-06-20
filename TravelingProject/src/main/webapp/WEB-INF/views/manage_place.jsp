@@ -172,6 +172,25 @@ a.index {
 	cursor: pointer;
 	float: right;
 }
+
+
+.upward-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.upward {
+  display: block;
+  width: 50px; /* 이미지의 너비를 조절할 수 있습니다 */
+  height: 50px; /* 이미지의 높이를 조절할 수 있습니다 */
+}
+
+.upward img {
+  width: 100%;
+  height: 100%;
+}
+
 </style>
 <%@ include file="./header.jsp" %>
 <body>	
@@ -185,7 +204,7 @@ a.index {
 	<div class="section">
 	<form method="get" action="/place/search">
 		<select name=type id="searchForm" >
-			<option value="b.city_name|| c.place_category_name|| a.place_name|| a.place_address|| a.place_tel">전체</option>
+			<option value="a.place_seq||b.city_name|| c.place_category_name|| a.place_name|| a.place_address|| a.place_tel">전체</option>
 			<option value="b.city_name">지역</option>
 			<option value="c.place_category_name">분류</option>
 			<option value="a.place_name">업체명</option>
@@ -251,6 +270,12 @@ a.index {
   		</c:if>
 		<a href="?pageNo=${endPage}&amount=${amount}" class="btn">>></a>
 	</div>
+	
+	<div class="upward-container">
+  <a href="#" class="upward">
+    <img src="/error/upward.gif">
+  </a>
+</div>
 
 </div>
 
