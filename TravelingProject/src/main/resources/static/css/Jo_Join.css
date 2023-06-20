@@ -7,6 +7,10 @@
     font-style: normal;
 }
 /* 라벨&input join */
+.form{
+	margin-top:8%;
+	
+}
 .form label {
 	font-weight: 700;
 	font-size: 20px; /* adjust this value as necessary */
@@ -150,16 +154,18 @@ input[id=birth]{
     display: none;
 }
 .select input[type=radio]+label{
+	border-radius: 15px;
     display: inline-block;
     cursor: pointer;
-    height: 24px;
+    height: 35px;
     width: 90px;
     border: 1px solid #F3732F;
     line-height: 24px;
     text-align: center;
     font-weight:bold;
-    font-size:13px;
+    font-size:20px;
 }
+
 .select input[type=radio]+label{
     background-color: #fff;
     color: #F3732F;

@@ -118,6 +118,7 @@ input.img-button {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
 var city_num = '';
+var city_name='';
 $(document)
 .ready(function() {
     cityBest();
@@ -145,8 +146,11 @@ $(document)
 
     // Event delegation for dynamically created elements
     $('#tourlist').on('click', '.div1-1', function() {
-        city_num = $(this).find('#city_num').val();
+    	
+    	city_num = $(this).find('#city_num').val();
+        city_name = $(this).find('p').contents().last().text().trim(); // Extract the city name
         console.log(city_num);
+        console.log(city_name);
         $.ajax({
             url: '/getCityDetails/' + city_num,
             type: 'post',
@@ -175,7 +179,7 @@ $(document)
     });
 	
     $(document).on('click', '#btnCreate', function(){
-        document.location="/schedulecreate/"+city_num;
+        document.location = "/schedulecreate/" + city_num + "/" + city_name;
     });
     
     $('#myModal').on('hidden.bs.modal', function() {
