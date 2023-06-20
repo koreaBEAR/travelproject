@@ -344,52 +344,52 @@ where city_name like '%' || #{param1} || '%'
 <!-- 선택지역에 모든 업체개수 count-->
 	<select id="placeListAllCount" resultType="_int">
 		select count(*) r_
-		  from place
+			from place
 		 where place_city = ${param1}
-		   and place_category in (${param2})
+			 and place_category in (${param2})
 	</select>
 <!-- 일정에 추가된 업체 제외한 업체개수 count-->
 	<select id="placeListCount" resultType="_int">
 		select count(*) r_
-		  from place
+			from place
 		 where place_city = ${param1}
-		   and place_category in (${param3})
-		   and not place_seq in (${param2})
+			 and place_category in (${param3})
+			 and not place_seq in (${param2})
 	</select>
 <!-- 맵 생성 -->
 	<select id="mapCreate" resultType="com.human.springboot.ScheduleCreateDTO">
 		select city_lat, city_lng
-		  from city
+			from city
 		 where city_num = #{param1} 
 	</select>
 <!-- 업체리스트 -->
 	<select id="allPlaceList" resultType="com.human.springboot.ScheduleCreateDTO">
 		select place_seq, place_name, place_img
-  		  from ( select a.*, rownum r_
-				   from ( select * 
-							from place
-							where place_city = #{param1}
-							  and place_category in (${param3})
-							order by place_name asc
-						) a
-				  where rownum <![CDATA[<]]> (#{param2} * 8) + 1 
-         	   )
- 		 where r_ <![CDATA[>=]]> ((#{param2} - 1) * 8) + 1
+			from ( select a.*, rownum r_
+							 from ( select * 
+												from place
+											 where place_city = #{param1}
+												 and place_category in (${param3})
+											 order by place_name asc
+										) a
+							where rownum <![CDATA[<]]> (#{param2} * 8) + 1 
+					 )
+		 where r_ <![CDATA[>=]]> ((#{param2} - 1) * 8) + 1
 	</select>
 <!-- 일정에 추가된 업체 제외한 업체리스트 -->
 	<select id="scheduleAddPlaceList" resultType="com.human.springboot.ScheduleCreateDTO">
 		select place_seq, place_name, place_img
-  		  from ( select a.*, rownum r_
-				   from ( select * 
-							from place
-							where place_city = #{param1}
-							  and place_category in (${param4})
-							  and not place_seq in (${param3})
-							order by place_name asc
-						) a
-				  where rownum <![CDATA[<]]> (#{param2} * 8) + 1 
-         	   )
- 		 where r_ <![CDATA[>=]]> ((#{param2} - 1) * 8) + 1
+			from ( select a.*, rownum r_
+							 from ( select * 
+												from place
+											 where place_city = #{param1}
+												 and place_category in (${param4})
+												 and not place_seq in (${param3})
+											 order by place_name asc
+										) a
+							where rownum <![CDATA[<]]> (#{param2} * 8) + 1 
+						)
+		 where r_ <![CDATA[>=]]> ((#{param2} - 1) * 8) + 1
 	</select>
 <!-- 일정에 추가된 업체의 마커를 생성 -->
 	<select id="markerScheduleCreate" resultType="com.human.springboot.ScheduleCreateDTO">
@@ -400,19 +400,33 @@ where city_name like '%' || #{param1} || '%'
 <!-- 일정에 추가된 업체가 있을때 검색 단어에 따른 업체리스트 -->
 	<select id="placeSearch" resultType="com.human.springboot.ScheduleCreateDTO">
 		select place_seq, place_name, place_img
-		  from place
-		 where place_category in (${param2})
-		   and not place_seq in (${param3})
-		   and place_name like '%${param1}%'
-		 order by place_name asc
+			from ( select a.*, rownum r_
+							 from ( select *
+												from place
+											 where place_city = #{param1}
+												 and place_category in (${param2})
+												 and not place_seq in (${param3})
+												 and place_name like '%${param4}%'
+											 order by place_name asc
+										) a
+							where rownum <![CDATA[<]]> (#{param5} * 8) + 1 
+					 )
+		 where r_ <![CDATA[>=]]> ((#{param5} - 1) * 8) + 1
 	</select>
 <!-- 일정에 추가된 업체가 없을때 검색 단어에 따른 업체리스트 -->
 	<select id="placeSearchNull" resultType="com.human.springboot.ScheduleCreateDTO">
 		select place_seq, place_name, place_img
-		  from place
-		 where place_category in (${param2})
-		   and place_name like '%${param1}%'
-		 order by place_name asc
+			from ( select a.*, rownum r_
+							 from ( select *
+												from place
+											 where place_city = #{param1}
+												 and place_category in (${param2})
+												 and place_name like '%${param3}%'
+											 order by place_name asc
+										) a
+							where rownum <![CDATA[<]]> (#{param4} * 8) + 1 
+					 )
+		 where r_ <![CDATA[>=]]> ((#{param4} - 1) * 8) + 1
 	</select>
 <!-- 업체정보 -->
 	<select id="placeInfo" resultType="com.human.springboot.ScheduleCreateDTO">
