@@ -1005,23 +1005,29 @@ public class Traval_controller {
 		String updateval = "ok";
 
 		try {
+		    HttpSession session = req.getSession();
+		    String member_id = (String) session.getAttribute("id");
 
-			List<String> fileNames1 = new ArrayList<>();
-// 이미지 파일이 업로드되었는지 확인
-			if (imgs != null && imgs.length > 0) {
-				for (MultipartFile file : imgs) {
-					if (!file.isEmpty()) {
-						String fileName = file.getOriginalFilename();
-						fileNames1.add(fileName);
-						String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/contact";
-						File newFile = new File(filePath + fileName);
-						file.transferTo(newFile);
-					}
-				}
-			}
-
-			String help_img = String.join(",", fileNames1);
-			tdao.contactupdate(help_seq, help_category, help_title, help_content, help_img, help_password);
+		    List<String> fileNames1 = new ArrayList<>();
+		    String filePath = req.getServletContext().getRealPath("/img/contact/");
+		    File folder = new File(filePath);
+		    if (!folder.exists()) {
+		        folder.mkdirs();
+		    }
+		    boolean fileExists = false;
+		    for (MultipartFile file : imgs) {
+		        if (!file.isEmpty()) {
+		            fileExists = true;
+		            String fileName = file.getOriginalFilename();
+		            String filePathAndName = filePath + fileName;
+		            File newFile = new File(filePathAndName);
+		            file.transferTo(newFile);
+		            fileNames1.add(fileName);  // 파일 이름을 리스트에 추가
+		        }
+		    }
+		    
+		    String help_img = fileExists ? String.join(",", fileNames1) : req.getParameter("old_img");
+		    tdao.contactupdate(help_seq, help_category, help_title, help_content, help_img, help_password);
 
 		} catch (Exception e) {
 			updateval = "fail";
