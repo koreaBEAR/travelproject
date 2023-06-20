@@ -50,8 +50,10 @@
 				     <input type="radio" id="gender" name="gender" value="남"><label for="gender">남</label>
 				     <input type="radio" id="gender2" name="gender" value="여"><label for="gender2">여</label>
 				</div>
-				<button class="joinButton" id="btnsubmit"><span>join</span></button>
-				<button id="btnback"><span>login</span></button>
+				<div class=joinbtn>
+				<button class="joinButton" id="btnsubmit"><span>𝙟𝙤𝙞𝙣</span></button>
+				<button class="joinButton" id="btnback"><span>𝒍𝒐𝒈𝒊𝒏</span></button>
+				</div>
 			</div>
 		</div>
 	</div>
