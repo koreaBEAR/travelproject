@@ -30,6 +30,8 @@
     <div class=viewDivFooter>
     <span name=pageNum>1</span>
     </div> 
+<!-- 푸터 -->
+<%@ include file="./footer.jsp" %>
     </body>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="http://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
