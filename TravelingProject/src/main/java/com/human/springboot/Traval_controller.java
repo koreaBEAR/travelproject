@@ -2,7 +2,6 @@ package com.human.springboot;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -354,9 +353,9 @@ public class Traval_controller {
 	@ResponseBody
 	public String loadReviewContent(HttpServletRequest req) {
 		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
-		int page = Integer.parseInt(req.getParameter("page"));
-		int reviewsPerPage = 3;
-		int offset = (page - 1)*reviewsPerPage;
+		// int page = Integer.parseInt(req.getParameter("page"));
+		// int reviewsPerPage = 3;
+		// int offset = (page - 1)*reviewsPerPage;
 		ArrayList <RevDTO> alPlace = tdao.reviewContent(placeNum);
 		JSONArray ja = new JSONArray();
 		try {
