@@ -35,34 +35,35 @@
   
 /*   업체 띄우기 */
 #placeList {		
-    margin-left: 5.5%;
+    margin-left: 2.5%;
     width: 94vw;
     margin-bottom: 7%;
     margin-top: 50px;
     display: grid;
     grid-template-columns: repeat(auto-fill, 300px);
     grid-auto-rows: 400px;
+    justify-content: end;
+    justify-items: center;
 }
 
 .divA {
-	
 	border-radius: 15px;
-    height: 80%;
-    width: 75%;
-    overflow: hidden;
-    border:1px solid rgb(128, 128, 128, .5);
-    flex: 0 0 calc(25% - 30px); 
-    box-sizing: border-box; 
-    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.5);
-    text-align:center;
-} 
+	height: 80%;
+	width: 75%;
+	overflow: hidden;
+	border: 1px solid rgb(128, 128, 128, .5);
+	flex: 0 0 calc(25% - 30px);
+	box-sizing: border-box;
+	box-shadow: 0 5px 7px rgba(0, 0, 0, 0.5);
+	text-align: center;
+}
 
 .divA p {
-    margin-top: 7px;
+    margin-top: 18px;
 }
 
 .boldText {
-	font-size: 17px;
+	font-size: 18px;
     font-weight: bold;
 }
 .divImg{
