@@ -573,7 +573,7 @@ li {
 	height: 752px;
 }
 
-.leftRadioSelectPlaceCss {
+.modalLeftRadioSelectCss {
 	height: 712px;
 }
 
@@ -591,4 +591,24 @@ li {
 
 .scheduleStyle {
 	overflow-y: auto;
+}
+
+#divModalSaveButton {
+	position: absolute;
+    width: 117px;
+    height: 37vh;
+    left: 250px;
+    top: 69px;
+    z-index: 1;
+}
+
+#modalSaveButton {
+	width: 100px;
+    height: 56px;
+    background-color: rgba(255, 255, 255, 1);
+    border: none;
+    border-radius: 4px;
+    backdrop-filter: blur(0px);
+    margin: 8px;
+    cursor: pointer;
 }

@@ -1343,4 +1343,22 @@ public class Traval_controller {
 		return ja.toString();
 	}
 	
+	@PostMapping("/modalSaveButton")
+	@ResponseBody
+	public String modalSaveButton(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String UserId = (String)session.getAttribute("id");
+		int city = Integer.parseInt(req.getParameter("city"));
+		String sData = req.getParameter("sData");
+		String sDays = req.getParameter("sDays");
+		String check = "true";
+		
+		System.out.println(sData);
+		System.out.println(sDays);
+		int UserSeq = Integer.parseInt(tdao.UserSeq(UserId));
+		tdao.modalsaveButton(city,UserSeq,sData,sDays);
+		
+		return check;
+	}
+	
 }

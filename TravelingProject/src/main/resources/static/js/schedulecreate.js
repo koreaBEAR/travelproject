@@ -25,7 +25,8 @@ $(document)
 .on('change', '.calender', dateCalculation) //여행의 시작날짜와 종료날짜의 기간계산을 위한 이벤트
 .on('click', '.info', placeInfo) //업체정보를 띄우기 위한 이벤트
 .on('click', '#scheduleCreate', scheduleDetailCreate) //일정생성 이벤트
-.on('click', '#scheduleModalClose', scheduleModalClose) // 모달을 닫는 함수
+.on('click', '#scheduleModalClose', scheduleModalClose) // 모달을 닫는 이벤트
+.on('click', '#modalSaveButton', modalSaveButton) // 일정상세페이지에서 일정저장 버튼 클릭 시 이벤트
 
 // URL에 cityNum과 cityName을 변수에 저장하는 코드
 tempAry = window.location.pathname.split('/');
@@ -531,7 +532,6 @@ function placeInfoModalClose() {
   $('#placeInfo_modal_content').empty();
 }
 
-
 //캘린더에 초기 날짜를 setting하는 함수입니다. (초기setting : 현재날짜 ~ 3일 후 날짜)
 function before_date(day){
 	let date = new Date();
@@ -565,7 +565,7 @@ function before_date(day){
 		$('#endDate').val(endDate);
   }
 
-  //캘린더의 옵션을 setting하는 함수입니다.
+// 캘린더의 옵션을 setting하는 함수입니다.
 function datePicker() {
   $('#startDate').datepicker({
 		changeMonth: true,
@@ -687,12 +687,9 @@ function scheduleDetailCreate() {
 
   $('#placeAddCartCopy').empty();
   $('#ulPlaceAddCart').clone().appendTo('#placeAddCartCopy');
-  $('#lodgingAddCartcopy').empty();
+  $('#lodgingAddCartCopy').empty();
   $('#ulLodgingAddCart').clone().appendTo('#lodgingAddCartCopy');
 
-  $('.addScheduleByDate').empty();
-  $('#dayListButtonArea div:eq(0)').empty();
-  $('#dayListButtonArea').empty();
   for ( let i = 1; i < calculation; i++ ) {
     $('#dayListButtonArea').append(`
     <div class="divDayButton" onclick="openDayDetailPlan(${i})">
@@ -700,16 +697,39 @@ function scheduleDetailCreate() {
       <h7>${i}DAY</h7>
     </div>
     `);
+    $('#divScheduleModalLeftSidebar').append(`
+			<div class="scheduleDate${i} scheduleStyle" style="display: none;">
+				<div id="leftRadioSelectPlace${i}" class="modalContainer" style="display: none;">
+					<ul id="ulPlaceContainer${i}" ondrop="drop(event)" class="modalLeftRadioSelectCss" ondragover="allowDrop(event);"></ul>
+				</div>
+				<div id="leftRadioSelectLodging${i}" class="modalContainer" style="display: none;">
+					<ul id="ulLodgingContainer${i}"ondrop="drop(event)" class="modalLeftRadioSelectCss" ondragover="allowDrop(event);"></ul>
+				</div>
+			</div>
+    `)
   }
   $('.leftRadioSelectPlaceCss').empty();
 	$('#dayButton1').trigger('click').css('background-color','red');
 	$('.scheduleDate1').attr('style','display:block;');
+  $('#leftRadioSelectPlace1').attr('style','display:block')
 	$('#placeAddCartCopy').attr('style','display: block')
 	$('#lodgingAddCartCopy').attr('style','display: none')
 	$('.ulPlaceAddCartCss').attr('style','height: 697px;')
 	$('.ulLodgingAddCartCss').attr('style','height: 697px;')
 }
 
+//일정상세페이지 modal을 종료하는 함수입니다.
+function scheduleModalClose() {
+	$('.scheduleModal').css('display','none');
+	$('.ulPlaceAddCart').removeAttr('style');
+	$('#ulPlaceAddCart').removeAttr('style');
+	$('.ulLodgingAddCartCss').removeAttr('style');
+	$('#ulLodgingAddCart').removeAttr('style');
+	$('.divDayButton').remove();
+	$('.scheduleStyle').remove();
+}
+
+// 일정상세페이지에서 우측 사이드바의 숙박&명소 버튼을 클릭 시 이벤트 함수입니다.
 function rightScheduleModalRadio(tagId) {
 	let thisId = tagId.id;
 	let rightScheduleModalRadioCP = Number($('#rightScheduleModalRadioCurrentP').val());
@@ -729,6 +749,7 @@ function rightScheduleModalRadio(tagId) {
   }
 }
 
+// 일정상세페이지에서 좌측 사이드바의 숙박&명소 버튼을 클릭 시 이벤트 함수입니다.
 function leftScheduleModalRadio(tagId){
 	let thisId = tagId.id;
 	let leftScheduleModalRadioCP = Number($('#leftScheduleModalRadioCurrentP').val());
@@ -749,22 +770,33 @@ function leftScheduleModalRadio(tagId){
   }
 }
 
+// 일정상세페이지에서 일별 버튼 클릭 시 이벤트 함수입니다.
 function openDayDetailPlan(buttonNum) {
 	let bNum = buttonNum;
+	let leftScheduleModalRadioCP = Number($('#leftScheduleModalRadioCurrentP').val());
 	
 	$('.dayButton').css('background-color','white');
 	$(`#dayButton${bNum}`).css('background-color','red');
 	$('#dayListButtonAreaCurrentP').val(bNum);
-	$('.scheduleStyle').attr('style','display:none;')
-	$(`.scheduleDate${bNum}`).attr('style','display:block;')
-	$('.modalContainer').attr('style','display:none;')
-	$(`#leftRadioSelectPlace${bNum}`).attr('style','display:block;')
-	$('input:radio[name=leftScheduleModalRadio]').attr('checked',true);
+	
+	if ( leftScheduleModalRadioCP == 1) {
+		$('.scheduleStyle').attr('style','display:none;')
+		$(`.scheduleDate${bNum}`).attr('style','display:block;')
+		$('.modalContainer').attr('style','display:none;')
+		$(`#leftRadioSelectLodging${bNum}`).attr('style','display:block;')
+	}
+	else if (leftScheduleModalRadioCP == 2) {
+		$('.scheduleStyle').attr('style','display:none;')
+		$(`.scheduleDate${bNum}`).attr('style','display:block;')
+		$('.modalContainer').attr('style','display:none;')
+		$(`#leftRadioSelectPlace${bNum}`).attr('style','display:block;')
+	}
 }
 
 let dragEl;
 let dropEl;
 
+// 드래그앤드롭 이벤트 함수들입니다.
 let drag = function(ev){
 	dragEl = ev.target;
 	
@@ -781,18 +813,75 @@ let drop = function(ev){
 		else {
 		dropEl.append(dragEl);			
 		}
-	} else if(ev.target.tagName == 'li' || ev.target.tagName == 'LI'){
+	}
+	else if(ev.target.tagName == 'li' || ev.target.tagName == 'LI'){
 		dropEl = ev.target;
 		let ul = ev.target.parentNode;
 		ul.insertBefore(dragEl, dropEl);
 	}
 }
 
-//일정상세페이지 modal을 종료하는 함수입니다.
-function scheduleModalClose() {
-	$('.scheduleModal').css('display','none');
-	$('.ulPlaceAddCart').removeAttr('style');
-	$('#ulPlaceAddCart').removeAttr('style');
-	$('.ulLodgingAddCartCss').removeAttr('style');
-	$('#ulLodgingAddCart').removeAttr('style');
+// 일정상세페이지에서 일정저장 버튼을 클릭 시 이벤트함수입니다.
+function modalSaveButton() {
+	let calculation = $('#day').text().split('');
+	calculation = calculation[0];
+	let scheduleData = '';
+	let startDate = $('#startDate').val();
+	let endDate = $('#endDate').val();
+	let scheduleDate = startDate+'~'+endDate;
+	
+	for ( let i = 1; i < calculation; i++ ) {
+		let placeLiLen = $(`#ulPlaceContainer${i}`).children().length;
+		let lodgingLiLen = $(`#ulLodgingContainer${i}`).children().length;
+			scheduleData += `day${i}/`;
+		for ( let j = 0; j < placeLiLen; j++ ) {
+			let placeSeq = $(`#ulPlaceContainer${i} li:eq(${j})`).val();
+			scheduleData += placeSeq+',';
+		}
+		for ( let k = 0; k < lodgingLiLen; k++ ) {
+			let lodgingSeq = $(`#ulLodgingContainer${i} li:eq(${k})`).val();
+			if ( i == calculation-1 && k == lodgingLiLen-1 ) {
+				scheduleData += lodgingSeq;				
+			}
+			else {
+				scheduleData += lodgingSeq+'-';
+			}
+		}
+	}
+
+	$.ajax({
+		url: "/modalSaveButton",
+		type: "post",
+		data: {
+			city: cityNum,
+			sData: scheduleData,
+			sDays: scheduleDate
+		},
+		dataType: "text",
+		success:function(check) {
+			if ( check == 'true') {
+				scheduleModalClose()
+			}
+		}
+	})
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

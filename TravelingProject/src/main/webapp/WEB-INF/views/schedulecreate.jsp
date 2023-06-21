@@ -69,7 +69,6 @@
 				<ul id="ulPlaceAddCart" class="ulPlaceAddCartCss" ondrop="drop(event)" ondragover="allowDrop(event);"></ul>
 			</div>
 		</div>
-
 		<div id="leftRadioSelectLodging" style="display: block;">
 			<div>
 				<button id="lodgingAllDelete" class="addAllDelete" onclick="allDelete(this)">숙박전체삭제</button>
@@ -79,18 +78,32 @@
 			</div>
 		</div>
 	</div>
+	
+	
 	<div id="divPlaceInfo" class="modal">
 		<div id="placeInfo_modal_content"></div>
 	</div>
+	
+	
 	<div id="divModalScheduleCreate" class="scheduleModal">
+	
 		<div id="scheduleCreateModalContent">
 			<div id="divScheduleModalClose">
 				<button type="button" id="scheduleModalClose" class="close">×</button>
 			</div>
+			
 			<div id="scheduleMap" class="map"></div>
+			
+			<div id="divModalSaveButton">
+				<button id="modalSaveButton">
+					<h7>일정저장</h7>
+				</button>
+			</div>
+			
 			<div id="dayListButtonArea">
 				<input type="hidden" id="dayListButtonAreaCurrentP" value="1">
 			</div>
+			
 			<div id="divScheduleModalRightSidebar">
 				<div class="rightScheduleModalRadio rightScheduleModalRadioCss">
 					<input type="radio" id="rightScheduleModalRadioLodging" name="rightScheduleModalRadio" onclick="rightScheduleModalRadio(this)">
@@ -102,6 +115,7 @@
 				<div id="placeAddCartCopy" class="addCartCopy"></div>
 				<div id="lodgingAddCartCopy" class="addCartCopy"></div>
 			</div>
+			
 			<div id="divScheduleModalLeftSidebar">
 				<div class="leftScheduleModalRadio leftScheduleModalRadioCss">
 					<input type="radio" id="leftScheduleModalRadioLodging" name="leftScheduleModalRadio" onclick="leftScheduleModalRadio(this)">
@@ -109,22 +123,6 @@
 					<input type="radio" id="leftScheduleModalRadioPlace" name="leftScheduleModalRadio" onclick="leftScheduleModalRadio(this)">
 					<label for="leftScheduleModalRadioPlace" style="width: 100%;"><span>명소</span></label>
 					<input type="hidden" id="leftScheduleModalRadioCurrentP" value="2">
-				</div>
-				<div class="scheduleDate1 scheduleStyle" style="display: none;">
-					<div id="leftRadioSelectPlace1" class="modalContainer" style="display: block;">
-						<ul ondrop="drop(event)" class="leftRadioSelectPlaceCss" ondragover="allowDrop(event);"></ul>
-					</div>
-					<div id="leftRadioSelectLodging1" class="modalContainer" style="display: none;">
-						<ul ondrop="drop(event)" class="leftRadioSelectPlaceCss" ondragover="allowDrop(event);"></ul>
-					</div>
-				</div>
-				<div class="scheduleDate2 scheduleStyle" style="display: none;">
-					<div id="leftRadioSelectPlace2" class="modalContainer" style="display: none;">
-						<ul ondrop="drop(event)" class="leftRadioSelectPlaceCss" ondragover="allowDrop(event);"></ul>
-					</div>
-					<div id="leftRadioSelectLodging2" class="modalContainer" style="display: none;">
-						<ul ondrop="drop(event)" class="leftRadioSelectPlaceCss" ondragover="allowDrop(event);"></ul>
-					</div>
 				</div>
 			</div>
 		</div>

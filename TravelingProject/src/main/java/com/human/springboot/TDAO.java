@@ -92,6 +92,9 @@ public interface TDAO {
 		ArrayList<ScheduleCreateDTO> placeInfo(int placeInfoId);
 		
 		ArrayList<ScheduleCreateDTO> markerScheduleCreate(String pSeq);
+		
+		String UserSeq(String UserId);
+		void modalsaveButton(int city,int UserSeq,String sData,String sDays);
 	}
 
 
