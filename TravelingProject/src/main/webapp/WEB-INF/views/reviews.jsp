@@ -8,6 +8,26 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/css/review.css">
 </head>
+<style>
+span[name='pageNum'] {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #a14a1c;
+    margin: 0 4px;
+    color: #a14a1c;
+    text-decoration: none;
+    transition: background-color .3s;
+    border-radius: 20px;
+}
+
+span[name='pageNum']:hover {
+	font-weight: bold;
+    background-color: #ddd;
+}
+span[name='pageNum'].current {
+    font-weight: bold;
+}
+</style>
 <body>
 <!-- 메인헤더 -->
 <%@ include file="./header.jsp" %>

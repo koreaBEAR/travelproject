@@ -175,8 +175,9 @@ $(document)
     })	
 })
 .on('click','#btnShow',function(){
-	 $(".form").fadeIn();
+	$(".form").fadeIn();
     $(".formTitle").fadeOut();
+    $('#loginID').trigger('focus');
 })
 
 function togglePasswordVisibility() {

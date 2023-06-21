@@ -93,15 +93,74 @@ $(document)
 })	
 .on('click','span[name=pageNum]',function(){
 	var pageNum = parseInt($(this).text())
-	$('span[name=page]').css({'background-color':'#fff','color':'#000'})
-	$(this).css({'background-color':'#000','color':'#fff'})
 	loadReview(pageNum);
 })
 .on('click','#closeBtn',function(){
 	$('.placeModal').css('display','none')
 })
 
+/*10페이지씩 제한 페이지네이션변경*/
 function loadReview(pageNum){
+    $.ajax({
+        url: "/loadReview",
+        data: {pageNum: pageNum},
+        type: "post",
+        dataType: "json",
+        success : function ( data ){
+            let i = 0;
+            let startPage = parseInt(data[0]['startPage']);
+            let endPage = parseInt(data[0]['endPage']);
+            let totalPage = parseInt(data[0]['howmany']);
+            var pageStr = "";
+            $('.viewDivFooter').empty();
+
+            // 첫페이지
+            pageStr = '<span name=pageNum onclick="loadReview(1)">First</span>' + pageStr;
+
+            if ( startPage > 10 ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + (startPage - 10) + ')"><<</span>';
+            }
+
+            for (i = startPage ; i <= endPage ; i++) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + i + ')">' + i + '</span>';
+            }
+
+            if ( endPage < totalPage ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + (endPage + 1) + ')">>></span>';
+            }
+
+            // 마지막 페이지
+            if ( totalPage > 10 && endPage < totalPage ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + totalPage + ')">Last</span>';
+            }
+
+            $('.viewDivFooter').append(pageStr);
+
+            // 현재 선택된 페이지 버튼만 글씨 진하게
+            $("span[name='pageNum']").removeClass("current");
+
+            
+            $("span[name='pageNum']").each(function() {
+                if ($(this).text() === pageNum.toString()) {
+                    $(this).addClass("current");
+                }
+            });
+
+            $('.placeList').empty();
+            for ( i = 1 ; i < data . length ; i ++ ) {
+                let placeImg = '<img src="' + data[i]['placeImg'] + '" class="placeImg">';
+                let hiddenId = '<input type="hidden" id="placeNum" name="placeNum" value="' + data[i]['placeId'] + '">';
+                let nameStr = "<p><span class=boldText>" + data[i]['placeId'] + '/' + data[i]['placeName'] + "</span></p>";
+                let div = '<div class="divA">' + hiddenId + '<div class="divImg">' + placeImg + '</div>' + nameStr + '</div>';
+                $('.placeList').append(div);
+            }
+        }
+    });
+}
+
+
+/*페이지네이션 기존코드*/
+/*function loadReview(pageNum){
 	$.ajax({
 		url:"/loadReview",
 		data:{pageNum:pageNum},
@@ -125,4 +184,4 @@ function loadReview(pageNum){
 				$('.placeList').append(div)
 			}
 		}})
-}
+}*/
