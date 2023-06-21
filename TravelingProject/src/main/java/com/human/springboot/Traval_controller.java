@@ -1163,8 +1163,15 @@ public class Traval_controller {
 	
 ///////////////현준///////////////////////
 	@GetMapping("/schedulecreate/{cityNum}/{cityName}")
-	public String Admin() {
-		return "schedulecreate";
+	public String Admin(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String UserId = (String)session.getAttribute("id");
+		System.out.println(UserId);
+		if(UserId =="" || UserId == null){			
+			return "redirect:/";
+		}else {
+			return "schedulecreate";
+		}
 	}
 
 	// 맵을 그리는 컨트롤러
