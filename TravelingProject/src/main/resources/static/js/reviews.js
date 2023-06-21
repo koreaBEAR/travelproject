@@ -31,9 +31,10 @@ $(document)
 								let placeAddress = '<p><span class="placeAddress">'+data[i]['placeAddress']+'</span></p>'
 								let placeLike = '<p><span class="placeLike">'+data[i]['placeLike']+'</span></p>'
 								let likeIcon = `<div class="checkbox"><input type="checkbox" id="myCheckbox"><label for="myCheckbox" class="checkbox-icon"></label></div>`;
+								let writeRev = '<div class= write><input type="button" value="리뷰쓰기""></div>'
 
 								divLeft = '<div class="divLeft"><div class="leftContainer"><div class="placeImges">'+placeImg+'</div><div class="placeName">'+placeName+'</div></div></div>'
-								divRight = '<div class="divRight"><div class="rightContainer"><div class="placeContent">'+placeContnet+placeTel+placeAddress+'</div><div class="placeIcon">'+placeLike+likeIcon+'</div><div class="placeReviews">reviews</div></div></div>'
+								divRight = '<div class="divRight"><div class="rightContainer"><div class="placeContent">'+placeContnet+placeTel+placeAddress+'</div><div class="placeIcon">'+likeIcon+placeLike+writeRev+'</div><div class="placeReviews">reviews</div></div></div>'
 							}
 								console.log("divLeft: "+divLeft)
 								console.log("divRight: "+divRight)

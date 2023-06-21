@@ -86,16 +86,16 @@
 }
 
 /*modal*/
-.placeModal{
-	position: fixed; /* Stay in place */
-	z-index: 999; /* Sit on top */
-	padding-top: 100px; /* Location of the box */
+/* .placeModal{
+	position: fixed; Stay in place
+	z-index: 999; Sit on top
+	padding-top: 100px; Location of the box
 	left: 0;
 	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+	width: 100%; Full width
+	height: 100%; Full height
+	overflow: auto; Enable scroll if needed
+	background-color: rgba(0,0,0,0.5); Black w/ opacity
 }
 .mainContainer{
 	width: 80%;
@@ -151,20 +151,150 @@
 .reivewImg{
 	width:100%;
 	height:500px;		
+} */
+
+.placeModal {
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
- .checkbox input[type="checkbox"] {
-   display: none;
- }
+.mainContainer {
+	width: 80%;
+	height: 80%;
+	padding: 30px;
+	border-radius: 10px;
+	background-color: #ffffff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
 
- .checkbox input[type="checkbox"] + label {
-   display: inline-block;
-   width: 35px;
-   height: 35px;
-   background-image: url('/img/review/unchecked.png');
-   background-size: cover;
- }
+.divMain {
+	display: flex;
+	height: 100%;
+}
 
- .checkbox input[type="checkbox"]:checked + label {
-   background-image: url('/img/review/checked.png');
- }
+#closeBtn {
+	float: right;
+	font-weight: bold;
+	color: #777;
+	font-size: 25px;
+	cursor: pointer;
+}
+
+.divLeft {
+	flex: 1;
+}
+
+.divRight {
+	flex: 2;
+	padding-left: 30px;
+}
+
+.leftContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.rightContainer {
+	display: flex;
+	flex-direction: column;
+}
+
+.placeImges {
+	width: 100%;
+}
+
+.placeImges img {
+	width: 300px;
+	height: 400px;
+	border-radius: 10px;
+}
+
+.placeName {
+	margin-top: 20px;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.placeContent {
+	margin-top: 10px;
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+.placeTel, .placeAddress {
+	margin-top: 5px;
+	font-size: 14px;
+}
+
+.placeIcon {
+	display: flex;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.placeLike {
+	font-weight: bold;	
+	margin-left: 25px;
+
+}
+
+.checkbox {
+	position: relative;
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+.checkbox input[type="checkbox"] {
+	display: none;
+}
+
+.checkbox input[type="checkbox"]+label {
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	background-image: url('/img/review/unchecked.png');
+	background-size: cover;
+}
+
+.checkbox input[type="checkbox"]:checked+label {
+	background-image: url('/img/review/checked.png');
+}
+
+.placeReviews {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.write {
+  text-align: center;
+  margin-top: 5px; /* Adjust the margin-top value as needed to move the button upward */
+}
+
+.write input[type="button"] {
+  padding: 6px 12px; /* Adjust the padding values as needed for the smaller button */
+  font-size: 12px; /* Adjust the font size as needed for the smaller button */
+  background-color: #000; /* Change the background color to black */
+  color: #fff; /* Set the text color to white */
+  border: none;
+  border-radius: 4px; /* Add rounded corners */
+  cursor: pointer;
+  margin-left: 25px; /* Adjust the margin-left value as needed for the button position */
+}
+
+.write input[type="button"]:hover {
+  background-color: #333; /* Change the background color on hover if desired */
+}
+
