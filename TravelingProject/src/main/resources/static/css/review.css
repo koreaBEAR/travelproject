@@ -35,15 +35,13 @@
   
 /*   업체 띄우기 */
 #placeList {		
-    margin-left: 2.5%;
+    margin-left: 5.5%;
     width: 94vw;
     margin-bottom: 7%;
     margin-top: 50px;
     display: grid;
     grid-template-columns: repeat(auto-fill, 300px);
     grid-auto-rows: 400px;
-    justify-content: end;
-    justify-items: center;
 }
 
 .divA {
