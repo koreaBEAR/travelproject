@@ -251,37 +251,71 @@ public class Traval_controller {
 	public String reviewPage() {
 		return "reviews";
 	}
-	//리뷰에 place보이기
-	
+	//리뷰에 place보이기 (페이지네이션 10페이지씩 보이게 변경)
 	@PostMapping("/loadReview")
 	@ResponseBody
 	public String loadReviews(HttpServletRequest req) {
-		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
-		ArrayList <RevDTO> alPlace = tdao.placeList();
-		int howmanyPlace = alPlace.size();
-		int howmanyPages = (howmanyPlace/13)+1;
-		if (howmanyPlace%13==0) {howmanyPages = howmanyPages-1;}
-		JSONArray ja = new JSONArray();
-		int start = (pageNum - 1)*13;
-		int end = (pageNum * 13)-1;
-		try {
-			JSONObject jo = new JSONObject();
-			jo.put("howmany",howmanyPages);
-			ja.put(jo);
-			for(int i=start; i<end; i++) {
-				if(i>=start && i<=end) {
-					jo = new JSONObject();
-					jo.put("placeId",alPlace.get(i).getPlace_seq());
-					jo.put("placeImg",alPlace.get(i).getPlace_img());
-					jo.put("placeName", alPlace.get(i).getPlace_name());					
-					ja.put(jo);
-				}
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return ja.toString();
+		
+	    int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+	    
+	    ArrayList <RevDTO> alPlace = tdao.placeList();
+	    int howmanyPlace = alPlace.size();
+	    int howmanyPages = (howmanyPlace/12)+1;
+	    if (howmanyPlace%13==0) {howmanyPages = howmanyPages-1;}
+	    JSONArray ja = new JSONArray();
+	    int start = (pageNum - 1)*12;
+	    int end = (pageNum * 12)-1;
+	    int startPage = (int)(((pageNum-1)/10)*10) + 1;
+	    int endPage = (int)(startPage+9 < howmanyPages ? startPage+9 : howmanyPages);
+	    try {
+	        JSONObject jo = new JSONObject();
+	        jo.put("howmany",howmanyPages);
+	        jo.put("startPage", startPage);
+	        jo.put("endPage", endPage);
+	        ja.put(jo);
+	        for(int i=start; i<=end && i<howmanyPlace; i++) {
+	            jo = new JSONObject();
+	            jo.put("placeId",alPlace.get(i).getPlace_seq());
+	            jo.put("placeImg",alPlace.get(i).getPlace_img());
+	            jo.put("placeName", alPlace.get(i).getPlace_name());					
+	            ja.put(jo);
+	        }
+	    }catch(Exception e) {
+	        e.printStackTrace();
+	    }
+	    return ja.toString();
 	}
+
+	/* 기존코드 */
+//	@PostMapping("/loadReview")
+//	@ResponseBody
+//	public String loadReviews(HttpServletRequest req) {
+//		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+//		ArrayList <RevDTO> alPlace = tdao.placeList();
+//		int howmanyPlace = alPlace.size();
+//		int howmanyPages = (howmanyPlace/13)+1;
+//		if (howmanyPlace%13==0) {howmanyPages = howmanyPages-1;}
+//		JSONArray ja = new JSONArray();
+//		int start = (pageNum - 1)*13;
+//		int end = (pageNum * 13)-1;
+//		try {
+//			JSONObject jo = new JSONObject();
+//			jo.put("howmany",howmanyPages);
+//			ja.put(jo);
+//			for(int i=start; i<end; i++) {
+//				if(i>=start && i<=end) {
+//					jo = new JSONObject();
+//					jo.put("placeId",alPlace.get(i).getPlace_seq());
+//					jo.put("placeImg",alPlace.get(i).getPlace_img());
+//					jo.put("placeName", alPlace.get(i).getPlace_name());					
+//					ja.put(jo);
+//				}
+//			}
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		return ja.toString();
+//	}
 	
 	@PostMapping("/loadReviewOne")
 	@ResponseBody

@@ -81,6 +81,12 @@
     transition: .4s;
 	cursor:pointer;
 }
+
+.viewDivFooter {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
 .viewDivFooter:hover{
 	cursor:pointer;
 }
