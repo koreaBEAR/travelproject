@@ -3,10 +3,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/gh/sunn-us/SUITE/fonts/static/woff2/SUITE.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/css/schedulecreate.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" type="text/css" href="/css/header.css">
 <title>일정상세페이지</title>
 </head>
 <body>
@@ -66,7 +66,7 @@
 				<button id="placeAllDelete" class="addAllDelete" onclick="allDelete(this)">명소전체삭제</button>
 			</div>
 			<div class="addCartCss">
-				<ul id="ulPlaceAddCart" ondrop="drop(event)" ondragover="allowDrop(event);"></ul>
+				<ul id="ulPlaceAddCart" class="ulPlaceAddCartCss" ondrop="drop(event)" ondragover="allowDrop(event);"></ul>
 			</div>
 		</div>
 
@@ -75,7 +75,7 @@
 				<button id="lodgingAllDelete" class="addAllDelete" onclick="allDelete(this)">숙박전체삭제</button>
 			</div>
 			<div  class="addCartCss">
-				<ul  id="ulLodgingAddCart" ondrop="drop(event)" ondragover="allowDrop(event);"></ul>
+				<ul  id="ulLodgingAddCart" class="ulLodgingAddCartCss" ondrop="drop(event)" ondragover="allowDrop(event);"></ul>
 			</div>
 		</div>
 	</div>

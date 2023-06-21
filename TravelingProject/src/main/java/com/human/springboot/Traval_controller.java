@@ -1248,17 +1248,19 @@ public class Traval_controller {
 	@PostMapping("/placeSearch")
 	@ResponseBody
 	public String placeSearch(HttpServletRequest req) {
-		String searchText = req.getParameter("search");
+		int city = Integer.parseInt(req.getParameter("city"));
 		String bigCategory = req.getParameter("bigCategory");
 		String pSeq = req.getParameter("pSeq");
+		String searchText = req.getParameter("search");
+		int currentP = Integer.parseInt(req.getParameter("currentP"));
 		
 		ArrayList<ScheduleCreateDTO> search = new ArrayList<ScheduleCreateDTO>();
 		
 		if ( pSeq == "" ) {
-			search = tdao.placeSearchNull(searchText,bigCategory);
+			search = tdao.placeSearchNull(city,bigCategory,searchText,currentP);
 		}
 		else {
-			search = tdao.placeSearch(searchText,bigCategory,pSeq);
+			search = tdao.placeSearch(city,bigCategory,pSeq,searchText,currentP);
 		}
 
 

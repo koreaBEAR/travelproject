@@ -11,13 +11,13 @@ $(document)
 .ready(function() {
   $('#searchInput').keypress(function(key) {
     if (key.keyCode == 13) {
-      search();
+      placeSearch();
       event.preventDefault();
     }
   })
 })
 
-.on('click', '#search', search) // 검색 이벤트
+.on('click', '#search', placeSearch) // 검색 이벤트
 .on('click', '.page', pagination) //페이지네이션 이벤트
 .on('click', '.page', placeListPageChange) //페이지에 맞는 리스트 구성을 위한 이벤트
 .on('click', '#placeAdd', placeAppend) //업체 일정에 추가 이벤트
@@ -101,7 +101,7 @@ function markerScheduleCreate(tagId) {
 let placeCommonString = [];
 
 //우측 리스트에 업체를 불러오고 placeCommonString 배열에 업체 그리는 코드를 저장하는 함수입니다.
-function placeList(city,pSeq) {
+function placeList(pSeq) {
   let cP = $('#hidden_currentP').val()
   let pCategory = $("#rightRadioCurrentP").val();
 
@@ -109,7 +109,7 @@ function placeList(city,pSeq) {
     url : "/placeList", 
     type : "post",
     data : {
-          city : city,
+          city : cityNum,
           currentP: cP,
           pSeq: pSeq,
           pCategory : pCategory
@@ -189,8 +189,8 @@ function selectPlaceAdd(tagId) {
       }
     }
   }
-  placeList(cityNum,pSeq);
-  placeListCount(cityNum,pSeq)
+  placeList(pSeq);
+  placeListCount(pSeq)
   markerScheduleCreate(tagId.id)
   $('#searchInput').val("");
 }
@@ -235,8 +235,8 @@ function selectPlaceDelete(tagId) {
       markers.splice(i,1);
     }
   }
-  placeList(cityNum,pSeq);
-  placeListCount(cityNum,pSeq);
+  placeList(pSeq);
+  placeListCount(pSeq);
 }
 
 //일정에 추가되어있는 업체를 원하는 업체만 지우는 함수입니다.
@@ -272,7 +272,6 @@ function allDelete(tagId) {
       }
     }
     $('#ulPlaceAddCart').empty();
-    placeList(cityNum,pSeq);
   }
   else if ( thisId == 'lodgingAllDelete' ) {
     for ( let i = 0; i < lodgingAddCartlen; i++ ) {
@@ -296,20 +295,20 @@ function allDelete(tagId) {
       }
     }
     $('#ulLodgingAddCart').empty();
-    placeList(cityNum,pSeq);
   }
+  placeList(pSeq);
 }
 
 //업체의 개수를 가져오는 함수입니다.
-function placeListCount(city,pSeq){
-  pCategory = $("#rightRadioCurrentP").val();
+function placeListCount(pSeq){
+  let pCategory = $("#rightRadioCurrentP").val();
 	$.ajax({	
 		url: "/placeListCount",
 		type: "post",
 		data: {
-			  city: city,
-              pSeq: pSeq,
-              pCategory: pCategory
+			  city: cityNum,
+        pSeq: pSeq,
+        pCategory: pCategory
 		},
 		dataType: "json",
 		success:function(count) {
@@ -388,13 +387,14 @@ function placeListPageChange() {
       pSeq += placeSeqList[i];
     }
   }
-  placeList(cityNum,pSeq);
+  placeList(pSeq);
 }
 
 //검색 이벤트 함수 입니다.
 function placeSearch() {
-  searchText = $('#searchInput').val();
+  let searchText = $('#searchInput').val();
   let rightRadioCP = Number($('#rightRadioCurrentP').val());
+  let cP = $('#hidden_currentP').val()
   let bigCategory = '';
   let pSeq = '';
 
@@ -416,54 +416,61 @@ function placeSearch() {
     }
   }
 
-  $.ajax({
-    url: '/placeSearch',
-    type: 'post',
-    data: {
-          search: searchText,
-          bigCategory: bigCategory,
-          pSeq: pSeq
-    },
-    dataType: 'json',
-    success:function(data) {
-      $('#divPlaceCard').empty();
-      for ( let i = 0; i < data.length; i++ ) {
-        let placeSeq = data[i].seq;
-        let placeName = data[i].name;
-        let placeImg = data[i].img;
-
-        let commonString = `
-        <div id='divPlaceCard${placeSeq}'draggable="true" ondragstart= "drag(event)" value='${placeSeq}'>
-	        <li id='placeCard${placeSeq}' class='placeCard' value='${placeSeq}'>
-	          <div class='placeImg'>
-	            <img class='cartImg' src='${placeImg}'>
-	          </div>
-	          <div class='placeTitle'>
-	            <span id='placeName'><h7>${placeName}</h7></span>
-	            <div class='iconFlex' id='${placeSeq}' onclick = 'selectPlaceDelete(this);'>
-	              <i id='scheduleDelete'title="목록에서 삭제" class="material-icons">clear</i>
-	            </div>
-	          </div>
-	        </li>
-	       </div>`
-        placeCommonString[i] = (commonString);
-        html = [];
-        html.push(
-          "<li class='placeCard'>",
-          "<div class='placeImg'><img class='cartImg' src='",placeImg,"'></div>",
-          "<div class='placeTitle'>",
-          "<span id='placeName'><h7>",placeName,"</h7></span>",
-          "<div class='iconFlex'>",
-          "<div title='장소정보' id='placeInfo'><i id='",placeSeq,"'class='material-icons info'>info</i></div>",
-          "<div title='장소추가' id='",placeSeq,"' onclick = 'selectPlaceAdd(this);'><i id='placeAdd' class='material-icons add'>add</i></div>",
-          "</div></div></li>"
-        );
-        $('#divPlaceCard').append(html.join(""));
-      }
-      $('#placeListCount').val(data.length);
-			pagination();
-    }
-  })
+	if ( searchText == null || searchText == '' ) {
+		placeList(pSeq);
+	}
+	else {
+	  $.ajax({
+	    url: '/placeSearch',
+	    type: 'post',
+	    data: {
+	          search: searchText,
+	          city: cityNum,
+	          bigCategory: bigCategory,
+	          currentP: cP,
+	          pSeq: pSeq
+	    },
+	    dataType: 'json',
+	    success:function(data) {
+	      $('#divPlaceCard').empty();
+	      for ( let i = 0; i < data.length; i++ ) {
+	        let placeSeq = data[i].seq;
+	        let placeName = data[i].name;
+	        let placeImg = data[i].img;
+	
+	        let commonString = `
+	        <div id='divPlaceCard${placeSeq}'draggable="true" ondragstart= "drag(event)" value='${placeSeq}'>
+		        <li id='placeCard${placeSeq}' class='placeCard' value='${placeSeq}'>
+		          <div class='placeImg'>
+		            <img class='cartImg' src='${placeImg}'>
+		          </div>
+		          <div class='placeTitle'>
+		            <span id='placeName'><h7>${placeName}</h7></span>
+		            <div class='iconFlex' id='${placeSeq}' onclick = 'selectPlaceDelete(this);'>
+		              <i id='scheduleDelete'title="목록에서 삭제" class="material-icons">clear</i>
+		            </div>
+		          </div>
+		        </li>
+		       </div>`
+	        placeCommonString[i] = (commonString);
+	        html = [];
+	        html.push(
+	          "<li class='placeCard'>",
+	          "<div class='placeImg'><img class='cartImg' src='",placeImg,"'></div>",
+	          "<div class='placeTitle'>",
+	          "<span id='placeName'><h7>",placeName,"</h7></span>",
+	          "<div class='iconFlex'>",
+	          "<div title='장소정보' id='placeInfo'><i id='",placeSeq,"'class='material-icons info'>info</i></div>",
+	          "<div title='장소추가' id='",placeSeq,"' onclick = 'selectPlaceAdd(this);'><i id='placeAdd' class='material-icons add'>add</i></div>",
+	          "</div></div></li>"
+	        );
+	        $('#divPlaceCard').append(html.join(""));
+	      }
+	      $('#placeListCount').val(data.length);
+				pagination();
+	    }
+	  })
+	}
 }
 
 //업체정보를 modal로 생성하는 함수입니다.
@@ -627,8 +634,8 @@ function rightRadio(tagId) {
       pSeq += placeSeqList[i];
     }
   }
-  placeList(cityNum,pSeq);
-  placeListCount(cityNum,pSeq);
+  placeList(pSeq);
+  placeListCount(pSeq);
 }
 
 //좌측 사이드바에 숙박&명소 클릭 시 이벤트발생 함수입니다.
@@ -656,12 +663,11 @@ function scheduleDetailCreate() {
   $('.scheduleModal').css('display','block');
   let calculation = $('#day').text().split('');
   calculation = calculation[0];
-  let city = cityNum;
 	
   $.ajax({
     url: "/mapCreate",
     type: "post",
-    data: {city: city},
+    data: {city: cityNum},
     dataType: "json",
     success:function(data) {
         cityLat = data[data.length-1].lat
@@ -686,6 +692,7 @@ function scheduleDetailCreate() {
 
   $('.addScheduleByDate').empty();
   $('#dayListButtonArea div:eq(0)').empty();
+  $('#dayListButtonArea').empty();
   for ( let i = 1; i < calculation; i++ ) {
     $('#dayListButtonArea').append(`
     <div class="divDayButton" onclick="openDayDetailPlan(${i})">
@@ -694,11 +701,13 @@ function scheduleDetailCreate() {
     </div>
     `);
   }
+  $('.leftRadioSelectPlaceCss').empty();
 	$('#dayButton1').trigger('click').css('background-color','red');
 	$('.scheduleDate1').attr('style','display:block;');
 	$('#placeAddCartCopy').attr('style','display: block')
 	$('#lodgingAddCartCopy').attr('style','display: none')
-	$('#ulPlaceAddCart').attr('style','height: 697px;')
+	$('.ulPlaceAddCartCss').attr('style','height: 697px;')
+	$('.ulLodgingAddCartCss').attr('style','height: 697px;')
 }
 
 function rightScheduleModalRadio(tagId) {
@@ -758,6 +767,7 @@ let dropEl;
 
 let drag = function(ev){
 	dragEl = ev.target;
+	
 }
 let allowDrop = function(ev){
 	ev.preventDefault();
@@ -765,7 +775,12 @@ let allowDrop = function(ev){
 let drop = function(ev){
 	if(ev.target.tagName == 'ul' || ev.target.tagName == 'UL'){
 		dropEl = ev.target;
-		dropEl.append(dragEl);
+		if ( dragEl.tagName == 'img' || dragEl.tagName == 'IMG') {
+			return false;
+		}
+		else {
+		dropEl.append(dragEl);			
+		}
 	} else if(ev.target.tagName == 'li' || ev.target.tagName == 'LI'){
 		dropEl = ev.target;
 		let ul = ev.target.parentNode;
@@ -776,16 +791,8 @@ let drop = function(ev){
 //일정상세페이지 modal을 종료하는 함수입니다.
 function scheduleModalClose() {
 	$('.scheduleModal').css('display','none');
+	$('.ulPlaceAddCart').removeAttr('style');
 	$('#ulPlaceAddCart').removeAttr('style');
-}
-
-// 일정 상세경로 클릭 시 길찾기
-function roadFind() {
-	let options =
-	"top=15, left=80, width=1100, height=900, status=no, menubar=no, toolbar=no, resizable=no";
-	window.open(
-	"Https://map.kakao.com/?sName=천안시청&eName=휴먼교육센터",
-	"길찾기",
-	options
-	);
+	$('.ulLodgingAddCartCss').removeAttr('style');
+	$('#ulLodgingAddCart').removeAttr('style');
 }
