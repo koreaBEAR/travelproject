@@ -191,13 +191,18 @@ a.index {
   height: 100%;
 }
 
+a.indexx:visited {
+	text-decoration: none;
+	color: #F3732F;
+}
+
 </style>
 <%@ include file="./header.jsp" %>
 <body>	
 <c:if test="${sessionScope.memberClass == 'admin'}">
 	<div class="nav">
 	<h2><a href ="/manage_member" class="index">회원관리</a></h2>
-	<h2><a href ="/manage_place" class="index">업체관리</a></h2>
+	<h2><a href ="/manage_place" class="indexx">업체관리</a></h2>
 	<h2><a href ="/manage_help" class="index">문의관리</a></h2>
 	</div>
 
