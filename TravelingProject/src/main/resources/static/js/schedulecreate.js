@@ -866,22 +866,3 @@ function modalSaveButton() {
 	})
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

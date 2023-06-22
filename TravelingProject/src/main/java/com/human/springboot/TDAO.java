@@ -79,20 +79,27 @@ public interface TDAO {
 		
 		
 ////////////////////////현준//////////////////
+		
+		//업체 개수 체크
 		int placeListAllCount(int city, String pSeq);
 		int placeListCount(int city, String pSeq, String pCategory);
 		
+		//맵
 		ArrayList<ScheduleCreateDTO> mapCreate(int city);
 		
+		//리스트
 		ArrayList<ScheduleCreateDTO> allPlaceList(int city,int currentP,String pCategory);
 		ArrayList<ScheduleCreateDTO> scheduleAddPlaceList(int city,int currentP,String pSeq, String pCategory);
 		ArrayList<ScheduleCreateDTO> placeSearchNull(int city, String bigCategory, String searchText, int currentP);
 		ArrayList<ScheduleCreateDTO> placeSearch(int city, String bigCategory, String pSeq, String searchText, int currentP);
 		
+		//업체정보
 		ArrayList<ScheduleCreateDTO> placeInfo(int placeInfoId);
 		
+		//마커생성
 		ArrayList<ScheduleCreateDTO> markerScheduleCreate(String pSeq);
 		
+		//유저seq 및 일정저장
 		String UserSeq(String UserId);
 		void modalsaveButton(int city,int UserSeq,String sData,String sDays);
 	}

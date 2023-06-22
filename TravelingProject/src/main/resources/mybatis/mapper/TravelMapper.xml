@@ -440,6 +440,7 @@ where city_name like '%' || #{param1} || '%'
 			from member
 		 where member_id = #{param1}
 	</select>
+<!-- 유저의 일정을 저장하는 sql -->
 	<insert id="modalsaveButton">
 		insert into schedule values (schedule_seq.nextval,${param1},${param2},#{param3},#{param4},to_Char(sysdate, 'YYYY/MM/DD'))
 	</insert>
