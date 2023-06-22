@@ -47,7 +47,8 @@
 <div class='btnsort'>
 <button class=boardBtn type="button" id=btnModify>수정</button>
 <button class=boardBtn id=btnRemove>삭제</button>
-<button class=boardBtn id=btnback>목록가기</button>
+<c:if test="${sessionScope.memberClass == 'admin'}"><button class=boardBtn id=btnbackadmin>목록가기</button></c:if>
+<c:if test="${sessionScope.memberClass != 'admin'}"><button class=boardBtn id=btnback>목록가기</button></c:if>
 </div>
   <h3>Comment</h3>
   <div class="comment">
@@ -84,7 +85,9 @@ $(document)
 .on('click','#btnback',function(){
    document.location='/contact';
 })
-
+.on('click','#btnbackadmin', function(){
+	document.location='/manage_help';
+})
 .on('click','#btnModify', function(){
 	document.location='/updatelist/'+$('#help_seq').val();
 })
