@@ -26,11 +26,13 @@
     <span id="title">
         <a href="/main"><img src="/img/logo.jpg" class="title_img"></a>
     </span>
+    <span id="head_line">
     <div class="dong">
         <a id="head_mine">WELCOME, ${id}</a>
         <a href="/logout" id="head_mypage">LOGOUT</a>
         <a href="/manage_member" id="head_mypage">ADMINPAGE</a>
     </div>
+    </span>
 </div>
 <% } else { %>
 <div class="Mainhead">
