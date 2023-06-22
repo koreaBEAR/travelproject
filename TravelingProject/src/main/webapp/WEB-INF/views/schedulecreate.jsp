@@ -81,7 +81,7 @@
 	
 	
 	<div id="divPlaceInfo" class="modal">
-		<div id="placeInfo_modal_content"></div>
+		<div id="placeInfoModalContent"></div>
 	</div>
 	
 	

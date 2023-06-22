@@ -161,25 +161,39 @@ let placeSeqList = [];
 // //일정에 업체를 추가하는 함수입니다.
 function selectPlaceAdd(tagId) {
   let rightRadioCP = Number($('#rightRadioCurrentP').val());
+  let calculation = $('#day').text().split('');
+	calculation = calculation[0];
+	let placeLiLen = $('#ulPlaceAddCart').children().length;
+	let lodgingLiLen = $('#ulLodgingAddCart').children().length;
   let pSeq = "";
-
-  for ( let i = 0; i < placeSeqList.length; i++ ) {
-    if ( tagId.id == placeSeqList[i] ) {
-      return false;
-    }
-  }
-
-  if ( rightRadioCP == 1 ) {
-    for ( let i = 0; i < placeSeqList.length; i++ ) {
-      if ( i != placeSeqList.length-1 ) {
-        pSeq += placeSeqList[i] + ',';
-      }
-      else {
-        pSeq += placeSeqList[i];
-      }
-    }
-  }
-  else if ( rightRadioCP == 2 ) {
+	
+	if ( rightRadioCP == 1 ) {
+		if ( lodgingLiLen == (calculation-1) ) {
+			alert('최대개수를 초과하였습니다.');
+			return false;
+		}
+		else {
+		  for ( let i = 0; i < placeSeqList.length; i++ ) {
+		    if ( tagId.id == placeSeqList[i] ) {
+		      return false;
+		    }
+		  }
+		
+	    for ( let i = 0; i < placeSeqList.length; i++ ) {
+	      if ( i != placeSeqList.length-1 ) {
+	        pSeq += placeSeqList[i] + ',';
+	      }
+	      else {
+	        pSeq += placeSeqList[i];
+	      }
+	    }
+		}
+	}
+	else if ( rightRadioCP == 2 ) {
+		if ( placeLiLen == (calculation-1)*3 ) {
+			alert('최대개수를 초과하였습니다.');
+			return false;
+		}
     placeSeqList[placeSeqList.length] = (tagId.id);
     for ( let i = 0; i < placeSeqList.length; i++ ) {
       if ( i != placeSeqList.length-1 ) {
@@ -189,7 +203,7 @@ function selectPlaceAdd(tagId) {
         pSeq += placeSeqList[i];
       }
     }
-  }
+	}
   placeList(pSeq);
   placeListCount(pSeq)
   markerScheduleCreate(tagId.id)
@@ -199,19 +213,29 @@ function selectPlaceAdd(tagId) {
 //좌측 리스트에 추가하는 업체를 그리는 함수입니다.
 function placeAppend() {
   let rightRadioCP = Number($('#rightRadioCurrentP').val());
-
-  if ( rightRadioCP == 1 ) {
-    $('#lodgingSelect').click();
-    leftRadio('lodgingSelect')
-    selectPlace = $(this).parent().parent().parent().parent().index();
-    $('#ulLodgingAddCart').append(placeCommonString[selectPlace]);
-  }
-  else if ( rightRadioCP == 2 ) {
-    $('#placeSelect').click();
-    leftRadio('placeSelect')
-    selectPlace = $(this).parent().parent().parent().parent().parent().index();
-    $('#ulPlaceAddCart').append(placeCommonString[selectPlace]);
-  }
+  let calculation = $('#day').text().split('');
+	calculation = calculation[0];
+	let placeLiLen = $('#ulPlaceAddCart').children().length;
+	let lodgingLiLen = $('#ulLodgingAddCart').children().length;
+	
+	if ( rightRadioCP == 1 ) {
+		if ( lodgingLiLen == (calculation-1) ) {
+			return false;
+		}
+		$('#lodgingSelect').click();
+		leftRadio('lodgingSelect')
+		selectPlace = $(this).parent().parent().parent().parent().parent().index();
+		$('#ulLodgingAddCart').append(placeCommonString[selectPlace]);
+	}
+	else if ( rightRadioCP == 2 ) {
+		if ( placeLiLen == (calculation-1)*3) {
+			return false;
+		}
+		$('#placeSelect').click();
+		leftRadio('placeSelect')
+		selectPlace = $(this).parent().parent().parent().parent().parent().index();
+		$('#ulPlaceAddCart').append(placeCommonString[selectPlace]);
+	}
 }
 
 //일정에 추가되어있는 업체를 취소하고 우측 리스트에 다시 나타나게하는 함수입니다.
@@ -250,20 +274,20 @@ function allDelete(tagId) {
   let placeAddCartlen = $('#ulPlaceAddCart').children().length;
   let lodgingAddCartlen = $('#ulLodgingAddCart').children().length;
   let thisId = tagId.id;
-
-  if ( thisId == 'placeAllDelete') {
+  let pSeq = '';
+	
+	if ( thisId == 'placeAllDelete') {
     for ( let i = 0; i < placeAddCartlen; i++ ) {
       placeDeleteSeq = $('#ulPlaceAddCart').children('li').val();
       for ( let j = 0; j < markers.length; j++ ) {
         if ( placeDeleteSeq == markers[j].Gb ) {
           markers[j].setMap(null);
           markers.splice(j,1);
-          $('#ulPlaceAddCart ul:eq(0)').remove();
+          $('#ulPlaceAddCart li:eq(0)').remove();
           placeSeqList.splice(j,1);
         }
       }
     }
-    let pSeq = "";
     for ( let i = 0; i < placeSeqList.length; i++ ) {
       if ( i != placeSeqList.length-1 ) {
         pSeq += placeSeqList[i] + ',';
@@ -272,21 +296,19 @@ function allDelete(tagId) {
         pSeq += placeSeqList[i];
       }
     }
-    $('#ulPlaceAddCart').empty();
   }
-  else if ( thisId == 'lodgingAllDelete' ) {
+  if ( thisId == 'lodgingAllDelete'){
     for ( let i = 0; i < lodgingAddCartlen; i++ ) {
       lodgingDeleteSeq = $('#ulLodgingAddCart').children('li').val();
       for ( let j = 0; j < markers.length; j++ ) {
         if ( lodgingDeleteSeq == markers[j].Gb ) {
           markers[j].setMap(null);
           markers.splice(j,1);
-          $('#ulLodgingAddCart ul:eq(0)').remove();
+          $('#ulLodgingAddCart li:eq(0)').remove();
           placeSeqList.splice(j,1);
         }
       }
     }
-    let pSeq = "";
     for ( let i = 0; i < placeSeqList.length; i++ ) {
       if ( i != placeSeqList.length-1 ) {
         pSeq += placeSeqList[i] + ',';
@@ -295,7 +317,6 @@ function allDelete(tagId) {
         pSeq += placeSeqList[i];
       }
     }
-    $('#ulLodgingAddCart').empty();
   }
   placeList(pSeq);
 }
@@ -477,53 +498,59 @@ function placeSearch() {
 //업체정보를 modal로 생성하는 함수입니다.
 function placeInfo() {
   let placeInfoId = $(this).attr('id');
-
-  $.ajax({
-    url: "/placeInfo",
-    type: "post",
-    data: { 
-          placeInfoId: placeInfoId
-    },
-    dataType: "json",
-    success:function(data) {
-      $('.modal').css('display','block');
-      placeName = data[data.length-1].name;
-      placeAddress = data[data.length-1].address;
-      placeTel = data[data.length-1].tel;
-      placeContent = data[data.length-1].content;
-      placeImg = data[data.length-1].img;
-      placeOpen = data[data.length-1].open;
-
-      placeOpen = placeOpen.split('/');
-
-      let placeInfo = `
-        <div class="placeInfo_modal_header">
-        <button type="button" class="close" onclick="placeInfoModalClose()">×</button>
-        </div>
-        <div class="placeInfo_modal_body">
-          <img id="placeInfoImg" src="${placeImg}" alt="Place Info">
-          <div>
-            <div>
-            <h2 class="placeInfo_title">${placeName}</h2>
-            <p class="placeInfo_content">${placeContent}</p>
-            <h4 class="modalTitle"><영업시간></h4>
-            <p class="modalOpen">${placeOpen[0]}</p>
-            <p class="modalOpen">${placeOpen[1]}</p>
-            <p class="modalOpen">${placeOpen[2]}</p>
-            <p class="modalOpen">${placeOpen[3]}</p>
-            <p class="modalOpen">${placeOpen[4]}</p>
-            <p class="modalOpen">${placeOpen[5]}</p>
-            <p class="modalOpen">${placeOpen[6]}</p>
-            <h4 class="modalTitle"><주소></h4>
-            <p class="modalAddress">${placeAddress}</p>
-            <h4 class="modalTitle"><전화번호></h4>
-            <p class="modalTel">${placeTel}</p>
-          </div>
-        </div>
-      `
-      $('#placeInfo_modal_content').append(placeInfo);
-    }
-  })
+  let infoLen = $('#placeInfoModalContent').children().length;
+	
+	if ( infoLen == 0 ) {
+	  $.ajax({
+	    url: "/placeInfo",
+	    type: "post",
+	    data: { 
+	          placeInfoId: placeInfoId
+	    },
+	    dataType: "json",
+	    success:function(data) {
+	      $('.modal').css('display','block');
+	      placeName = data[data.length-1].name;
+	      placeAddress = data[data.length-1].address;
+	      placeTel = data[data.length-1].tel;
+	      placeContent = data[data.length-1].content;
+	      placeImg = data[data.length-1].img;
+	      placeOpen = data[data.length-1].open;
+	
+	      placeOpen = placeOpen.split('/');
+	
+	      let placeInfo = `
+	        <div class="placeInfoModalHeader">
+	        <button type="button" class="close" onclick="placeInfoModalClose()">×</button>
+	        </div>
+	        <div class="placeInfoModalBody">
+	          <img id="placeInfoImg" src="${placeImg}" alt="Place Info">
+	          <div>
+	            <div>
+	            <h3 class="placeInfoTitle">${placeName}</h3>
+	            <p class="placeInfoContent">${placeContent}</p>
+	            <h4 class="modalTitle"><영업시간></h4>
+	            <p class="modalOpen">${placeOpen[0]}</p>
+	            <p class="modalOpen">${placeOpen[1]}</p>
+	            <p class="modalOpen">${placeOpen[2]}</p>
+	            <p class="modalOpen">${placeOpen[3]}</p>
+	            <p class="modalOpen">${placeOpen[4]}</p>
+	            <p class="modalOpen">${placeOpen[5]}</p>
+	            <p class="modalOpen">${placeOpen[6]}</p>
+	            <h4 class="modalTitle"><주소></h4>
+	            <p class="modalAddress">${placeAddress}</p>
+	            <h4 class="modalTitle"><전화번호></h4>
+	            <p class="modalTel">${placeTel}</p>
+	          </div>
+	        </div>
+	      `
+	      $('#placeInfoModalContent').append(placeInfo);
+	    }
+	  })
+  }
+  else {
+	  return false;
+  }
 }
 
 //업체정보 modal을 종료하는 함수입니다.
@@ -793,6 +820,7 @@ function openDayDetailPlan(buttonNum) {
 	}
 }
 
+// 드래그앤드롭 이벤트에 사용되는 전역변수
 let dragEl;
 let dropEl;
 
@@ -860,9 +888,12 @@ function modalSaveButton() {
 		dataType: "text",
 		success:function(check) {
 			if ( check == 'true') {
-				scheduleModalClose()
+				scheduleModalClose();
+				let modalClose = 'placeAllDelete/lodgingAllDelete'
+				$('#placeAllDelete').click();
+				$('#lodgingAllDelete').click();
+				
 			}
 		}
 	})
-
 }

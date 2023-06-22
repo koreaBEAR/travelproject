@@ -18,7 +18,6 @@ h1 {
 
 li {
 	position: relative;
-	z-index: 90;
 }
 
 .material-icons {
@@ -357,7 +356,7 @@ li {
 	overflow: auto; /* 스크롤 가능하도록 */
 	background-color: rgba(0, 0, 0, 0.5); /* 배경에 약간의 투명도 */
 }
-#placeInfo_modal_content {
+#placeInfoModalContent {
 	position: relative;
 	top: 35vh;
 	left: 23vw;
@@ -366,11 +365,11 @@ li {
 	height: 40%;
 }
 
-.placeInfo_title{	
+.placeInfoTitle{	
 	display: inline;
 	margin-left: 7px;
 }
-.placeInfo_content{
+.placeInfoContent{
 	margin: 5px 7px 0 7px;
 	font-family: 'Prtendard-Regular';
 	font-size: 14px;
@@ -385,6 +384,7 @@ li {
 	right: 8px;
 	z-index: 1;
 	cursor: pointer;
+	line-height: 1;
 }
 
 #placeInfoImg {
@@ -392,7 +392,7 @@ li {
 	width: 260px;
 }
 
-.placeInfo_modal_body {
+.placeInfoModalBody {
 	position: relative;
 	display: flex;
 	align-items: center;
