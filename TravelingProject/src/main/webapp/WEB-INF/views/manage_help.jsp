@@ -186,28 +186,28 @@ a.index {
 }
 
 #help_category::before {
-  content: "Category: ";
-  font-weight: bold;
+	content: "Category: ";
+	font-weight: bold;
 }
 
 #help_title::before {
-  content: "Title: ";
-  font-weight: bold;
+	content: "Title: ";
+	font-weight: bold;
 }
 
 #member_id::before {
-  content: "ID: ";
-  font-weight: bold;
+	content: "ID: ";
+	font-weight: bold;
 }
 
 #help_created::before {
-  content: "Created: ";
-  font-weight: bold;
+	content: "Created: ";
+	font-weight: bold;
 }
 
 #help_content::before {
-  content: "Content: ";
-  font-weight: bold;
+	content: "Content: ";
+	font-weight: bold;
 }
 
 #helpDlg textarea {
@@ -242,14 +242,18 @@ a.index {
 }
 
 .ui-dialog-titlebar-close {
-  background-color: #213555;
-  border-radius: 4px;
-  position: absolute;
-  opacity: 0.8;
-  right: 0;
-  color: white;
+	background-color: #213555;
+	border-radius: 4px;
+	position: absolute;
+	opacity: 0.8;
+	right: 0;
+	color: white;
 }
 
+a.indexx:visited {
+	text-decoration: none;
+	color: #F3732F;
+}
 </style>
 <body>
 <%@ include file="./header.jsp" %>
@@ -257,7 +261,7 @@ a.index {
 	<div class="nav">
 	<h2><a href ="/manage_member" class="index">회원관리</a></h2>
 	<h2><a href ="/manage_place" class="index">업체관리</a></h2>
-	<h2><a href ="/manage_help" class="index">문의관리</a></h2>
+	<h2><a href ="/manage_help" class="indexx">문의관리</a></h2>
 	</div>
 	
 	<div class="section">

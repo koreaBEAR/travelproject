@@ -33,6 +33,7 @@
 .nav a {
 	text-decoration: none;
 	color: #000;
+	
 }
 
 .section {
@@ -163,6 +164,11 @@ a.index {
 	text-decoration: none;
 }
 
+a.indexx:visited {
+	text-decoration: none;
+	color: #F3732F;
+}
+
 .bold {
 	font-weight: bold;
 }
@@ -172,7 +178,7 @@ a.index {
 <c:if test="${sessionScope.memberClass == 'admin'}">
 	
 	<div class="nav">
-	<h2><a href ="/manage_member" class="index">회원관리</a></h2>
+	<h2><a href ="/manage_member" class="indexx">회원관리</a></h2>
 	<h2><a href ="/manage_place" class="index">업체관리</a></h2>
 	<h2><a href ="/manage_help" class="index">문의관리</a></h2>
 	</div>
