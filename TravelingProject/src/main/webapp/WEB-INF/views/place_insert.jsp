@@ -153,7 +153,7 @@ input[type=button]:hover, input[type=submit]:hover {
 	</tr>
 	<tr>		
 		<td>영업시간</td>
-		<td><input type=text name=open id=open required></td>		
+		<td><input type=text name=open id=open placeholder="월:10:00~20:00/화:10:00~20:00/" required></td>		
 	</tr>
 	<tr>		
 		<td>설명</td>
