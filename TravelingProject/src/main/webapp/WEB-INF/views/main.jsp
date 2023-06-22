@@ -247,7 +247,7 @@ function cityBest() {
         success: function(data) {
             $('#tourlist').empty();
             for (var i = 0; i < data.length; i++) {
-                var str = '<div id="div1-1" class="div1-1">';
+                var str = '<div class="div1-1">';
                 str += '<input type="hidden" id="city_num" name="city_num" value="' + data[i]['city_num'] + '">';
                 str += '<div class="div_img"><img src="/img/' + data[i]['city_img'] + '" alt="City Image"></div>';
                 str += '<p><span class="bold-text">' + data[i]['city_engname'] + '</span></br>' + data[i]['city_name'] + '</p></div>';
@@ -271,10 +271,10 @@ function SearchCity() {
             var data = response; // Access the response directly
             $('#tourlist').empty();
             for (var i = 0; i < data.length; i++) {
-                var str = '<div class="divtbl1"><div class="div1-1">';
+                var str = '<div class="div1-1">';
                 str += '<input type="hidden" id="city_num" name="city_num" value="' + data[i]['city_num'] + '">';
                 str += '<div class="div_img"><img src="/img/' + data[i]['city_img'] + '" alt="City Image"></div>';
-                str += '<p><span class="bold-text">' + data[i]['city_engname'] + '</span></br>' + data[i]['city_name'] + '</p></div></div>';
+                str += '<p><span class="bold-text">' + data[i]['city_engname'] + '</span></br>' + data[i]['city_name'] + '</p></div>';
                 $('#tourlist').append(str);
             }
 

@@ -24,6 +24,7 @@ h1 {
 
 /* 게시판 테이블 */
 .table01 {
+	cursor: context-menu;
 	width: 100%;
 	border-collapse: collapse;
 }
