@@ -408,8 +408,37 @@ public class Traval_controller {
 	
 	//마이페이지
 	@GetMapping("/myPage")
-	public String loadMyPage() {
+	public String loadMyPage(HttpServletRequest req, Model model) {
+		HttpSession session = req.getSession();
+		String memberID = (String)session.getAttribute("id");
+		String memberNickName = tdao.selectMemberNickName(memberID);
+		model.addAttribute("nickName", memberNickName);
 		return "myPage";
+	}
+	//마이페이지 schedule load
+	@PostMapping("/loadMyPageSchedule")
+	@ResponseBody
+	public String loadMyPageSchedule(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String member_id = (String)session.getAttribute("id");
+		int memberSeq = tdao.findMemberSeq(member_id);
+		ArrayList <MyPageDTO> alSchedule = tdao.myPageSchedule(memberSeq);
+		JSONArray ja = new JSONArray();
+		try {
+			for(int i=0; i<alSchedule.size(); i++) {
+				JSONObject jo = new JSONObject();
+				jo.put("schedule_seq", alSchedule.get(i).getSchedule_seq());
+				jo.put("cityName", alSchedule.get(i).getCity_name());
+				jo.put("cityImg", alSchedule.get(i).getCity_img());
+				jo.put("scheduleDays", alSchedule.get(i).getSchedule_days());
+				jo.put("scheduleUpdated", alSchedule.get(i).getSchedule_updated());
+				ja.put(jo);
+			}
+			System.out.println(ja.toString());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return ja.toString();
 	}
 	
 	//정아
