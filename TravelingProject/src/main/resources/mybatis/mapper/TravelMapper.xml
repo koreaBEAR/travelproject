@@ -67,6 +67,27 @@
 	        where a.place_seq = #{param1}
 	        and a.place_seq = b.place_seq
 	</select>
+	<!-- 마이페이지 멤버찾기 -->
+	<select id="findMemberSeq" resultType="Integer">	
+		select member_seq
+			from member
+			where member_id = #{param1}
+	</select>
+	<!-- 마이페이지 스케줄load -->
+	<select id="myPageSchedule" resultType="com.human.springboot.MyPageDTO">
+		select a.schedule_seq, c.city_img, c.city_name, b.member_nickname, a.schedule_days, a.schedule_updated
+			from schedule a, member b, city c
+			where a.member_seq = #{param1}
+			and	a.member_seq = b.member_seq
+			and a.city_seq = c.city_num
+			order by schedule_seq
+	</select>
+	<!-- 멤버 닉네임 -->
+	<select id="selectMemberNickName" resultType="String">
+		select member_nickname
+			from member
+			where member_id = #{param1}
+	</select>
 	
 	<!--정아  -->
 	<!-- 회원관리 페이징해서 보여주기 & 삭제 -->

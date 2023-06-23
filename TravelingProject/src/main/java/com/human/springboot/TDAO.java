@@ -27,6 +27,11 @@ public interface TDAO {
 	ArrayList <RevDTO> reviewContent(int placeSeq);
 	int reviewsCheck(int placeSeq);
 	
+	
+	//마이페이지
+	int findMemberSeq(String member_id);
+	String selectMemberNickName(String member_id);
+	ArrayList <MyPageDTO> myPageSchedule(int memberSeq);
 	//정아////////////////
 	//회원관리
 		void member_delete(int member_seq);
