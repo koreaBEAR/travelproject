@@ -1386,6 +1386,7 @@ public class Traval_controller {
 		System.out.println(sDays);
 		int UserSeq = Integer.parseInt(tdao.UserSeq(UserId));
 		tdao.modalsaveButton(city,UserSeq,sData,sDays);
+		tdao.cityCountInc(city);
 		
 		return check;
 	}

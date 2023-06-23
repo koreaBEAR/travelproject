@@ -465,5 +465,8 @@ where city_name like '%' || #{param1} || '%'
 	<insert id="modalsaveButton">
 		insert into schedule values (schedule_seq.nextval,${param1},${param2},#{param3},#{param4},to_Char(sysdate, 'YYYY/MM/DD'))
 	</insert>
+	<update id="cityCountInc">
+		update city set city_count= city_count+1 where city_num = #{param1}
+	</update>
 	
 </mapper>
