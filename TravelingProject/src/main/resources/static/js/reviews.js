@@ -98,6 +98,37 @@ $(document)
 .on('click','#closeBtn',function(){
 	$('.placeModal').css('display','none')
 })
+// Dropdown menu for 'Search by region' button
+$('.dropdown .btn-secondary').eq(0).click(function() {
+  var dropdownMenu = $(this).next('.city');
+  dropdownMenu.slideToggle(300);
+  var buttonOffset = $(this).offset();
+  var buttonWidth = $(this).outerWidth();
+  var dropdownMenuWidth = dropdownMenu.outerWidth();
+  dropdownMenu.css({
+    'left': buttonOffset.left + buttonWidth+20 - dropdownMenuWidth
+  });
+});
+
+// Dropdown menu for 'Sort lookup' button
+$('.dropdown .btn-secondary').eq(1).click(function() {
+  var dropdownMenu = $(this).next('.city');
+  dropdownMenu.slideToggle(300);
+  var buttonOffset = $(this).offset();
+  var buttonWidth = $(this).outerWidth();
+  var dropdownMenuWidth = dropdownMenu.outerWidth();
+  dropdownMenu.css({
+    'left': buttonOffset.left + buttonWidth+60 - dropdownMenuWidth
+  });
+});
+
+// Set the dropdown menu to close when a non-click area is clicked
+$(window).click(function(event) {
+  if (!$(event.target).closest('.dropdown').length) {
+    $('.dropdown .city').slideUp(300);
+  }
+});
+
 
 /*10페이지씩 제한 페이지네이션변경*/
 function loadReview(pageNum){

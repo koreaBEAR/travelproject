@@ -92,6 +92,7 @@ span[name='pageNum'].current {
 	justify-content: flex-end;
 	margin-right: 5%;
 }
+
 </style>
 <body>
 <!-- 메인헤더 -->
