@@ -102,6 +102,7 @@ public interface TDAO {
 		//유저seq 및 일정저장
 		String UserSeq(String UserId);
 		void modalsaveButton(int city,int UserSeq,String sData,String sDays);
+		void cityCountInc(int city); // 일정생성 시 시티카운트 증가(city_count+1)
 	}
 
 
