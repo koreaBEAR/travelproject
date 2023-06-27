@@ -1,6 +1,22 @@
+// URL에 cityNum과 cityName을 변수에 저장하는 코드
+tempAry = window.location.pathname.split('/');
+cityNum = tempAry[2];
+cityName = decodeURIComponent(tempAry[3]);
+siteName = tempAry[1];
+scheduleSeq = tempAry[4];
+
+
 $(document)
 .ready(mapCreate)
-.ready(before_date(3))
+.ready(function() {
+	if ( siteName == 'schedulecreate') {
+		before_date(3)
+	}
+	else {
+		return false;
+	}
+})
+	
 .ready(datePicker)
 .ready(function() {	
 	$('#place').trigger('click');
@@ -16,11 +32,15 @@ $(document)
     }
   })
 })
+.ready(function() {
+	if ( siteName == 'scheduleupdate') {
+		scheduleupdateimport();
+	}
+})
 
 .on('click', '#search', placeSearch) // 검색 이벤트
 .on('click', '.page', pagination) //페이지네이션 이벤트
 .on('click', '.page', placeListPageChange) //페이지에 맞는 리스트 구성을 위한 이벤트
-/*.on('click', '#placeAdd', placeAppend) //업체 일정에 추가 이벤트*/
 .on('click', '#scheduleDelete', scheduleDelete) //일정에 추가되어 있는 업체를 선택부분만 삭제하는 이벤트
 .on('change', '.calender', dateCalculation) //여행의 시작날짜와 종료날짜의 기간계산을 위한 이벤트
 .on('click', '.info', placeInfo) //업체정보를 띄우기 위한 이벤트
@@ -28,10 +48,6 @@ $(document)
 .on('click', '#scheduleModalClose', scheduleModalClose) // 모달을 닫는 이벤트
 .on('click', '#modalSaveButton', modalSaveButton) // 일정상세페이지에서 일정저장 버튼 클릭 시 이벤트
 
-// URL에 cityNum과 cityName을 변수에 저장하는 코드
-tempAry = window.location.pathname.split('/');
-cityNum = tempAry[2];
-cityName = decodeURIComponent(tempAry[3]);
 
 //초기 위도,경도를 통한 선택지역 맵 불러오기
 function mapCreate() {
@@ -51,9 +67,9 @@ function mapCreate() {
         }
         // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
         map = new kakao.maps.Map(mapContainer, mapOption)
-        placeListCount(cityNum,null);
-        $('#cityName').text(cityName);
-      }
+			}
+  	  placeListCount(cityNum,null);
+      $('#cityName').text(cityName);
     }
   });
 }
@@ -180,6 +196,7 @@ function selectPlaceAdd(tagId,ArrayNum) {
 	    $('#lodgingSelect').click();
 			leftRadio('lodgingSelect')
 			$('#ulLodgingAddCart').append(placeCommonString[ArrayNum]);
+			placeSeqList[placeSeqList.length] = (tagId.id);
 	    for ( let i = 0; i < placeSeqList.length; i++ ) {
 	      if ( i != placeSeqList.length-1 ) {
 	        pSeq += placeSeqList[i] + ',';
@@ -195,7 +212,7 @@ function selectPlaceAdd(tagId,ArrayNum) {
 			alert('최대개수를 초과하였습니다.');
 			return false;
 		}
-    $('#placeSelect').click();
+		$('#placeSelect').click();
 		leftRadio('placeSelect')
 		$('#ulPlaceAddCart').append(placeCommonString[ArrayNum]);
     placeSeqList[placeSeqList.length] = (tagId.id);
@@ -912,6 +929,7 @@ function modalSaveButton() {
 	let startDate = $('#startDate').val();
 	let endDate = $('#endDate').val();
 	let scheduleDate = startDate+'~'+endDate;
+	let siteNum;
 	
 	for ( let i = 1; i < calculation; i++ ) {
 		let placeLiLen = $(`#ulPlaceContainer${i}`).children().length;
@@ -931,6 +949,14 @@ function modalSaveButton() {
 			}
 		}
 	}
+	
+	if ( siteName == 'schedulecreate') {
+		siteNum = 1;
+	}
+	
+	else if ( siteName == 'scheduleupdate') {
+		siteNum = 2;
+	}
 
 	$.ajax({
 		url: "/modalSaveButton",
@@ -938,7 +964,9 @@ function modalSaveButton() {
 		data: {
 			city: cityNum,
 			sData: scheduleData,
-			sDays: scheduleDate
+			sDays: scheduleDate,
+			siteNum: siteNum,
+			scheduleSeq: scheduleSeq
 		},
 		dataType: "text",
 		success:function(check) {
@@ -950,4 +978,64 @@ function modalSaveButton() {
 			}
 		}
 	})
+}
+
+scheduleUpdateCommonString = [];
+
+function scheduleupdateimport() {
+	let pSeq = '';
+	$.ajax({
+		url: "/scheduleupdateimport",
+		type: "post",
+		data: {
+			scheduleSeq : scheduleSeq
+		},
+		dataType: "json",
+		success:function(data) {
+			console.log(data);
+			let scheduleDays = data[data.length-1].days;
+			scheduleDays = scheduleDays.split('~');
+			let startDate = scheduleDays[0];
+			let endDate = scheduleDays[1];
+			$('#startDate').val(startDate);
+			$('#endDate').val(endDate);
+			for ( let i = 0; i < (data.length-1); i++ ) {
+				placeSeq = data[i].seq;
+				placeCategory = Number(data[i].category);
+				placeName = data[i].name;
+				placeImg = data[i].img;
+				
+				let commonString = `
+				        <li id='placeCard${placeSeq}' class='placeCard' draggable="true" ondragstart= "drag(event,${placeSeq})" value='${placeSeq}'>
+				          <div class='placeImg'>
+				            <img class='cartImg' src='${placeImg}'>
+				          </div>
+				          <div class='placeTitle'>
+				            <span id='placeName'><h7>${placeName}</h7></span>
+				            <div class='iconFlex' id='${placeSeq}' onclick = 'selectPlaceDelete(this);'>
+				              <i id='scheduleDelete'title="목록에서 삭제" class="material-icons">clear</i>
+				            </div>
+				          </div>
+				        </li>`;
+				scheduleUpdateCommonString[i] = (commonString);
+				if ( placeCategory == 5 || placeCategory == 6 ) {
+					$('#ulLodgingAddCart').append(scheduleUpdateCommonString[i]);					
+				}
+				else {
+					$('#ulPlaceAddCart').append(scheduleUpdateCommonString[i]);
+				}
+				placeSeqList[placeSeqList.length] = (placeSeq);
+				if ( i == data.length-2 ) {
+					pSeq += placeSeqList[i];
+				}
+				else {
+					pSeq += placeSeqList[i] + ',';
+				}
+				markerScheduleCreate(placeSeq);
+			}
+			placeList(pSeq);
+		}
+	})
+	
+	
 }

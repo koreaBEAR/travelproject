@@ -32,6 +32,7 @@ public interface TDAO {
 	int findMemberSeq(String member_id);
 	String selectMemberNickName(String member_id);
 	ArrayList <MyPageDTO> myPageSchedule(int memberSeq);
+	void scheduledelete(int scheduleSeq);
 	//정아////////////////
 	//회원관리
 		void member_delete(int member_seq);
@@ -105,9 +106,14 @@ public interface TDAO {
 		ArrayList<ScheduleCreateDTO> markerScheduleCreate(String pSeq);
 		
 		//유저seq 및 일정저장
-		String UserSeq(String UserId);
-		void modalsaveButton(int city,int UserSeq,String sData,String sDays);
+		int  UserSeq(String UserId);
+		void scheduleInsert(int city,int UserSeq,String sData,String sDays);
 		void cityCountInc(int city); // 일정생성 시 시티카운트 증가(city_count+1)
+		
+		//일정수정
+		ScheduleDTO scheduleData(int UserSeq, int scheduleSeq);
+		ArrayList<ScheduleCreateDTO> scheduleUpdateDataList(String scheduleUpdatePlaceSeq);
+		void scheduleUpdata(int scheduleSeq, int city, int UserSeq,String sData, String sDays);
 	}
 
 

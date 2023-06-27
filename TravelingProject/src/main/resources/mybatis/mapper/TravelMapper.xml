@@ -75,13 +75,16 @@
 	</select>
 	<!-- 마이페이지 스케줄load -->
 	<select id="myPageSchedule" resultType="com.human.springboot.MyPageDTO">
-		select a.schedule_seq, c.city_img, c.city_name, b.member_nickname, a.schedule_days, a.schedule_updated
+		select a.schedule_seq, city_seq, c.city_img, c.city_name, b.member_nickname, a.schedule_days, a.schedule_updated
 			from schedule a, member b, city c
 			where a.member_seq = #{param1}
 			and	a.member_seq = b.member_seq
 			and a.city_seq = c.city_num
 			order by schedule_seq
 	</select>
+	<delete id="scheduledelete">
+		delete from schedule where schedule_seq = ${param1}
+	</delete>
 	<!-- 멤버 닉네임 -->
 	<select id="selectMemberNickName" resultType="String">
 		select member_nickname
@@ -456,17 +459,38 @@ where city_name like '%' || #{param1} || '%'
 		 where place_seq = #{param1}
 	</select>
 <!-- userSeq를 return하는 sql -->
-	<select id="UserSeq" resultType="String">
+	<select id="UserSeq" resultType="_int">
 		select member_seq
 			from member
 		 where member_id = #{param1}
 	</select>
 <!-- 유저의 일정을 저장하는 sql -->
-	<insert id="modalsaveButton">
+	<insert id="scheduleInsert">
 		insert into schedule values (schedule_seq.nextval,${param1},${param2},#{param3},#{param4},to_Char(sysdate, 'YYYY/MM/DD'))
 	</insert>
 	<update id="cityCountInc">
 		update city set city_count= city_count+1 where city_num = #{param1}
 	</update>
-	
+<!-- 일정수정 관련 dataImport -->
+	<select id="scheduleData" resultType="com.human.springboot.ScheduleDTO">
+		select schedule_data, schedule_days
+			from schedule
+		 where member_seq = ${param1}
+			 and schedule_seq = ${param2}
+	</select>
+<!-- 일정에 추가되어있던 업체 불러오기 -->
+	<select id="scheduleUpdateDataList" resultType="com.human.springboot.ScheduleCreateDTO">
+		select place_seq, place_name ,place_category, place_img
+			from place
+		 where place_seq in (${param1})
+	</select>
+<!-- 일정수정 저장하기 -->
+	<update id="scheduleUpdata">
+		update schedule set
+		schedule_data = #{param4}, schedule_days = #{param5}, schedule_updated = to_Char(sysdate, 'YYYY/MM/DD')
+		where schedule_seq = ${param1}
+		  and city_seq = ${param2}
+		  and member_seq = ${param3}
+	</update>
+
 </mapper>

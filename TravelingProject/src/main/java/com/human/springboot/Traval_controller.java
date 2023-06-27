@@ -428,6 +428,7 @@ public class Traval_controller {
 			for(int i=0; i<alSchedule.size(); i++) {
 				JSONObject jo = new JSONObject();
 				jo.put("schedule_seq", alSchedule.get(i).getSchedule_seq());
+				jo.put("citySeq", alSchedule.get(i).getCity_seq());
 				jo.put("cityName", alSchedule.get(i).getCity_name());
 				jo.put("cityImg", alSchedule.get(i).getCity_img());
 				jo.put("scheduleDays", alSchedule.get(i).getSchedule_days());
@@ -439,6 +440,22 @@ public class Traval_controller {
 			e.printStackTrace();
 		}
 		return ja.toString();
+	}
+	
+	@PostMapping("/scheduledelete")
+	@ResponseBody
+	public String scheduledelete(HttpServletRequest req) {
+		int scheduleSeq = Integer.parseInt(req.getParameter("scheduleSeq"));
+		String check = "true";
+		
+		if ( scheduleSeq >= 0 ) {
+			tdao.scheduledelete(scheduleSeq);
+		}
+		else {
+			check = "false";
+		}
+		
+		return check;
 	}
 	
 	//정아
@@ -1190,9 +1207,9 @@ public class Traval_controller {
 	
 	
 	
-///////////////현준///////////////////////
+/////////////////////////////////현준///////////////////////////////////////
 	@GetMapping("/schedulecreate/{cityNum}/{cityName}")
-	public String Admin(HttpServletRequest req) {
+	public String schedulecreate(HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		String UserId = (String)session.getAttribute("id");
 		System.out.println(UserId);
@@ -1201,6 +1218,11 @@ public class Traval_controller {
 		}else {
 			return "schedulecreate";
 		}
+	}
+	
+	@GetMapping("/scheduleupdate/{cityNum}/{cityName}/{scheduleNum}")
+	public String scheduleupdate(HttpServletRequest req) {
+		return "scheduleupdate";
 	}
 
 	// 맵을 그리는 컨트롤러
@@ -1380,15 +1402,66 @@ public class Traval_controller {
 		int city = Integer.parseInt(req.getParameter("city"));
 		String sData = req.getParameter("sData");
 		String sDays = req.getParameter("sDays");
+		int siteNum = Integer.parseInt(req.getParameter("siteNum"));
+		int scheduleSeq = Integer.parseInt(req.getParameter("scheduleSeq"));
 		String check = "true";
+
+		int UserSeq = tdao.UserSeq(UserId);
+		tdao.cityCountInc(city);			
 		
-		System.out.println(sData);
-		System.out.println(sDays);
-		int UserSeq = Integer.parseInt(tdao.UserSeq(UserId));
-		tdao.modalsaveButton(city,UserSeq,sData,sDays);
-		tdao.cityCountInc(city);
+		if ( siteNum == 1 ) {
+			tdao.scheduleInsert(city,UserSeq,sData,sDays);
+		}
+		else if ( siteNum == 2 ) {
+			tdao.scheduleUpdata(scheduleSeq,city,UserSeq,sData,sDays);
+		}
+		else {
+			check = "false";
+		}
+		
 		
 		return check;
+	}
+	
+	@PostMapping("/scheduleupdateimport")
+	@ResponseBody
+	public String scheduleupdateimport(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String UserId = (String)session.getAttribute("id");
+		int scheduleSeq = Integer.parseInt(req.getParameter("scheduleSeq"));
+		
+		int UserSeq = tdao.UserSeq(UserId);
+		
+		ScheduleDTO scheduleData = new ScheduleDTO();
+		scheduleData = tdao.scheduleData(UserSeq,scheduleSeq);
+		
+		String[] scheduleDataSP1 = scheduleData.getSchedule_data().split("-");
+		
+		ArrayList<ScheduleCreateDTO> placeArray = new ArrayList<ScheduleCreateDTO>();
+		
+		JSONArray ja = new JSONArray();
+		for ( int i = 0; i < scheduleDataSP1.length; i++ ) {
+			String[] scheduleDataSP2 = scheduleDataSP1[i].split("/");
+			String[] scheduleUpdatePlaceSeq = scheduleDataSP2[1].split(",");
+			for ( int j = 0; j < scheduleUpdatePlaceSeq.length; j++ ) {
+				placeArray = tdao.scheduleUpdateDataList(scheduleUpdatePlaceSeq[j]);
+				
+				for ( int k = 0; k < placeArray.size(); k++ ){
+					JSONObject jo1 = new JSONObject();
+					
+					jo1.put("seq",placeArray.get(k).place_seq);
+					jo1.put("category",placeArray.get(k).place_category);
+					jo1.put("name",placeArray.get(k).place_name);
+					jo1.put("img",placeArray.get(k).place_img);
+					
+					ja.put(jo1);
+				}
+			}
+		}
+		JSONObject jo2 = new JSONObject();
+		jo2.put("days",scheduleData.getSchedule_days());
+		ja.put(jo2);
+	return ja.toString();
 	}
 	
 }
