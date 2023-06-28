@@ -196,7 +196,6 @@ function selectPlaceAdd(tagId,ArrayNum) {
 	    $('#lodgingSelect').click();
 			leftRadio('lodgingSelect')
 			$('#ulLodgingAddCart').append(placeCommonString[ArrayNum]);
-			placeSeqList[placeSeqList.length] = (tagId.id);
 	    for ( let i = 0; i < placeSeqList.length; i++ ) {
 	      if ( i != placeSeqList.length-1 ) {
 	        pSeq += placeSeqList[i] + ',';
