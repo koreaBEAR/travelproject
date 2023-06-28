@@ -58,7 +58,7 @@ public class Traval_controller {
 			String mobile = req.getParameter("mobile");
 			String gender = req.getParameter("gender");
 			
-			System.out.println(id+"/"+pw+"/"+name+"/"+nickName+"/"+mobile+"/"+email+"/"+birth+"/"+gender);
+//			System.out.println(id+"/"+pw+"/"+name+"/"+nickName+"/"+mobile+"/"+email+"/"+birth+"/"+gender);
 			tdao.member_insert(id,pw,name,nickName,mobile,email,birth,gender);
 			
 		} catch(Exception e) {
@@ -111,7 +111,7 @@ public class Traval_controller {
 			int n = tdao.member_check(id,pw);
 			String memberClass = tdao.member_class(id);
 			HttpSession session = req.getSession();
-			System.out.println(memberClass);
+//			System.out.println(memberClass);
 			if(n==1) {
 				session.setAttribute("id", id);
 				session.setAttribute("memberClass", memberClass);
@@ -141,7 +141,7 @@ public class Traval_controller {
 			String id = req.getParameter("id");
 			String Email = req.getParameter("mail");
 			String memberId = tdao.member_id(id, Email);
-			System.out.println(memberId);
+//			System.out.println(memberId);
 			if(memberId!="") {
 				findId=memberId;
 			}else {
@@ -223,9 +223,9 @@ public class Traval_controller {
 			String newPw = req.getParameter("newPw");
 			String chkNewPw = req.getParameter("chkNewPw");
 			String id = req.getParameter("id");
-			System.out.println(newPw);
-			System.out.println(chkNewPw);
-			System.out.println(id);
+//			System.out.println(newPw);
+//			System.out.println(chkNewPw);
+//			System.out.println(id);
 			if(newPw.equals(chkNewPw)) {
 				tdao.newPwUpdate(id,newPw);
 				val="ok";
@@ -435,7 +435,7 @@ public class Traval_controller {
 				jo.put("scheduleUpdated", alSchedule.get(i).getSchedule_updated());
 				ja.put(jo);
 			}
-			System.out.println(ja.toString());
+//			System.out.println(ja.toString());
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -588,16 +588,16 @@ public class Traval_controller {
 	@ResponseBody
 	public String place_delete(HttpServletRequest req) {
 	    String place_seq = req.getParameter("placeSeqs");
-	    System.out.println(place_seq);
+//	    System.out.println(place_seq);
 	    place_seq = place_seq.replaceFirst(",", "");
 	    place_seq = place_seq.replace("on,", "");
 	    String[] placeSeqArray = place_seq.split(",");
-	    System.out.println("placeSeqArray:"+Arrays.toString(placeSeqArray));
+//	    System.out.println("placeSeqArray:"+Arrays.toString(placeSeqArray));
 	    
 	    for (String seq : placeSeqArray) {
 	        int placeSeq = Integer.parseInt(seq);
 	        tdao.place_delete(placeSeq);
-	        System.out.println(placeSeq);
+//	        System.out.println(placeSeq);
 	    }
 	    
 	    return "manage_place";
@@ -642,7 +642,7 @@ public class Traval_controller {
 
 	    	    
 	    String[] fileNames = req.getParameterValues("imageNames[]");
-	    System.out.println(Arrays.toString(fileNames));
+//	    System.out.println(Arrays.toString(fileNames));
 	    
 	    String[] imageUrls;
 	    if (fileNames != null) {
@@ -669,7 +669,7 @@ public class Traval_controller {
 	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename;
 	            File dest = new File(filePath);
 	            image.transferTo(dest);
-	            System.out.println(dest);
+//	            System.out.println(dest);
 	        }
 	        return "manage_place";
 	    } catch (IOException e) {
@@ -678,9 +678,9 @@ public class Traval_controller {
 	            String originalFilename = image.getOriginalFilename();
 	            String filePath = "C:/Users/admin/git/travelproject/TravelingProject/src/main/resources/static/img/place/" + originalFilename;
 	            File file = new File(filePath);
-	            System.out.println("filePath" + filePath);
+//	            System.out.println("filePath" + filePath);
 	            if (file.exists() && file.isFile()) {
-	                System.out.println("delete" + file);
+//	                System.out.println("delete" + file);
 	                file.delete();
 	            }
 	        }
@@ -724,7 +724,7 @@ public class Traval_controller {
 	    String place_address = postcode + "," + address + "," + detailAddress;
 
 	    String[] fileNames = req.getParameterValues("imageNames[]");
-	    System.out.println(Arrays.toString(fileNames));
+//	    System.out.println(Arrays.toString(fileNames));
 	    
 	    String[] imageUrls;
 	    if (fileNames != null) {
@@ -1173,8 +1173,8 @@ public class Traval_controller {
 		String getpwd = tdao.pwdselect(help_seq);
 		String putpwd = req.getParameter("help_password");
 
-		System.out.println("getpwd=" + getpwd);
-		System.out.println("putpwd=" + putpwd);
+//		System.out.println("getpwd=" + getpwd);
+//		System.out.println("putpwd=" + putpwd);
 
 		if (getpwd.equals(putpwd)) {
 			return new ResponseEntity<>("contactdetail", HttpStatus.OK);
@@ -1212,7 +1212,7 @@ public class Traval_controller {
 	public String schedulecreate(HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		String UserId = (String)session.getAttribute("id");
-		System.out.println(UserId);
+//		System.out.println(UserId);
 		if(UserId =="" || UserId == null){			
 			return "redirect:/";
 		}else {
@@ -1255,6 +1255,8 @@ public class Traval_controller {
 		int currentP = Integer.parseInt(req.getParameter("currentP"));
 		String pSeq = req.getParameter("pSeq");
 		String pCategory = req.getParameter("pCategory");
+		
+		System.out.println(pSeq);
 
 		ArrayList<ScheduleCreateDTO> pl = new ArrayList<ScheduleCreateDTO>();
 
@@ -1440,6 +1442,7 @@ public class Traval_controller {
 		ArrayList<ScheduleCreateDTO> placeArray = new ArrayList<ScheduleCreateDTO>();
 		
 		JSONArray ja = new JSONArray();
+		System.out.println("scheduleDataSP1.length : "+scheduleDataSP1.length);
 		for ( int i = 0; i < scheduleDataSP1.length; i++ ) {
 			String[] scheduleDataSP2 = scheduleDataSP1[i].split("/");
 			String[] scheduleUpdatePlaceSeq = scheduleDataSP2[1].split(",");

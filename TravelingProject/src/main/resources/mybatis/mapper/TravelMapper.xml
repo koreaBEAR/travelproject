@@ -482,7 +482,7 @@ where city_name like '%' || #{param1} || '%'
 	<select id="scheduleUpdateDataList" resultType="com.human.springboot.ScheduleCreateDTO">
 		select place_seq, place_name ,place_category, place_img
 			from place
-		 where place_seq in (${param1})
+		 where place_seq = ${param1}
 	</select>
 <!-- 일정수정 저장하기 -->
 	<update id="scheduleUpdata">

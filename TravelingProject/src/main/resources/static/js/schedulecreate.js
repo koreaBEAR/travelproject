@@ -69,6 +69,7 @@ function mapCreate() {
         map = new kakao.maps.Map(mapContainer, mapOption)
 			}
   	  placeListCount(cityNum,null);
+  	  dateCalculation()
       $('#cityName').text(cityName);
     }
   });
@@ -187,12 +188,6 @@ function selectPlaceAdd(tagId,ArrayNum) {
 			return false;
 		}
 		else {
-		  for ( let i = 0; i < placeSeqList.length; i++ ) {
-		    if ( tagId.id == placeSeqList[i] ) {
-		      return false;
-		    }
-		  }
-		
 	    $('#lodgingSelect').click();
 			leftRadio('lodgingSelect')
 			$('#ulLodgingAddCart').append(placeCommonString[ArrayNum]);
@@ -207,10 +202,15 @@ function selectPlaceAdd(tagId,ArrayNum) {
 		}
 	}
 	else if ( rightRadioCP == 2 ) {
-		if ( placeLiLen == (calculation*6) ) {
+		if ( placeLiLen == (calculation*3) ) {
 			alert('최대개수를 초과하였습니다.');
 			return false;
 		}
+		for ( let i = 0; i < placeSeqList.length; i++ ) {
+		    if ( tagId.id == placeSeqList[i] ) {
+		      return false;
+		    }
+		  }
 		$('#placeSelect').click();
 		leftRadio('placeSelect')
 		$('#ulPlaceAddCart').append(placeCommonString[ArrayNum]);
@@ -633,6 +633,8 @@ function dateCalculation() {
   
   changeDayCount = `${dateDifference} DAY`;
   $('#day').text(changeDayCount);
+  $('#placeAllDelete').click();
+	$('#lodgingAllDelete').click();
 }
 
 //우측 사이드바에서 숙박&명소 클릭 시 이벤트발생 함수입니다.
@@ -685,9 +687,15 @@ function leftRadio(tagId) {
 
 //일정상세페이지 modal을 생성하는 함수입니다.
 function scheduleDetailCreate() {
-  $('.scheduleModal').css('display','block');
+	let ulLodgingAddcartLen = $('#ulLodgingAddCart').children().length;
   let calculation = $('#day').text().split('');
   calculation = calculation[0];
+  
+	if ( ulLodgingAddcartLen < calculation-1) {
+		alert('숙박업체 개수가 부족합니다')
+		return false;
+	}
+  $('.scheduleModal').css('display','block');
 	
   $.ajax({
     url: "/mapCreate",
@@ -715,7 +723,7 @@ function scheduleDetailCreate() {
   $('#lodgingAddCartCopy').empty();
   $('#ulLodgingAddCart').clone().appendTo('#lodgingAddCartCopy');
 
-  for ( let i = 1; i < calculation; i++ ) {
+  for ( let i = 1; i <= calculation; i++ ) {
     $('#dayListButtonArea').append(`
     <div class="divDayButton" onclick="openDayDetailPlan(${i})">
       <div id="dayButton${i}" class="dayButton">
@@ -791,13 +799,14 @@ function rightScheduleModalRadio(tagId) {
     $("#rightScheduleModalRadioCurrentP").val(rightScheduleModalRadioCP);
     $('#lodgingAddCartCopy').attr('style','display: block')
     $('#placeAddCartCopy').attr('style','display: none')
-    
+    $('#leftScheduleModalRadioLodging').click();
   }
   else if ( thisId == 'rightScheduleModalRadioPlace') {
     rightScheduleModalRadioCP = 2;
     $("#rightScheduleModalRadioCurrentP").val(rightScheduleModalRadioCP);
     $('#placeAddCartCopy').attr('style','display: block')
     $('#lodgingAddCartCopy').attr('style','display: none')
+    $('#leftScheduleModalRadioPlace').click();
   }
 }
 
@@ -810,15 +819,14 @@ function leftScheduleModalRadio(tagId){
 	if ( thisId == 'leftScheduleModalRadioLodging') {
     leftScheduleModalRadioCP = 1;
     $("#leftScheduleModalRadioCurrentP").val(leftScheduleModalRadioCP);
-    $(`#leftRadioSelectLodging${dayListButtonAreaCP}`).attr('style','display: block;')
-    $(`#leftRadioSelectPlace${dayListButtonAreaCP}`).attr('style','display: none;')
-    
+    $(`#leftRadioSelectLodging${dayListButtonAreaCP}`).attr('style','display: block;');
+    $(`#leftRadioSelectPlace${dayListButtonAreaCP}`).attr('style','display: none;');
   }
   else if ( thisId == 'leftScheduleModalRadioPlace') {
     leftScheduleModalRadioCP = 2;
     $("#leftScheduleModalRadioCurrentP").val(leftScheduleModalRadioCP);
-    $(`#leftRadioSelectPlace${dayListButtonAreaCP}`).attr('style','display: block;')
-    $(`#leftRadioSelectLodging${dayListButtonAreaCP}`).attr('style','display: none;')
+    $(`#leftRadioSelectPlace${dayListButtonAreaCP}`).attr('style','display: block;');
+    $(`#leftRadioSelectLodging${dayListButtonAreaCP}`).attr('style','display: none;');
   }
 }
 
@@ -863,12 +871,13 @@ let allowDrop = function(ev){
 let drop = function(ev){
 	let rightScheduleModalRadioCP = $('#rightScheduleModalRadioCurrentP').val();
 	let leftScheduleModalRadioCP = $('#leftScheduleModalRadioCurrentP').val();
+	let dayListButtonAreaCP = $('#dayListButtonAreaCurrentP').val();
+	let calculation = $('#day').text().split('');
+	calculation = calculation[0];
+	
 	if(ev.target.tagName == 'ul' || ev.target.tagName == 'UL'){
 		dropEl = ev.target;
-		if ( dragEl.tagName == 'img' || dragEl.tagName == 'IMG') {
-			return false;
-		}
-		else if ( rightScheduleModalRadioCP != leftScheduleModalRadioCP) {
+		if ( dragEl.tagName == 'img' || dragEl.tagName == 'IMG' || rightScheduleModalRadioCP != leftScheduleModalRadioCP || dayListButtonAreaCP == calculation ) {
 			return false;
 		}
 		else {
@@ -1009,10 +1018,10 @@ function scheduleupdateimport() {
 			$('#endDate').val(endDate);
 			dateCalculation();
 			for ( let i = 0; i < (data.length-1); i++ ) {
-				placeSeq = data[i].seq;
-				placeCategory = Number(data[i].category);
-				placeName = data[i].name;
-				placeImg = data[i].img;
+				let placeSeq = data[i].seq;
+				let placeCategory = Number(data[i].category);
+				let placeName = data[i].name;
+				let placeImg = data[i].img;
 				
 				let commonString = `
 				        <li id='placeCard${placeSeq}' class='placeCard' draggable="true" ondragstart= "drag(event,${placeSeq})" value='${placeSeq}'>
@@ -1032,19 +1041,17 @@ function scheduleupdateimport() {
 				}
 				else {
 					$('#ulPlaceAddCart').append(scheduleUpdateCommonString[i]);
-				placeSeqList[placeSeqList.length] = (placeSeq);
-				if ( i == data.length-2 ) {
-					pSeq += placeSeqList[i];
-				}
-				else {
-					pSeq += placeSeqList[i] + ',';
-				}
+					placeSeqList[placeSeqList.length] = (placeSeq);
+					if ( i == data.length-2 ) {
+						pSeq += placeSeqList[placeSeqList.length-1];
+					}
+					else {
+						pSeq += placeSeqList[placeSeqList.length-1] + ',';
+					}
 				}
 				markerScheduleCreate(placeSeq);
 			}
 			placeList(pSeq);
 		}
 	})
-	
-	
 }
