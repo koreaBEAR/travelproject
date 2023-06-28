@@ -1001,13 +1001,13 @@ function scheduleupdateimport() {
 		},
 		dataType: "json",
 		success:function(data) {
-			console.log(data);
 			let scheduleDays = data[data.length-1].days;
 			scheduleDays = scheduleDays.split('~');
 			let startDate = scheduleDays[0];
 			let endDate = scheduleDays[1];
 			$('#startDate').val(startDate);
 			$('#endDate').val(endDate);
+			dateCalculation();
 			for ( let i = 0; i < (data.length-1); i++ ) {
 				placeSeq = data[i].seq;
 				placeCategory = Number(data[i].category);
@@ -1032,13 +1032,13 @@ function scheduleupdateimport() {
 				}
 				else {
 					$('#ulPlaceAddCart').append(scheduleUpdateCommonString[i]);
-				}
 				placeSeqList[placeSeqList.length] = (placeSeq);
 				if ( i == data.length-2 ) {
 					pSeq += placeSeqList[i];
 				}
 				else {
 					pSeq += placeSeqList[i] + ',';
+				}
 				}
 				markerScheduleCreate(placeSeq);
 			}
