@@ -571,6 +571,10 @@ function before_date(day){
 		let e_mm = end.getMonth()+1;
 		let e_dd = end.getDate()-1;
 		
+		if ( e_dd == 0 ) {
+			e_dd = 1;
+		}
+		
 		if(e_mm<10){
 			e_mm = "0" + e_mm;
 		} if(e_dd<10){
@@ -639,10 +643,12 @@ function rightRadio(tagId) {
   if (thisId == 'lodging') {
     rightRadioCp = 1;
     $("#rightRadioCurrentP").val(rightRadioCp);
+    Number($("#hidden_currentP").val(1));
   }
   else if (thisId == 'place') {
     rightRadioCp = 2;
     $("#rightRadioCurrentP").val(rightRadioCp);
+    Number($("#hidden_currentP").val(1));
   }
   let pSeq = '';
   for ( let i = 0; i < placeSeqList.length; i++ ) {
@@ -955,6 +961,10 @@ function modalSaveButton() {
 	
 	else if ( siteName == 'scheduleupdate') {
 		siteNum = 2;
+	}
+	
+	if ( scheduleSeq == null ) {
+		scheduleSeq = 0;
 	}
 
 	$.ajax({
