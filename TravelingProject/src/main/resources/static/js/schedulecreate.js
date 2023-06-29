@@ -160,7 +160,7 @@ function placeList(pSeq) {
           "<div class='placeTitle'>",
           "<span id='placeName'><h7>",placeName,"</h7></span>",
           "<div class='iconFlex'>",
-          "<i title='장소정보' id='",placeSeq,"'class='material-icons info' onclick = 'placeInfo();'>info</i>",
+          "<i title='장소정보' id='",placeSeq,"'class='material-icons info'>info</i>",
           "<i title='장소추가' id='",placeSeq,"' class='material-icons add' onclick = 'selectPlaceAdd(this,",i,");'>add</i>",
           "</div></div></li>"
         );
@@ -548,7 +548,7 @@ function placeInfo() {
 //업체정보 modal을 종료하는 함수입니다.
 function placeInfoModalClose() {
   $('.modal').css('display','none')
-  $('#placeInfo_modal_content').empty();
+  $('#placeInfoModalContent').empty();
 }
 
 //캘린더에 초기 날짜를 setting하는 함수입니다. (초기setting : 현재날짜 ~ 3일 후 날짜)
@@ -1035,7 +1035,7 @@ function scheduleupdateimport() {
 				            </div>
 				          </div>
 				        </li>`;
-				scheduleUpdateCommonString[i] = (commonString);
+				scheduleUpdateCommonString[i] = (commonString); 
 				if ( placeCategory == 5 || placeCategory == 6 ) {
 					$('#ulLodgingAddCart').append(scheduleUpdateCommonString[i]);					
 				}
