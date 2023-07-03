@@ -1010,7 +1010,6 @@ function scheduleupdateimport() {
 		},
 		dataType: "json",
 		success:function(data) {
-			console.log(data);
 			let scheduleDays = data[data.length-1].days;
 			scheduleDays = scheduleDays.split('~');
 			let startDate = scheduleDays[0];
