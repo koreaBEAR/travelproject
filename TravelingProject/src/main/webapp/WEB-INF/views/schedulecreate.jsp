@@ -14,8 +14,11 @@
 	<!-- 지도를 표시할 div 입니다 -->
 	<div id="map"></div>
 	<div id="divScheduleCreate">
-		<button id="scheduleCreate">
+		<button id="scheduleCreate" class="centerButton">
 			<h7>일정생성</h7>
+		</button>
+		<button id="placeRecommendation" class="centerButton">
+			<h7>업체추천</h7>
 		</button>
 	</div>
 	<div id="rightSideBar">

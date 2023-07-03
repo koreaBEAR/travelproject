@@ -49,7 +49,7 @@ li {
 	z-index: 1;
 }
 
-#scheduleCreate {
+.centerButton {
 	width: 100px;
 	height: 56px;
 	background-color: rgba(255, 255, 255, 1);
@@ -64,7 +64,7 @@ li {
 	position: absolute;
 	background-color: #fff;
 	width: 250px;
-	height: 86.9vh;
+	height: 87.6vh;
 	right: 0;
 	bottom: 0;
 }
@@ -76,7 +76,7 @@ li {
 	position: absolute;
 	background-color: #fff;
 	width: 250px;
-	height: 86.9vh;
+	height: 87.6vh;
 	left: 0;
 	bottom: 0;
 	text-align: center;
@@ -278,7 +278,7 @@ li {
 
 .addCartCss {
 	width: 100%;
-	height: 555px;
+	height: 591px;
 	overflow-y: auto;
 }
 
