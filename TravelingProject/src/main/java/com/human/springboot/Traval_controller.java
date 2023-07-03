@@ -373,9 +373,6 @@ public class Traval_controller {
 				jo.put("placeTel", alPlace.get(i).getPlace_tel());
 				jo.put("placeAddress", alPlace.get(i).getPlace_address());
 				jo.put("placeLike", alPlace.get(i).getPlace_like());
-				jo.put("reviewNickName",alPlace.get(i).getMember_nickname());
-				jo.put("reviewContent",alPlace.get(i).getReview_content());
-				jo.put("reviewDate",alPlace.get(i).getReview_date());
 				ja.put(jo);
 			}
 		}catch(Exception e) {
@@ -386,25 +383,27 @@ public class Traval_controller {
 	@PostMapping("/loadReviewContent")
 	@ResponseBody
 	public String loadReviewContent(HttpServletRequest req) {
-		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
-		// int page = Integer.parseInt(req.getParameter("page"));
-		// int reviewsPerPage = 3;
-		// int offset = (page - 1)*reviewsPerPage;
-		ArrayList <RevDTO> alPlace = tdao.reviewContent(placeNum);
-		JSONArray ja = new JSONArray();
-		try {
-			for(int i=0; i<alPlace.size(); i++) {				
-				JSONObject jo = new JSONObject();
-				jo.put("reviewNickName",alPlace.get(i).getMember_nickname());
-				jo.put("reviewContent",alPlace.get(i).getReview_content());
-				jo.put("reviewDate",alPlace.get(i).getReview_date());
-				ja.put(jo);
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return ja.toString();
+	    int placeNum = Integer.parseInt(req.getParameter("placeNum"));
+	    int page = 1; // Get the page parameter
+	    int startIndex = (page - 1);
+	    
+	    ArrayList<RevDTO> alPlace = tdao.reviewContent(placeNum); // Retrieve all reviews
+
+	    JSONArray ja = new JSONArray();
+	    try {
+	    	 for (int i = startIndex; i < alPlace.size(); i++) {
+	            JSONObject jo = new JSONObject();
+	            jo.put("reviewNickName", alPlace.get(i).getMember_nickname());
+	            jo.put("reviewContent", alPlace.get(i).getReview_content());
+	            jo.put("reviewDate", alPlace.get(i).getReview_date());
+	            ja.put(jo);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return ja.toString();
 	}
+
 	
 	//마이페이지
 	@GetMapping("/myPage")
