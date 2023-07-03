@@ -453,31 +453,29 @@ function placeSearch() {
 	        let placeImg = data[i].img;
 	
 	        let commonString = `
-	        <div id='divPlaceCard${placeSeq}'draggable="true" ondragstart= "drag(event)" value='${placeSeq}'>
-		        <li id='placeCard${placeSeq}' class='placeCard' value='${placeSeq}'>
-		          <div class='placeImg'>
-		            <img class='cartImg' src='${placeImg}'>
-		          </div>
-		          <div class='placeTitle'>
-		            <span id='placeName'><h7>${placeName}</h7></span>
-		            <div class='iconFlex' id='${placeSeq}' onclick = 'selectPlaceDelete(this);'>
-		              <i id='scheduleDelete'title="목록에서 삭제" class="material-icons">clear</i>
-		            </div>
-		          </div>
-		        </li>
-		       </div>`
+	        <li id='placeCard${placeSeq}' class='placeCard' draggable="true" ondragstart= "drag(event,${placeSeq})" value='${placeSeq}'>
+	          <div class='placeImg'>
+	            <img class='cartImg' src='${placeImg}'>
+	          </div>
+	          <div class='placeTitle'>
+	            <span id='placeName'><h7>${placeName}</h7></span>
+	            <div class='iconFlex' id='${placeSeq}' onclick = 'selectPlaceDelete(this);'>
+	              <i id='scheduleDelete'title="목록에서 삭제" class="material-icons">clear</i>
+	            </div>
+	          </div>
+	        </li>`;
 	        placeCommonString[i] = (commonString);
 	        html = [];
 	        html.push(
-	          "<li class='placeCard'>",
+	          "<li class='placeCard column'>",
 	          "<div class='placeImg'><img class='cartImg' src='",placeImg,"'></div>",
 	          "<div class='placeTitle'>",
 	          "<span id='placeName'><h7>",placeName,"</h7></span>",
 	          "<div class='iconFlex'>",
-	          "<div title='장소정보' id='placeInfo'><i id='",placeSeq,"'class='material-icons info'>info</i></div>",
-	          "<div title='장소추가' id='",placeSeq,"' onclick = 'selectPlaceAdd(this);'><i id='placeAdd' class='material-icons add'>add</i></div>",
+	          "<i title='장소정보' id='",placeSeq,"'class='material-icons info'>info</i>",
+	          "<i title='장소추가' id='",placeSeq,"' class='material-icons add' onclick = 'selectPlaceAdd(this,",i,");'>add</i>",
 	          "</div></div></li>"
-	        );
+        	);
 	        $('#divPlaceCard').append(html.join(""));
 	      }
 	      $('#placeListCount').val(data.length);
@@ -877,7 +875,10 @@ let drop = function(ev){
 	
 	if(ev.target.tagName == 'ul' || ev.target.tagName == 'UL'){
 		dropEl = ev.target;
-		if ( dragEl.tagName == 'img' || dragEl.tagName == 'IMG' || rightScheduleModalRadioCP != leftScheduleModalRadioCP || dayListButtonAreaCP == calculation ) {
+		if ( dragEl.tagName == 'img' || dragEl.tagName == 'IMG' || rightScheduleModalRadioCP != leftScheduleModalRadioCP ) {
+			return false;
+		}
+		else if ( dayListButtonAreaCP == calculation && leftScheduleModalRadioCP == 1 || dayListButtonAreaCP == calculation && rightScheduleModalRadioCP == 1 ) {
 			return false;
 		}
 		else {
