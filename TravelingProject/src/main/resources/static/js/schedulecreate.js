@@ -47,7 +47,7 @@ $(document)
 .on('click', '#scheduleCreate', scheduleDetailCreate) //일정생성 이벤트
 .on('click', '#scheduleModalClose', scheduleModalClose) // 모달을 닫는 이벤트
 .on('click', '#modalSaveButton', modalSaveButton) // 일정상세페이지에서 일정저장 버튼 클릭 시 이벤트
-
+.on('click', '#placeRecommendation', placeRecommendation)
 
 //초기 위도,경도를 통한 선택지역 맵 불러오기
 function mapCreate() {
@@ -1037,12 +1037,12 @@ function scheduleupdateimport() {
 				        </li>`;
 				scheduleUpdateCommonString[i] = (commonString); 
 				if ( placeCategory == 5 || placeCategory == 6 ) {
-					$('#ulLodgingAddCart').append(scheduleUpdateCommonString[i]);					
+					$('#ulLodgingAddCart').append(scheduleUpdateCommonString[i]);
 				}
 				else {
 					$('#ulPlaceAddCart').append(scheduleUpdateCommonString[i]);
 					placeSeqList[placeSeqList.length] = (placeSeq);
-					if ( i == data.length-2 ) {
+					if ( i == data.length-3 ) {
 						pSeq += placeSeqList[placeSeqList.length-1];
 					}
 					else {
@@ -1054,4 +1054,8 @@ function scheduleupdateimport() {
 			placeList(pSeq);
 		}
 	})
+}
+
+function placeRecommendation() {
+	document.location = "/scheduleai";
 }
