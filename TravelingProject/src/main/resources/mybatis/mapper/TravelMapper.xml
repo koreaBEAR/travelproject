@@ -44,6 +44,22 @@
 	<select id="placeList" resultType="com.human.springboot.RevDTO">
 		select place_seq, place_img, place_name from place order by place_seq
 	</select>
+	<!-- 인기순정렬 -->
+	<select id="placeListPopular" resultType="com.human.springboot.RevDTO">
+		select place_seq, place_img, place_name from place order by place_like desc
+	</select>
+	<select id="placeListASC" resultType="com.human.springboot.RevDTO">
+		select place_seq, place_img, place_name from place order by place_name asc
+	</select>
+	<select id="placeListDESC" resultType="com.human.springboot.RevDTO">
+		select place_seq, place_img, place_name from place order by place_name desc
+	</select>
+	<select id="placeListCity" resultType="com.human.springboot.RevDTO">
+		select place_seq, place_img, place_name from place where place_city = #{param1} order by place_seq
+	</select>
+	<select id="placeListCategory" resultType="com.human.springboot.RevDTO">
+		select place_seq, place_img, place_name from place where place_category between #{param1} and #{param2}  order by place_seq
+	</select>
 	<select id="placeReviews" resultType="com.human.springboot.RevDTO">
 		select place_seq, place_img, place_name, place_address,
 				place_tel, place_content, place_open, place_like
@@ -85,6 +101,15 @@
 	<delete id="scheduledelete">
 		delete from schedule where schedule_seq = ${param1}
 	</delete>
+	<select id="loadPlaceLike" resultType="Integer">
+		select place_like from place where place_seq = #{param1}
+	</select>
+	<update id="updateUpLike">
+		update place set place_like = place_like + 1 where place_seq = #{param1}
+	</update>
+	<update id="updateDownLike">
+		update place set place_like = place_like - 1 where place_seq = #{param1}
+	</update>
 	<!-- 멤버 닉네임 -->
 	<select id="selectMemberNickName" resultType="String">
 		select member_nickname

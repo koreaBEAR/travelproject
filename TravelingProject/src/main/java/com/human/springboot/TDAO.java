@@ -22,6 +22,11 @@ public interface TDAO {
 	
 	//리뷰
 	ArrayList <RevDTO> placeList();
+	ArrayList <RevDTO> placeListCity(int cityNum);
+	ArrayList <RevDTO> placeListCategory(int n1, int n2);
+	ArrayList <RevDTO> placeListPopular();
+	ArrayList <RevDTO> placeListASC();
+	ArrayList <RevDTO> placeListDESC();
 	ArrayList <RevDTO> placeReviews(int placeSeq);
 	ArrayList <RevDTO> reviewPlace(int placeSeq);
 	ArrayList <RevDTO> reviewContent(int placeSeq);
@@ -33,6 +38,9 @@ public interface TDAO {
 	String selectMemberNickName(String member_id);
 	ArrayList <MyPageDTO> myPageSchedule(int memberSeq);
 	void scheduledelete(int scheduleSeq);
+	int loadPlaceLike (int placeNum);
+	void updateUpLike(int placeNum);
+	void updateDownLike(int placeNum);
 	//정아////////////////
 	//회원관리
 		void member_delete(int member_seq);

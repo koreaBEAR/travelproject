@@ -1,11 +1,12 @@
 let currentPage = 1
 let likeNum = 0
+let placeNum = ''
 $(document)
 .ready(function(){
 	$('.placeModal').css('display','none')
 	loadReview(1)
 	$('#placeList').on('click','.divA',function(){
-		let placeNum = $(this).find('#placeNum').val()
+		placeNum = $(this).find('#placeNum').val()
 		console.log("placeNum: "+placeNum)
 		$.ajax({
 			url:"/loadReviewOne",
@@ -25,7 +26,7 @@ $(document)
 							let divRight = ''
 							$('.divMain').empty()
 							for(i=0; i<data.length; i++){
-								let placeImg = '<img src="'+ data[i]['placeImg']+'"class="reivewImg">'
+								let placeImg = '<img src="'+ data[i]['placeImg']+'"class="reivewImg"><input type="hidden" id="hiddenPlaceNum" value="'+placeNum+'">'
 								let placeName = '<p><span class="placeName">'+data[i]['placeName']+'</span></p>'
 								let placeContnet = '<p><span class="placeContent">'+data[i]['placeContent']+'</span></p>'
 								let placeTel = '<p><span class="placeTel">'+data[i]['placeTel']+'</span></p>'
@@ -40,6 +41,7 @@ $(document)
 								console.log("divLeft: "+divLeft)
 								console.log("divRight: "+divRight)
 								$('.divMain').append(divLeft,divRight)
+								loadLike()
 						}
 					})
 				}else if(data=="overOne"){
@@ -53,7 +55,7 @@ $(document)
 							let divRight = ''
 							$('.divMain').empty()
 							for(i=0; i<data.length; i++){
-								let placeImg = '<img src="'+ data[i]['placeImg']+'"class="reivewImg">'
+								let placeImg = '<img src="'+ data[i]['placeImg']+'"class="reivewImg"><input type="hidden" id="hiddenPlaceNum" value="'+placeNum+'">'
 								let placeName = '<p><span class="placeName">'+data[i]['placeName']+'</span></p>'
 								let placeContnet = '<p><span class="placeContent">'+data[i]['placeContent']+'</span></p>'
 								let placeTel = '<p><span class="placeTel">'+data[i]['placeTel']+'</span></p>'
@@ -83,6 +85,7 @@ $(document)
 											console.log("placeReview: "+placeReview)
 											$('.placeReviews').append(placeReview)
 										}
+										loadLike()
 									}
 								})
 								
@@ -100,13 +103,25 @@ $(document)
 })
 .on('click','#closeBtn',function(){
 	$('.placeModal').css('display','none')
+	var hiddenValue = placeNum;
+	console.log(hiddenValue);
 })
-.on('click','.checkbox-icon',function(){
-	if($('.checkbox input[type="checkbox"]:checked+label')==true){
-		console.log('checked')
-	}else{
-		console.log('unchecked')
-	}
+.on('click', '.checkbox-icon', function() {
+	let placeNum=$('#hiddenPlaceNum').val()
+  if ($('.checkbox input[type="checkbox"]:checked+label').length == 0) {
+    upLike(placeNum);
+  } else {
+    downLike(placeNum);
+  }
+})
+.on('click','#popularity',function(){
+	loadReviewPopular(1)
+})
+.on('click','#asc',function(){
+	loadReviewASC(1)
+})
+.on('click','#desc',function(){
+	loadReviewDESC(1)
 })
 // Dropdown menu for 'Search by region' button
 $('.dropdown .btn-secondary').eq(0).click(function() {
@@ -138,8 +153,53 @@ $(window).click(function(event) {
     $('.dropdown .city').slideUp(300);
   }
 });
+// Add a click event listener to the <li> elements
+$('.dropdown-item').click(function() {
+  // Get the ID of the clicked <li> element
+  var id = $(this).attr('id');
+  loadReviewCity(1,id)
+});
+$('.tag').click(function(){
+	var n1 = parseInt($(this).attr('id'))
+	var n2 = n1 + 1
+	console.log('<'+n1+','+n2+'>')
+	loadReviewCategory(1,n1,n2);
+})
 
-
+function loadLike(){
+	let placeNum=$('#hiddenPlaceNum').val()
+	$.ajax({
+		url:"/loadLike",
+		data:{placeNum:placeNum},
+		type:"post",
+		dataType:"text",
+		success:function(data){
+			$('.placeLike').text(data)
+		}
+	})
+}
+function upLike(placeNum){
+	$.ajax({
+		url:"/upLike",
+		data:{placeNum:placeNum},
+		type:"post",
+		dataType:"text",
+		success:function(data){
+			loadLike()
+		}
+	})
+}
+function downLike(placeNum){
+	$.ajax({
+		url:"/downLike",
+		data:{placeNum:placeNum},
+		type:"post",
+		dataType:"text",
+		success:function(data){
+			loadLike()
+		}
+	})
+}
 /*10페이지씩 제한 페이지네이션변경*/
 function loadReview(pageNum){
     $.ajax({
@@ -198,7 +258,292 @@ function loadReview(pageNum){
         }
     });
 }
+//인기순
+function loadReviewPopular(pageNum){
+    $.ajax({
+        url: "/loadReviewPopular",
+        data: {pageNum: pageNum},
+        type: "post",
+        dataType: "json",
+        success : function ( data ){
+            let i = 0;
+            let startPage = parseInt(data[0]['startPage']);
+            let endPage = parseInt(data[0]['endPage']);
+            let totalPage = parseInt(data[0]['howmany']);
+            var pageStr = "";
+            $('.viewDivFooter').empty();
 
+            // 첫페이지
+            pageStr = '<span name=pageNum onclick="loadReview(1)">First</span>' + pageStr;
+
+            if ( startPage > 10 ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + (startPage - 10) + ')"><<</span>';
+            }
+
+            for (i = startPage ; i <= endPage ; i++) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + i + ')">' + i + '</span>';
+            }
+
+            if ( endPage < totalPage ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + (endPage + 1) + ')">>></span>';
+            }
+
+            // 마지막 페이지
+            if ( totalPage > 10 && endPage < totalPage ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + totalPage + ')">Last</span>';
+            }
+
+            $('.viewDivFooter').append(pageStr);
+
+            // 현재 선택된 페이지 버튼만 글씨 진하게
+            $("span[name='pageNum']").removeClass("current");
+
+            
+            $("span[name='pageNum']").each(function() {
+                if ($(this).text() === pageNum.toString()) {
+                    $(this).addClass("current");
+                }
+            });
+
+            $('.placeList').empty();
+            for ( i = 1 ; i < data . length ; i ++ ) {
+                let placeImg = '<img src="' + data[i]['placeImg'] + '" class="placeImg">';
+                let hiddenId = '<input type="hidden" id="placeNum" name="placeNum" value="' + data[i]['placeId'] + '">';
+                let nameStr = "<p><span class=boldText>" + data[i]['placeId'] + '/' + data[i]['placeName'] + "</span></p>";
+                let div = '<div class="divA">' + hiddenId + '<div class="divImg">' + placeImg + '</div>' + nameStr + '</div>';
+                $('.placeList').append(div);
+            }
+        }
+    });
+}
+function loadReviewASC(pageNum){
+    $.ajax({
+        url: "/loadReviewASC",
+        data: {pageNum: pageNum},
+        type: "post",
+        dataType: "json",
+        success : function ( data ){
+            let i = 0;
+            let startPage = parseInt(data[0]['startPage']);
+            let endPage = parseInt(data[0]['endPage']);
+            let totalPage = parseInt(data[0]['howmany']);
+            var pageStr = "";
+            $('.viewDivFooter').empty();
+
+            // 첫페이지
+            pageStr = '<span name=pageNum onclick="loadReview(1)">First</span>' + pageStr;
+
+            if ( startPage > 10 ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + (startPage - 10) + ')"><<</span>';
+            }
+
+            for (i = startPage ; i <= endPage ; i++) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + i + ')">' + i + '</span>';
+            }
+
+            if ( endPage < totalPage ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + (endPage + 1) + ')">>></span>';
+            }
+
+            // 마지막 페이지
+            if ( totalPage > 10 && endPage < totalPage ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + totalPage + ')">Last</span>';
+            }
+
+            $('.viewDivFooter').append(pageStr);
+
+            // 현재 선택된 페이지 버튼만 글씨 진하게
+            $("span[name='pageNum']").removeClass("current");
+
+            
+            $("span[name='pageNum']").each(function() {
+                if ($(this).text() === pageNum.toString()) {
+                    $(this).addClass("current");
+                }
+            });
+
+            $('.placeList').empty();
+            for ( i = 1 ; i < data . length ; i ++ ) {
+                let placeImg = '<img src="' + data[i]['placeImg'] + '" class="placeImg">';
+                let hiddenId = '<input type="hidden" id="placeNum" name="placeNum" value="' + data[i]['placeId'] + '">';
+                let nameStr = "<p><span class=boldText>" + data[i]['placeId'] + '/' + data[i]['placeName'] + "</span></p>";
+                let div = '<div class="divA">' + hiddenId + '<div class="divImg">' + placeImg + '</div>' + nameStr + '</div>';
+                $('.placeList').append(div);
+            }
+        }
+    });
+}
+function loadReviewDESC(pageNum){
+    $.ajax({
+        url: "/loadReviewDESC",
+        data: {pageNum: pageNum},
+        type: "post",
+        dataType: "json",
+        success : function ( data ){
+            let i = 0;
+            let startPage = parseInt(data[0]['startPage']);
+            let endPage = parseInt(data[0]['endPage']);
+            let totalPage = parseInt(data[0]['howmany']);
+            var pageStr = "";
+            $('.viewDivFooter').empty();
+
+            // 첫페이지
+            pageStr = '<span name=pageNum onclick="loadReview(1)">First</span>' + pageStr;
+
+            if ( startPage > 10 ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + (startPage - 10) + ')"><<</span>';
+            }
+
+            for (i = startPage ; i <= endPage ; i++) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + i + ')">' + i + '</span>';
+            }
+
+            if ( endPage < totalPage ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + (endPage + 1) + ')">>></span>';
+            }
+
+            // 마지막 페이지
+            if ( totalPage > 10 && endPage < totalPage ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + totalPage + ')">Last</span>';
+            }
+
+            $('.viewDivFooter').append(pageStr);
+
+            // 현재 선택된 페이지 버튼만 글씨 진하게
+            $("span[name='pageNum']").removeClass("current");
+
+            
+            $("span[name='pageNum']").each(function() {
+                if ($(this).text() === pageNum.toString()) {
+                    $(this).addClass("current");
+                }
+            });
+
+            $('.placeList').empty();
+            for ( i = 1 ; i < data . length ; i ++ ) {
+                let placeImg = '<img src="' + data[i]['placeImg'] + '" class="placeImg">';
+                let hiddenId = '<input type="hidden" id="placeNum" name="placeNum" value="' + data[i]['placeId'] + '">';
+                let nameStr = "<p><span class=boldText>" + data[i]['placeId'] + '/' + data[i]['placeName'] + "</span></p>";
+                let div = '<div class="divA">' + hiddenId + '<div class="divImg">' + placeImg + '</div>' + nameStr + '</div>';
+                $('.placeList').append(div);
+            }
+        }
+    });
+}
+function loadReviewCity(pageNum, cityNum){
+    $.ajax({
+        url: "/loadReviewCity",
+        data: {pageNum: pageNum,cityNum:cityNum },
+        type: "post",
+        dataType: "json",
+        success : function ( data ){
+            let i = 0;
+            let startPage = parseInt(data[0]['startPage']);
+            let endPage = parseInt(data[0]['endPage']);
+            let totalPage = parseInt(data[0]['howmany']);
+            var pageStr = "";
+            $('.viewDivFooter').empty();
+
+            // 첫페이지
+            pageStr = '<span name=pageNum onclick="loadReview(1)">First</span>' + pageStr;
+
+            if ( startPage > 10 ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + (startPage - 10) + ')"><<</span>';
+            }
+
+            for (i = startPage ; i <= endPage ; i++) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + i + ')">' + i + '</span>';
+            }
+
+            if ( endPage < totalPage ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + (endPage + 1) + ')">>></span>';
+            }
+
+            // 마지막 페이지
+            if ( totalPage > 10 && endPage < totalPage ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + totalPage + ')">Last</span>';
+            }
+
+            $('.viewDivFooter').append(pageStr);
+
+            // 현재 선택된 페이지 버튼만 글씨 진하게
+            $("span[name='pageNum']").removeClass("current");
+
+            
+            $("span[name='pageNum']").each(function() {
+                if ($(this).text() === pageNum.toString()) {
+                    $(this).addClass("current");
+                }
+            });
+
+            $('.placeList').empty();
+            for ( i = 1 ; i < data . length ; i ++ ) {
+                let placeImg = '<img src="' + data[i]['placeImg'] + '" class="placeImg">';
+                let hiddenId = '<input type="hidden" id="placeNum" name="placeNum" value="' + data[i]['placeId'] + '">';
+                let nameStr = "<p><span class=boldText>" + data[i]['placeId'] + '/' + data[i]['placeName'] + "</span></p>";
+                let div = '<div class="divA">' + hiddenId + '<div class="divImg">' + placeImg + '</div>' + nameStr + '</div>';
+                $('.placeList').append(div);
+            }
+        }
+    });
+}
+function loadReviewCategory(pageNum,n1,n2){
+    $.ajax({
+        url: "/loadReviewCategory",
+        data: {pageNum: pageNum,n1:n1,n2:n2 },
+        type: "post",
+        dataType: "json",
+        success : function ( data ){
+            let i = 0;
+            let startPage = parseInt(data[0]['startPage']);
+            let endPage = parseInt(data[0]['endPage']);
+            let totalPage = parseInt(data[0]['howmany']);
+            var pageStr = "";
+            $('.viewDivFooter').empty();
+
+            // 첫페이지
+            pageStr = '<span name=pageNum onclick="loadReview(1)">First</span>' + pageStr;
+
+            if ( startPage > 10 ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + (startPage - 10) + ')"><<</span>';
+            }
+
+            for (i = startPage ; i <= endPage ; i++) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + i + ')">' + i + '</span>';
+            }
+
+            if ( endPage < totalPage ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + (endPage + 1) + ')">>></span>';
+            }
+
+            // 마지막 페이지
+            if ( totalPage > 10 && endPage < totalPage ) {
+                pageStr = pageStr + '<span name=pageNum onclick="loadReview(' + totalPage + ')">Last</span>';
+            }
+
+            $('.viewDivFooter').append(pageStr);
+
+            // 현재 선택된 페이지 버튼만 글씨 진하게
+            $("span[name='pageNum']").removeClass("current");
+
+            
+            $("span[name='pageNum']").each(function() {
+                if ($(this).text() === pageNum.toString()) {
+                    $(this).addClass("current");
+                }
+            });
+
+            $('.placeList').empty();
+            for ( i = 1 ; i < data . length ; i ++ ) {
+                let placeImg = '<img src="' + data[i]['placeImg'] + '" class="placeImg">';
+                let hiddenId = '<input type="hidden" id="placeNum" name="placeNum" value="' + data[i]['placeId'] + '">';
+                let nameStr = "<p><span class=boldText>" + data[i]['placeId'] + '/' + data[i]['placeName'] + "</span></p>";
+                let div = '<div class="divA">' + hiddenId + '<div class="divImg">' + placeImg + '</div>' + nameStr + '</div>';
+                $('.placeList').append(div);
+            }
+        }
+    });
+}
 
 /*페이지네이션 기존코드*/
 /*function loadReview(pageNum){

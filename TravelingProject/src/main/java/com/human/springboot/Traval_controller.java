@@ -278,6 +278,174 @@ public class Traval_controller {
 	    }
 	    return ja.toString();
 	}
+	@PostMapping("/loadReviewPopular")
+	@ResponseBody
+	public String loadReviewPopular(HttpServletRequest req) {
+		
+	    int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+	    
+	    ArrayList <RevDTO> alPlace = tdao.placeListPopular();
+	    int howmanyPlace = alPlace.size();
+	    int howmanyPages = (howmanyPlace/12)+1;
+	    if (howmanyPlace%13==0) {howmanyPages = howmanyPages-1;}
+	    JSONArray ja = new JSONArray();
+	    int start = (pageNum - 1)*12;
+	    int end = (pageNum * 12)-1;
+	    int startPage = (int)(((pageNum-1)/10)*10) + 1;
+	    int endPage = (int)(startPage+9 < howmanyPages ? startPage+9 : howmanyPages);
+	    try {
+	        JSONObject jo = new JSONObject();
+	        jo.put("howmany",howmanyPages);
+	        jo.put("startPage", startPage);
+	        jo.put("endPage", endPage);
+	        ja.put(jo);
+	        for(int i=start; i<=end && i<howmanyPlace; i++) {
+	            jo = new JSONObject();
+	            jo.put("placeId",alPlace.get(i).getPlace_seq());
+	            jo.put("placeImg",alPlace.get(i).getPlace_img());
+	            jo.put("placeName", alPlace.get(i).getPlace_name());					
+	            ja.put(jo);
+	        }
+	    }catch(Exception e) {
+	        e.printStackTrace();
+	    }
+	    return ja.toString();
+	}
+	@PostMapping("/loadReviewASC")
+	@ResponseBody
+	public String loadReviewASC(HttpServletRequest req) {
+		
+	    int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+	    
+	    ArrayList <RevDTO> alPlace = tdao.placeListASC();
+	    int howmanyPlace = alPlace.size();
+	    int howmanyPages = (howmanyPlace/12)+1;
+	    if (howmanyPlace%13==0) {howmanyPages = howmanyPages-1;}
+	    JSONArray ja = new JSONArray();
+	    int start = (pageNum - 1)*12;
+	    int end = (pageNum * 12)-1;
+	    int startPage = (int)(((pageNum-1)/10)*10) + 1;
+	    int endPage = (int)(startPage+9 < howmanyPages ? startPage+9 : howmanyPages);
+	    try {
+	        JSONObject jo = new JSONObject();
+	        jo.put("howmany",howmanyPages);
+	        jo.put("startPage", startPage);
+	        jo.put("endPage", endPage);
+	        ja.put(jo);
+	        for(int i=start; i<=end && i<howmanyPlace; i++) {
+	            jo = new JSONObject();
+	            jo.put("placeId",alPlace.get(i).getPlace_seq());
+	            jo.put("placeImg",alPlace.get(i).getPlace_img());
+	            jo.put("placeName", alPlace.get(i).getPlace_name());					
+	            ja.put(jo);
+	        }
+	    }catch(Exception e) {
+	        e.printStackTrace();
+	    }
+	    return ja.toString();
+	}
+	@PostMapping("/loadReviewDESC")
+	@ResponseBody
+	public String loadReviewDESC(HttpServletRequest req) {
+		
+	    int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+	    
+	    ArrayList <RevDTO> alPlace = tdao.placeListDESC();
+	    int howmanyPlace = alPlace.size();
+	    int howmanyPages = (howmanyPlace/12)+1;
+	    if (howmanyPlace%13==0) {howmanyPages = howmanyPages-1;}
+	    JSONArray ja = new JSONArray();
+	    int start = (pageNum - 1)*12;
+	    int end = (pageNum * 12)-1;
+	    int startPage = (int)(((pageNum-1)/10)*10) + 1;
+	    int endPage = (int)(startPage+9 < howmanyPages ? startPage+9 : howmanyPages);
+	    try {
+	        JSONObject jo = new JSONObject();
+	        jo.put("howmany",howmanyPages);
+	        jo.put("startPage", startPage);
+	        jo.put("endPage", endPage);
+	        ja.put(jo);
+	        for(int i=start; i<=end && i<howmanyPlace; i++) {
+	            jo = new JSONObject();
+	            jo.put("placeId",alPlace.get(i).getPlace_seq());
+	            jo.put("placeImg",alPlace.get(i).getPlace_img());
+	            jo.put("placeName", alPlace.get(i).getPlace_name());					
+	            ja.put(jo);
+	        }
+	    }catch(Exception e) {
+	        e.printStackTrace();
+	    }
+	    return ja.toString();
+	}
+	@PostMapping("/loadReviewCity")
+	@ResponseBody
+	public String loadReviewCity(HttpServletRequest req) {
+		
+	    int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+	    int cityNum = Integer.parseInt(req.getParameter("cityNum"));
+	    
+	    ArrayList <RevDTO> alPlace = tdao.placeListCity(cityNum);
+	    int howmanyPlace = alPlace.size();
+	    int howmanyPages = (howmanyPlace/12)+1;
+	    if (howmanyPlace%13==0) {howmanyPages = howmanyPages-1;}
+	    JSONArray ja = new JSONArray();
+	    int start = (pageNum - 1)*12;
+	    int end = (pageNum * 12)-1;
+	    int startPage = (int)(((pageNum-1)/10)*10) + 1;
+	    int endPage = (int)(startPage+9 < howmanyPages ? startPage+9 : howmanyPages);
+	    try {
+	        JSONObject jo = new JSONObject();
+	        jo.put("howmany",howmanyPages);
+	        jo.put("startPage", startPage);
+	        jo.put("endPage", endPage);
+	        ja.put(jo);
+	        for(int i=start; i<=end && i<howmanyPlace; i++) {
+	            jo = new JSONObject();
+	            jo.put("placeId",alPlace.get(i).getPlace_seq());
+	            jo.put("placeImg",alPlace.get(i).getPlace_img());
+	            jo.put("placeName", alPlace.get(i).getPlace_name());					
+	            ja.put(jo);
+	        }
+	    }catch(Exception e) {
+	        e.printStackTrace();
+	    }
+	    return ja.toString();
+	}
+	@PostMapping("/loadReviewCategory")
+	@ResponseBody
+	public String loadReviewCategory(HttpServletRequest req) {
+		
+	    int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+	    int n1 = Integer.parseInt(req.getParameter("n1"));
+	    int n2 = Integer.parseInt(req.getParameter("n2"));
+	    
+	    ArrayList <RevDTO> alPlace = tdao.placeListCategory(n1,n2);
+	    int howmanyPlace = alPlace.size();
+	    int howmanyPages = (howmanyPlace/12)+1;
+	    if (howmanyPlace%13==0) {howmanyPages = howmanyPages-1;}
+	    JSONArray ja = new JSONArray();
+	    int start = (pageNum - 1)*12;
+	    int end = (pageNum * 12)-1;
+	    int startPage = (int)(((pageNum-1)/10)*10) + 1;
+	    int endPage = (int)(startPage+9 < howmanyPages ? startPage+9 : howmanyPages);
+	    try {
+	        JSONObject jo = new JSONObject();
+	        jo.put("howmany",howmanyPages);
+	        jo.put("startPage", startPage);
+	        jo.put("endPage", endPage);
+	        ja.put(jo);
+	        for(int i=start; i<=end && i<howmanyPlace; i++) {
+	            jo = new JSONObject();
+	            jo.put("placeId",alPlace.get(i).getPlace_seq());
+	            jo.put("placeImg",alPlace.get(i).getPlace_img());
+	            jo.put("placeName", alPlace.get(i).getPlace_name());					
+	            ja.put(jo);
+	        }
+	    }catch(Exception e) {
+	        e.printStackTrace();
+	    }
+	    return ja.toString();
+	}
 
 	/* 기존코드 */
 //	@PostMapping("/loadReview")
@@ -396,6 +564,51 @@ public class Traval_controller {
 	    }
 	    return ja.toString();
 	}
+	@PostMapping("/loadLike")
+	@ResponseBody
+	public String loadLike(HttpServletRequest req) {
+		String val = null;
+		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
+		int n = tdao.loadPlaceLike(placeNum);
+		try {
+			if(n<0) {
+				return val;
+			}
+			else {
+				val = ""+n;
+			}
+		}catch(Exception e) {
+			
+		}
+		return val;
+	}
+	@PostMapping("/upLike")
+	@ResponseBody
+	public String upLike(HttpServletRequest req) {
+		String val = "ok";
+		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
+		try {
+			tdao.updateUpLike(placeNum);
+		}catch(Exception e) {
+			val = "not OK";			
+		}
+		return val;
+		
+	}
+	@PostMapping("/downLike")
+	@ResponseBody
+	public String downLike(HttpServletRequest req) {
+		String val = "ok";
+		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
+		try {
+			tdao.updateDownLike(placeNum);
+		}catch(Exception e) {
+			val = "not OK";			
+		}
+		return val;
+		
+	}
+
 
 	
 	//마이페이지

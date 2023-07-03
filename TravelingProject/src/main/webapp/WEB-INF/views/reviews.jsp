@@ -108,9 +108,9 @@ span[name='pageNum'].current {
 <!-- 지역별 네비 탭 -->    
 <div class="nav-tab">
     <ul>
-        <li class="active"><a href="#tab1">맛집</a></li>
-        <li><a href="#tab2">숙소</a></li>
-        <li><a href="#tab3">명소</a></li>
+        <li class="active"><a class="tag" id="1">맛집</a></li>
+        <li><a class="tag" id="5">숙소</a></li>
+        <li><a class="tag" id="3">명소</a></li>
     </ul>
 </div>
 
@@ -119,25 +119,25 @@ span[name='pageNum'].current {
 		<button class="btn btn-secondary dropdown-toggle" type="button"
 			data-bs-toggle="dropdown" aria-expanded="false">지역별 조회하기</button>
 		<ul class="city dropdown-menu">
-			<li><a class="dropdown-item" href="#">가평</a></li>
-			<li><a class="dropdown-item" href="#">강릉</a></li>
-			<li><a class="dropdown-item" href="#">거제/통영</a></li>
-			<li><a class="dropdown-item" href="#">경주</a></li>
-			<li><a class="dropdown-item" href="#">대전</a></li>
-			<li><a class="dropdown-item" href="#">부산</a></li>
-			<li><a class="dropdown-item" href="#">서울</a></li>
-			<li><a class="dropdown-item" href="#">여수</a></li>
-			<li><a class="dropdown-item" href="#">인천</a></li>
-			<li><a class="dropdown-item" href="#">전주</a></li>
-			<li><a class="dropdown-item" href="#">제주</a></li>
-			<li><a class="dropdown-item" href="#">제천</a></li>
+			<li><a class="dropdown-item" id="31">가평</a></li>
+			<li><a class="dropdown-item" id="33">강릉</a></li>
+			<li><a class="dropdown-item" id="55">거제/통영</a></li>
+			<li><a class="dropdown-item" id="54">경주</a></li>
+			<li><a class="dropdown-item" id="42">대전</a></li>
+			<li><a class="dropdown-item" id="51">부산</a></li>
+			<li><a class="dropdown-item" id="2">서울</a></li>
+			<li><a class="dropdown-item" id="61">여수</a></li>
+			<li><a class="dropdown-item" id="32">인천</a></li>
+			<li><a class="dropdown-item" id="63">전주</a></li>
+			<li><a class="dropdown-item" id="64">제주</a></li>
+			<li><a class="dropdown-item" id="43">제천</a></li>
 		</ul>
 		<button class="btn btn-secondary dropdown-toggle" type="button"
 			data-bs-toggle="dropdown" aria-expanded="false">정렬 조회</button>
 		<ul class="city dropdown-menu">
-			<li><a class="dropdown-item" href="#">인기순</a></li>
-			<li><a class="dropdown-item" href="#">오름차순</a></li>
-			<li><a class="dropdown-item" href="#">내림차순</a></li>
+			<li><a class="dropdown-item" id="popularity">인기순</a></li>
+			<li><a class="dropdown-item" id="asc">오름차순</a></li>
+			<li><a class="dropdown-item" id="desc">내림차순</a></li>
 		</ul>
 	</div>
 	
