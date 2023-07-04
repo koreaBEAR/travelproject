@@ -53,18 +53,19 @@ $(document)
 })
 .on('click','#revBtn',function(){
 	let placeNum = $('#hiddenPlaceNum').val();
-	$('#btnUpload').val(placeNum); 
-
+	$('#btnUpload').val(placeNum);
     $('#reviewPlace').text($('.placeName').text());
-    let memberNickName = $('#uesrNickname').text();
+    
     $('#reviewWriteDig').dialog({
         title:'',
         closeText: "X",
         modal:true,
         width:'500px'
     })
-    $('#btnUpload').click(function(){
-		let placeNum = $(this).val()
+})
+.on('click','#btnUpload',function(){
+	let memberNickName = $('#uesrNickname').text();
+	let placeNum = $(this).val()
 		$.ajax({
 		url : '/revContentInsert',
 		type : 'post',
@@ -80,11 +81,10 @@ $(document)
 			$('#btnCancel').trigger('click');
 		}
 	})
-	})
-         
 })
 
 .on('click', '#btnCancel', function() {
+	$('#revContent').val('')
     $('#reviewWriteDig').dialog('close');
     loadReviewContent()
 })
