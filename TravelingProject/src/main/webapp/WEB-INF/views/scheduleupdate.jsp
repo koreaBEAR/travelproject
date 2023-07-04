@@ -17,6 +17,9 @@
 		<button id="scheduleCreate" class="centerButton">
 			<h7>일정생성</h7>
 		</button>
+		<button id="placeRecommendation" class="centerButton">
+			<h7>업체추천</h7>
+		</button>
 	</div>
 	<div id="rightSideBar">
 		<div id="divSearch">
