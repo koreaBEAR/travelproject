@@ -564,7 +564,6 @@ $.ajax({
 		console.log("divLeft: "+divLeft)
 		console.log("divRight: "+divRight)
 		$('.divMain').append(divLeft,divRight)
-		$('.placeReviews').empty()
 			loadReviewContent()
 	}
 })
@@ -576,6 +575,7 @@ $.ajax({
 	data:{placeNum:placeNum, page:currentPage},
 	dataType:"json",
 	success:function(data){
+		$('.placeReviews').empty()
 		for(i=0; i<data.length; i++){
 			let placeReview =''
 			let reviewNickName = '<p><span class="memberNickName">'+data[i]['reviewNickName']+'</span></p>'
