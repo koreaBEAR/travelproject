@@ -183,6 +183,10 @@ h2 {
 	width: 179px;
 	height: 25px;
 }
+.infoChangeInput{
+	width: 179px;
+	height: 25px;
+}
 
 .pwChangeModalButton {
 	border-radius: 30px;
@@ -259,15 +263,15 @@ h2 {
 		<div id="infoInput">
 			<h2>개인정보 변경</h2>
 			<span>닉네임</span>
-			<input type="text" id="changeNickname" value=${nickName}>
+			<input type="text" id="changeNickname" class="infoChangeInput" value=${nickName}>
 			<font size=2 id="chageNicknameText" class="infoChangeModalFont"></font>
 			<span>이메일</span>
-			<input type="text" id="changeMail" value=${mail} onkeyup="validEmail(this)" onkeydown="validEmail(this)">
+			<input type="text" id="changeMail" class="infoChangeInput" value=${mail} onkeyup="validEmail(this)" onkeydown="validEmail(this)">
 			<font size=2 id="chageMailText" class="infoChangeModalFont"></font>
 			<span>전화번호</span>
 			<input
 					type="tel"
-					class="form-control m-input"
+					class="infoChangeInput form-control m-input"
 					name="tel"
 					id="telInput"
 					required
