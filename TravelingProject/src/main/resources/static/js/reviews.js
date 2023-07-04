@@ -16,81 +16,9 @@ $(document)
 			success:function(data){
 				console.log(data)
 				if(data=="zero"){
-					$.ajax({
-						url:"/loadPlaceInfo",
-						type:"post",
-						data:{placeNum:placeNum},
-						dataType:"json",
-						success:function(data){
-							let divLeft = ''
-							let divRight = ''
-							$('.divMain').empty()
-							for(i=0; i<data.length; i++){
-								let placeImg = '<img src="'+ data[i]['placeImg']+'"class="reivewImg"><input type="hidden" id="hiddenPlaceNum" value="'+placeNum+'">'
-								let placeName = '<p><span class="placeName">'+data[i]['placeName']+'</span></p>'
-								let placeContnet = '<p><span class="placeContent">'+data[i]['placeContent']+'</span></p>'
-								let placeTel = '<p><span class="placeTel">'+data[i]['placeTel']+'</span></p>'
-								let placeAddress = '<p><span class="placeAddress">'+data[i]['placeAddress']+'</span></p>'
-								let placeLike = '<p><span class="placeLike">'+data[i]['placeLike']+'</span></p>'
-								let likeIcon = `<div class="checkbox"><input type="checkbox" id="myCheckbox"><label for="myCheckbox" class="checkbox-icon"></label></div>`;
-								let writeRev = '<div class= write><input type="button" value="리뷰쓰기"></div>'
-
-								divLeft = '<div class="divLeft"><div class="leftContainer"><div class="placeImges">'+placeImg+'</div><div class="placeName">'+placeName+'</div></div></div>'
-								divRight = '<div class="divRight"><div class="rightContainer"><div class="placeContent">'+placeContnet+placeTel+placeAddress+'</div><div class="placeIcon">'+likeIcon+placeLike+writeRev+'</div><div class="placeReviews">reviews</div></div></div>'
-							}
-								console.log("divLeft: "+divLeft)
-								console.log("divRight: "+divRight)
-								$('.divMain').append(divLeft,divRight)
-								loadLike()
-						}
-					})
+					loadPlaceInfo()
 				}else if(data=="overOne"){
-					$.ajax({
-						url:"/loadReviewInfo",
-						type:"post",
-						data:{placeNum:placeNum},
-						dataType:"json",
-						success:function(data){
-							let divLeft = ''
-							let divRight = ''
-							$('.divMain').empty()
-							for(i=0; i<data.length; i++){
-								let placeImg = '<img src="'+ data[i]['placeImg']+'"class="reivewImg"><input type="hidden" id="hiddenPlaceNum" value="'+placeNum+'">'
-								let placeName = '<p><span class="placeName">'+data[i]['placeName']+'</span></p>'
-								let placeContnet = '<p><span class="placeContent">'+data[i]['placeContent']+'</span></p>'
-								let placeTel = '<p><span class="placeTel">'+data[i]['placeTel']+'</span></p>'
-								let placeAddress = '<p><span class="placeAddress">'+data[i]['placeAddress']+'</span></p>'
-								let placeLike = '<p><span class="placeLike">'+data[i]['placeLike']+'</span></p>'
-								let likeIcon = `<div class="checkbox"><input type="checkbox" id="myCheckbox"><label for="myCheckbox" class="checkbox-icon"></label></div>`;
-								let writeRev = '<div class= write><input type="button" value="리뷰쓰기" id="revLikeBtn"></div>'
-								divLeft = '<div class="divLeft"><div class="leftContainer"><div class="placeImges">'+placeImg+'</div><div class="placeName">'+placeName+'</div></div></div>'
-								divRight = '<div class="divRight"><div class="rightContainer"><div class="placeContent">'+placeContnet+placeTel+placeAddress+'</div><div class="placeIcon">'+likeIcon+placeLike+writeRev+'</div><div class="placeReviews"></div></div></div>'
-							}
-							console.log("divLeft: "+divLeft)
-							console.log("divRight: "+divRight)
-							$('.divMain').append(divLeft,divRight)
-							$('.placeReviews').empty()
-								$.ajax({
-									url:"/loadReviewContent",
-									type:"post",
-									data:{placeNum:placeNum, page:currentPage},
-									dataType:"json",
-									success:function(data){
-										for(i=0; i<data.length; i++){
-											let placeReview =''
-											let reviewNickName = '<p><span class="memberNickName">'+data[i]['reviewNickName']+'</span></p>'
-											let reviewContent = '<p><span class="reviewContent">'+data[i]['reviewContent']+'</span></p>'
-											let reviewDate = '<p><span class="reviewDate">'+data[i]['reviewDate']+'</span></p>'
-											placeReview = '<div class="reviewblock">'+reviewNickName+reviewContent+reviewDate+'</div>'
-											console.log("placeReview: "+placeReview)
-											$('.placeReviews').append(placeReview)
-										}
-										loadLike()
-									}
-								})
-								
-						}
-					})
+					loadReviewInfo()
 				}
 			}
 		})
@@ -122,6 +50,43 @@ $(document)
 })
 .on('click','#desc',function(){
 	loadReviewDESC(1)
+})
+.on('click','#revBtn',function(){
+	let placeNum = $('#hiddenPlaceNum').val();
+	$('#btnUpload').val(placeNum); 
+
+    $('#reviewPlace').text($('.placeName').text());
+    let memberNickName = $('#uesrNickname').text();
+    $('#reviewWriteDig').dialog({
+        title:'',
+        closeText: "X",
+        modal:true,
+        width:'500px'
+    })
+    $('#btnUpload').click(function(){
+		let placeNum = $(this).val()
+		$.ajax({
+		url : '/revContentInsert',
+		type : 'post',
+		dataType : 'text',
+		data : { revContent:$('#revContent').val(), placeNum : placeNum, memberNickName:memberNickName},
+        beforeSend: function() {
+        	 if ($('#revContent').val() == '') {
+        	        alert('리뷰를 작성해주세요');
+        	        return false; 
+        	    }},
+		success : function(data) {
+			console.log('작성완료')
+			$('#btnCancel').trigger('click');
+		}
+	})
+	})
+         
+})
+
+.on('click', '#btnCancel', function() {
+    $('#reviewWriteDig').dialog('close');
+    loadReviewContent()
 })
 // Dropdown menu for 'Search by region' button
 $('.dropdown .btn-secondary').eq(0).click(function() {
@@ -544,30 +509,83 @@ function loadReviewCategory(pageNum,n1,n2){
         }
     });
 }
+function loadPlaceInfo(){
+$.ajax({
+	url:"/loadPlaceInfo",
+	type:"post",
+	data:{placeNum:placeNum},
+	dataType:"json",
+	success:function(data){
+		let divLeft = ''
+		let divRight = ''
+		$('.divMain').empty()
+		for(i=0; i<data.length; i++){
+			let placeImg = '<img src="'+ data[i]['placeImg']+'"class="reivewImg"><input type="hidden" id="hiddenPlaceNum" value="'+placeNum+'">'
+			let placeName = '<p><span class="placeName">'+data[i]['placeName']+'</span></p>'
+			let placeContnet = '<p><span class="placeContent">'+data[i]['placeContent']+'</span></p>'
+			let placeTel = '<p><span class="placeTel">'+data[i]['placeTel']+'</span></p>'
+			let placeAddress = '<p><span class="placeAddress">'+data[i]['placeAddress']+'</span></p>'
+			let placeLike = '<p><span class="placeLike">'+data[i]['placeLike']+'</span></p>'
+			let likeIcon = `<div class="checkbox"><input type="checkbox" id="myCheckbox"><label for="myCheckbox" class="checkbox-icon"></label></div>`;
+			let writeRev = '<div class= write><input type="button" value="리뷰쓰기" id="revBtn"></div>'
 
-/*페이지네이션 기존코드*/
-/*function loadReview(pageNum){
-	$.ajax({
-		url:"/loadReview",
-		data:{pageNum:pageNum},
-		type:"post",
-		dataType:"json",
-		success:function(data){
-			let i = 0
-			let endPage = parseInt(data[0]['howmany'])
-			var pageStr = ''
-			$('.viewDivFooter').empty()
-			for(i=1; i<=endPage; i++){
-				pageStr = pageStr + '&nbsp;<span name=pageNum>'+i+'</span>&nbsp;'
-			}
-			$('.viewDivFooter').append(pageStr)
-			$('.placeList').empty()
-			for(i=1; i<data.length; i++){
-				let placeImg = '<img src="'+data[i]['placeImg']+'" class="placeImg">'
-				let hiddenId = '<input type="hidden" id="placeNum" name="placeNum" value="'+data[i]['placeId']+'">'
-				let nameStr = "<p><span class=boldText>"+data[i]['placeId']+'/'+data[i]['placeName']+"</span></p>"
-				let div = '<div class="divA">'+hiddenId+'<div class="divImg">'+placeImg+'</div>'+nameStr+'</div>'
-				$('.placeList').append(div)
-			}
-		}})
-}*/
+			divLeft = '<div class="divLeft"><div class="leftContainer"><div class="placeImges">'+placeImg+'</div><div class="placeName">'+placeName+'</div></div></div>'
+			divRight = '<div class="divRight"><div class="rightContainer"><div class="placeContent">'+placeContnet+placeTel+placeAddress+'</div><div class="placeIcon">'+likeIcon+placeLike+writeRev+'</div><div class="placeReviews">reviews</div></div></div>'
+		}
+			console.log("divLeft: "+divLeft)
+			console.log("divRight: "+divRight)
+			$('.divMain').append(divLeft,divRight)
+			loadLike()
+	}
+})	
+}
+function loadReviewInfo(){
+$.ajax({
+	url:"/loadReviewInfo",
+	type:"post",
+	data:{placeNum:placeNum},
+	dataType:"json",
+	success:function(data){
+		let divLeft = ''
+		let divRight = ''
+		$('.divMain').empty()
+		for(i=0; i<data.length; i++){
+			let placeImg = '<img src="'+ data[i]['placeImg']+'"class="reivewImg"><input type="hidden" id="hiddenPlaceNum" value="'+placeNum+'">'
+			let placeName = '<p><span class="placeName">'+data[i]['placeName']+'</span></p>'
+			let placeContnet = '<p><span class="placeContent">'+data[i]['placeContent']+'</span></p>'
+			let placeTel = '<p><span class="placeTel">'+data[i]['placeTel']+'</span></p>'
+			let placeAddress = '<p><span class="placeAddress">'+data[i]['placeAddress']+'</span></p>'
+			let placeLike = '<p><span class="placeLike">'+data[i]['placeLike']+'</span></p>'
+			let likeIcon = `<div class="checkbox"><input type="checkbox" id="myCheckbox"><label for="myCheckbox" class="checkbox-icon"></label></div>`;
+			let writeRev = '<div class= write><input type="button" value="리뷰쓰기" id="revBtn"></div>'
+			divLeft = '<div class="divLeft"><div class="leftContainer"><div class="placeImges">'+placeImg+'</div><div class="placeName">'+placeName+'</div></div></div>'
+			divRight = '<div class="divRight"><div class="rightContainer"><div class="placeContent">'+placeContnet+placeTel+placeAddress+'</div><div class="placeIcon">'+likeIcon+placeLike+writeRev+'</div><div class="placeReviews"></div></div></div>'
+		}
+		console.log("divLeft: "+divLeft)
+		console.log("divRight: "+divRight)
+		$('.divMain').append(divLeft,divRight)
+		$('.placeReviews').empty()
+			loadReviewContent()
+	}
+})
+}
+function loadReviewContent(){
+$.ajax({
+	url:"/loadReviewContent",
+	type:"post",
+	data:{placeNum:placeNum, page:currentPage},
+	dataType:"json",
+	success:function(data){
+		for(i=0; i<data.length; i++){
+			let placeReview =''
+			let reviewNickName = '<p><span class="memberNickName">'+data[i]['reviewNickName']+'</span></p>'
+			let reviewContent = '<p><span class="reviewContent">'+data[i]['reviewContent']+'</span></p>'
+			let reviewDate = '<p><span class="reviewDate">'+data[i]['reviewDate']+'</span></p>'
+			placeReview = '<div class="reviewblock">'+reviewNickName+reviewContent+reviewDate+'</div>'
+			console.log("placeReview: "+placeReview)
+			$('.placeReviews').append(placeReview)
+		}
+		loadLike()
+	}
+})	
+}

@@ -31,6 +31,7 @@ public interface TDAO {
 	ArrayList <RevDTO> reviewPlace(int placeSeq);
 	ArrayList <RevDTO> reviewContent(int placeSeq);
 	int reviewsCheck(int placeSeq);
+	void revInsert(int placeNum, String memberNickname, String content);
 	
 	
 	//마이페이지

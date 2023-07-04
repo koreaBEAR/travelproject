@@ -148,6 +148,12 @@ span[name='pageNum'].current {
     <div class=viewDivFooter>
     <span name=pageNum>1</span>
     </div>
+    <div id="reviewWriteDig" style="display:none;">
+		<div id="reviewPlace"></div>
+		<div id="uesrNickname">${nickName}</div>
+    	<div><textarea name=revContent id=revContent></textarea></div>
+    	<div><button id="btnUpload" >등록</button><button id="btnCancel">취소</button></div>   
+	</div>
 <!-- 푸터 -->
 <%@ include file="./footer.jsp" %> 
     </body>

@@ -83,6 +83,10 @@
 	        where a.place_seq = #{param1}
 	        and a.place_seq = b.place_seq
 	</select>
+	<insert id="revInsert">
+		insert into travel_rev (review_seq, place_seq, member_nickname, review_content, review_date)
+			values (travel_seq.nextval, #{param1}, #{param2}, #{param3}, to_char(sysdate, 'yyyy/mm/dd'))
+	</insert>
 	<!-- 마이페이지 멤버찾기 -->
 	<select id="findMemberSeq" resultType="Integer">	
 		select member_seq

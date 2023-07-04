@@ -241,7 +241,11 @@ public class Traval_controller {
 	
 	//리뷰 피드
 	@GetMapping("/place")
-	public String reviewPage() {
+	public String reviewPage(HttpServletRequest req, Model model) {
+		HttpSession session = req.getSession();
+		String memberID = (String)session.getAttribute("id");
+		String memberNickName = tdao.selectMemberNickName(memberID);
+		model.addAttribute("nickName", memberNickName);
 		return "reviews";
 	}
 	//리뷰에 place보이기 (페이지네이션 10페이지씩 보이게 변경)
@@ -499,7 +503,7 @@ public class Traval_controller {
 	}
 	@PostMapping("/loadPlaceInfo")
 	@ResponseBody
-	public String loadPlaceInfo(HttpServletRequest req) {
+	public String loadPlaceInfo(HttpServletRequest req,Model model) {
 		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
 		ArrayList <RevDTO> alPlace = tdao.reviewPlace(placeNum);
 		JSONArray ja = new JSONArray();
@@ -521,7 +525,7 @@ public class Traval_controller {
 	}
 	@PostMapping("/loadReviewInfo")
 	@ResponseBody
-	public String loadReviewInfo(HttpServletRequest req) {
+	public String loadReviewInfo(HttpServletRequest req,Model model) {
 		int placeNum = Integer.parseInt(req.getParameter("placeNum"));
 		ArrayList <RevDTO> alPlace = tdao.placeReviews(placeNum);
 		JSONArray ja = new JSONArray();
@@ -607,6 +611,21 @@ public class Traval_controller {
 		}
 		return val;
 		
+	}
+	@PostMapping("/revContentInsert")
+	@ResponseBody
+	public String revContentInsert(HttpServletRequest req) {
+		String retval=null;
+		try {
+			int placeNum = Integer.parseInt(req.getParameter("placeNum"));
+			String member = req.getParameter("memberNickName");
+			String revContent = req.getParameter("revContent");
+			tdao.revInsert(placeNum, member, revContent);
+			retval="ok";
+		}catch(Exception e) {
+			retval="not ok";
+		}
+		return retval;
 	}
 
 
