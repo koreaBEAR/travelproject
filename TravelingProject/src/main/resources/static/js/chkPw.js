@@ -47,7 +47,7 @@ $(document)
 	$('#nowPw').val('')
 	$('#changePw').val('')
 	$('#chkChangePw').val('')
-	document.location="/main"
+	document.location="/myPage"
 })
 .on('keyup','#chkChangePw',function(){
 	let pw=$('#changePw').val()

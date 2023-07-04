@@ -38,6 +38,9 @@ public interface TDAO {
 	int findMemberSeq(String member_id);
 	String selectMemberNickName(String member_id);
 	ArrayList <MyPageDTO> myPageSchedule(int memberSeq);
+	String selectMemberMobile(String member_id);
+	String selectMemberMail(String member_id);
+	void memberInfoModify(String s1, String s2, String s3, String s4);
 	void scheduledelete(int scheduleSeq);
 	int loadPlaceLike (int placeNum);
 	void updateUpLike(int placeNum);

@@ -143,17 +143,37 @@ h2 {
 	height: 100%;
 	overflow: auto; /* 스크롤 가능하도록 */
 	background-color: rgba(0, 0, 0, 0.5); /* 배경에 약간의 투명도 */
+	padding:5px;
 }
-
-#pwChangeModalContent {
+.infoModal {
+	display: none; /* 모달을 기본적으로 숨김 */
+	position: fixed; /* 위치를 고정 */
+	z-index: 1; /* 다른 요소들보다 위에 표시 */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto; /* 스크롤 가능하도록 */
+	background-color: rgba(0, 0, 0, 0.5); /* 배경에 약간의 투명도 */
+	padding:5px;
+}
+#pwChangeModalContent{
 	position: relative;
 	top: 30vh;
 	left: 32vw;
 	background-color: #fefefe;
 	width: 30%;
-	height: 30%;
+	height: 35%;
 }
-#modalInput {
+#modifyInfoContainer{
+	position: relative;
+	top: 30vh;
+	left: 32vw;
+	background-color: #fefefe;
+	width: 30%;
+	height: 40%;
+}
+#modalInput, #infoInput{
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -184,8 +204,15 @@ h2 {
 	display: flex;
 	justify-content: center;
 }
+.divInfoChangeModalButton{
+	position: relative;
+	margin-top:6%;
+	bottom: -4px;
+	display: flex;
+	justify-content: center;
+}
 
-.pwChangeModalFont {
+.pwChangeModalFont, .infoChangeModalFont{
 	margin: 5px 0 5px 0;
 	height: 16px;
 }
@@ -210,7 +237,7 @@ h2 {
 	</div>
 	<div id="pwChangeModal" class="modal">
 			<div id="pwChangeModalContent">
-			<input type=hidden id=hidden value=${id}>
+				<input type=hidden id=hidden value=${id}>
 			<div id="modalInput">
 				<h2>비밀번호 변경</h2>
 				<input type="text" id="nowPw" class="pwChangeModalInput" placeholder="현재비밀번호">
@@ -224,6 +251,36 @@ h2 {
 				<button id="btnChange" class="pwChangeModalButton">변경하기</button>
 				<button id="btnCancel" class="pwChangeModalButton">취소하기</button>
 			</div>
+		</div>
+	</div>
+	<div id="modifyInfo" class="infoModal">
+		<div id="modifyInfoContainer">
+			<input type=hidden id=infoHiddenId value=${id}>
+		<div id="infoInput">
+			<h2>개인정보 변경</h2>
+			<span>닉네임</span>
+			<input type="text" id="changeNickname" value=${nickName}>
+			<font size=2 id="chageNicknameText" class="infoChangeModalFont"></font>
+			<span>이메일</span>
+			<input type="text" id="changeMail" value=${mail} onkeyup="validEmail(this)" onkeydown="validEmail(this)">
+			<font size=2 id="chageMailText" class="infoChangeModalFont"></font>
+			<span>전화번호</span>
+			<input
+					type="tel"
+					class="form-control m-input"
+					name="tel"
+					id="telInput"
+					required
+					pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"
+					maxlength="13"
+					placeholder="예) 010-9999-9999"
+					value=${mobile} 
+			/>
+			<div class="divInfoChangeModalButton">	
+				<button id="btnInfoChange" class="pwChangeModalButton">변경하기</button>
+				<button id="btnInfoCancel" class="pwChangeModalButton">취소하기</button>
+			</div>
+		</div>
 		</div>
 	</div>
 <%@ include file="./footer.jsp" %>

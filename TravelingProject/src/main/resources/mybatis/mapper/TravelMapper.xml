@@ -13,7 +13,7 @@
 		select count(*) from member where member_id=#{param1}
 	</select>
 	<select id="nickName_check" resultType="Integer">
-		select count(*) from member where member_id=#{param1}
+		select count(*) from member where member_nickname=#{param1}
 	</select>
 	<select id="member_check" resultType="Integer">
 		select count(*) from member where member_id=#{param1} and member_pw=#{param2}
@@ -93,6 +93,16 @@
 			from member
 			where member_id = #{param1}
 	</select>
+	<select id="selectMemberMail" resultType="String">
+		select member_email
+			from member
+			where member_id = #{param1}
+	</select>
+	<select id="selectMemberMobile" resultType="String">
+		select member_mobile
+			from member
+			where member_id = #{param1}
+	</select>
 	<!-- 마이페이지 스케줄load -->
 	<select id="myPageSchedule" resultType="com.human.springboot.MyPageDTO">
 		select a.schedule_seq, city_seq, c.city_img, c.city_name, b.member_nickname, a.schedule_days, a.schedule_updated
@@ -120,7 +130,10 @@
 			from member
 			where member_id = #{param1}
 	</select>
-	
+	<update id="memberInfoModify">
+		update member set member_email = #{param1}, member_nickname = #{param2}, member_mobile = #{param3}
+			where member_id = #{param4}
+	</update>
 	<!--정아  -->
 	<!-- 회원관리 페이징해서 보여주기 & 삭제 -->
 	<select id="member_paging"  resultType="com.human.springboot.LDTO"> 

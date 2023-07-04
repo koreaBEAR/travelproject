@@ -637,8 +637,29 @@ public class Traval_controller {
 		HttpSession session = req.getSession();
 		String memberID = (String)session.getAttribute("id");
 		String memberNickName = tdao.selectMemberNickName(memberID);
+		String memberMail = tdao.selectMemberMail(memberID);
+		String membermobile = tdao.selectMemberMobile(memberID);
+		model.addAttribute("mail", memberMail);
+		model.addAttribute("mobile", membermobile);
 		model.addAttribute("nickName", memberNickName);
 		return "myPage";
+	}
+	@PostMapping("/memberInfoModify")
+	@ResponseBody
+	public String memberInfoModify(HttpServletRequest req) {
+		String retval = null;
+		try {
+			String memberMail = req.getParameter("mail");
+			String memberNickname = req.getParameter("nickname");
+			String memberMobile = req.getParameter("tel");
+			String memberId = req.getParameter("id");
+			tdao.memberInfoModify(memberMail, memberNickname, memberMobile, memberId);
+			retval = "ok";
+		}catch(Exception e) {
+			retval = "not ok";
+			e.printStackTrace();
+		}
+		return retval;
 	}
 	//마이페이지 schedule load
 	@PostMapping("/loadMyPageSchedule")
