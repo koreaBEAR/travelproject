@@ -17,6 +17,10 @@ body {
     margin: 0;
     padding: 0;
 }
+h2 {
+	margin: 5px 0 13px 0;
+	padding: 0;
+}
 .Main {
     display: flex;
     align-items: center;
@@ -128,6 +132,64 @@ body {
 .ButtonContainer > button:hover{
      color: white;
 }
+
+.modal {
+	display: none; /* 모달을 기본적으로 숨김 */
+	position: fixed; /* 위치를 고정 */
+	z-index: 1; /* 다른 요소들보다 위에 표시 */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto; /* 스크롤 가능하도록 */
+	background-color: rgba(0, 0, 0, 0.5); /* 배경에 약간의 투명도 */
+}
+
+#pwChangeModalContent {
+	position: relative;
+	top: 30vh;
+	left: 32vw;
+	background-color: #fefefe;
+	width: 30%;
+	height: 30%;
+}
+#modalInput {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.pwChangeModalInput {
+	width: 179px;
+	height: 25px;
+}
+
+.pwChangeModalButton {
+	border-radius: 30px;
+	background-color: #F8B48F;
+	border: 0.5px solid #F8B48F;
+	color: black;
+	padding: 5px 10px;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition-duration: 0.4s;
+	display: inline-block;
+	margin: 0 5px 0 5px
+}
+
+.divPwChangeModalButton {
+	position: relative;
+	bottom: -6px;
+	display: flex;
+	justify-content: center;
+}
+
+.pwChangeModalFont {
+	margin: 5px 0 5px 0;
+	height: 16px;
+}
+
 </style>
 <body>
 <%@ include file="./header.jsp" %>
@@ -138,11 +200,29 @@ body {
 					<span class="MemberId">${nickName} 님의 마이페이지 입니다.</span>
 				</div>
 				<div class="Modify">
-					<a href="*" id="modify">개인정보 수정</a>
-					<a href="*" id="change">비밀번호 변경</a>
+					<a href="javascript:;" id="modify">개인정보 수정</a>
+					<a href="javascript:;" id="change">비밀번호 변경</a>
 				</div>
 			</div>
 			<div class="MainSchedule">
+			</div>
+		</div>
+	</div>
+	<div id="pwChangeModal" class="modal">
+			<div id="pwChangeModalContent">
+			<input type=hidden id=hidden value=${id}>
+			<div id="modalInput">
+				<h2>비밀번호 변경</h2>
+				<input type="text" id="nowPw" class="pwChangeModalInput" placeholder="현재비밀번호">
+				<font size=2 id="nowPwText" class="pwChangeModalFont"></font>
+				<input type="text" id="changePw"  class="pwChangeModalInput" onkeyup="characterCheckPW(this)"onkeydown="characterCheckPW(this)" placeholder="새비밀번호">
+				<font size=2 id="changePwText" class="pwChangeModalFont"></font>
+				<input type="text" id="chkChangePw" class="pwChangeModalInput" placeholder="비밀번호확인">
+				<font size=2 id="chkChangePwText" class="pwChangeModalFont"></font>
+			</div>
+			<div class="divPwChangeModalButton">	
+				<button id="btnChange" class="pwChangeModalButton">변경하기</button>
+				<button id="btnCancel" class="pwChangeModalButton">취소하기</button>
 			</div>
 		</div>
 	</div>
@@ -151,4 +231,5 @@ body {
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="http://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="js/myPage.js"></script>
+<script src="js/chkPw.js"></script>
 </html>

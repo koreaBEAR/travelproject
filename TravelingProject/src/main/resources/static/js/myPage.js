@@ -25,6 +25,7 @@ $(document)
 })
 
 .on('click','#ScheduleDelete', scheduleTagDelete)
+.on('click', '#change', pwChangeModal)
 
 function scheduleModify(citySeq,cityName,scheduleSeq) {
 	document.location = "/scheduleupdate/" + citySeq + "/" + cityName + "/" + scheduleSeq;
@@ -50,4 +51,8 @@ function scheduleDelete(scheduleSeq) {
 function scheduleTagDelete() {
 	$(this).parent().parent().parent().remove();
 	
+}
+
+function pwChangeModal() {
+	$('.modal').css('display','block');
 }

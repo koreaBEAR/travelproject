@@ -75,13 +75,24 @@ if( regExp.test(obj.value) ){
 	}
 }
 function checkpwlength(pw){
+	let nowPw = $('#nowPw').val();
+	console.log(nowPw);
+	
 	if(pw.length<8||pw.length>16){
 		$('#changePwText').attr('color','red')
 		$('#changePwText').html("비밀번호는 8 ~ 16 자리로 입력해주세요.")
 		$('#changePw').val('')
 		$('#changePw').trigger('focus')
 		return false;
-	}else{
+	}
+	else if ( nowPw == pw ) {
+		$('#changePwText').attr('color','red')
+		$('#changePwText').html("현재비밀번호와 다른 비밀번호를 입력해주세요.")
+		$('#changePw').val('')
+		$('#changePw').trigger('focus')
+		return false;
+	}
+	else{
 		$('#changePwText').attr('color','green')
 		$('#changePwText').html("사용가능한 비밀번호 입니다.")
 		return false;
