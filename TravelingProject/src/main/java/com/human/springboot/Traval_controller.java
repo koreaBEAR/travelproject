@@ -624,6 +624,7 @@ public class Traval_controller {
 			retval="ok";
 		}catch(Exception e) {
 			retval="not ok";
+			e.printStackTrace();
 		}
 		return retval;
 	}
